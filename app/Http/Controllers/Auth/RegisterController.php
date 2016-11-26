@@ -47,11 +47,35 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $data = $this->filterArray($data);
+
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'first_name' => 'required|regex:/^\b[a-z\s-]+\b$/i|max:255',
+            'middle_name' => 'regex:/^\b[a-z\s-]+\b$/i|max:255',
+            'last_name' => 'required|regex:/^\b[a-z\s-]+\b$/i|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
+    }
+
+    private function filterArray(array $data)
+    {
+        $data['first_name'] = $this->formatData($data['first_name']);
+        $data['middle_name'] = $this->formatData($data['middle_name']);
+        $data['last_name'] = $this->formatData($data['last_name']);
+
+        return $data;
+    }
+
+    private function formatData($data)
+    {
+        $regexrep = [
+            '/\s+/' => ' ',
+            '/-+/' => '-',
+            '/\s?-\s?/' => '-',
+        ];
+
+        return ucwords(strtolower(preg_replace(array_keys($regexrep), array_values($regexrep), trim($data))));
     }
 
     /**
@@ -62,8 +86,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $data = $this->filterArray($data);
+
         return User::create([
-            'name' => $data['name'],
+            'fname' => $data['first_name'],
+            'mname' => $data['middle_name'],
+            'lname' => $data['last_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
