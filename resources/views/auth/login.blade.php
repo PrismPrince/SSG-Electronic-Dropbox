@@ -41,7 +41,7 @@
                   value="{{ old('email') }}"
                   required
                   v-model="email"
-                  @keyup.enter="focusPassword"
+                  @keyup.enter.prevent="focusPassword"
                 >
       
                 <span class="help-block" v-if="errors.email.status != errors.email.changed">
@@ -64,7 +64,6 @@
                   name="password"
                   required
                   v-model="password"
-                  @keyup.enter="submitLoginForm"
                 >
       
                 <span class="help-block" v-if="errors.password.status != errors.password.changed">
@@ -89,7 +88,7 @@
       
             <div class="form-group">
               <div class="col-md-8 col-md-offset-4">
-                <button type="submit" class="btn btn-primary" @click.prevent="submitLoginForm" :disabled="btnDisabled">
+                <button type="submit" class="btn btn-primary" :disabled="btnDisabled">
                   Login
                 </button>
       

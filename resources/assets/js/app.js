@@ -84,10 +84,6 @@ if ($('#login-form').length) {
     methods: {
       focusPassword() {
         document.getElementById('password').focus()
-      },
-
-      submitLoginForm() {
-        if (!this.btnDisabled) document.getElementById('login-form').submit()
       }
     }
   });
@@ -156,7 +152,6 @@ if ($('#login-form').length) {
         } else {
           this.errors.first_name.status = true
           this.errors.first_name.text = ''
-          console.log('ok')
         }
       },
       middle_name() {
@@ -170,7 +165,6 @@ if ($('#login-form').length) {
         } else {
           this.errors.middle_name.status = true
           this.errors.middle_name.text = ''
-          console.log('ok')
         }
       },
       last_name() {
@@ -187,7 +181,6 @@ if ($('#login-form').length) {
         } else {
           this.errors.last_name.status = true
           this.errors.last_name.text = ''
-          console.log('ok')
         }
       },
       email() {
@@ -208,7 +201,6 @@ if ($('#login-form').length) {
         else {
           this.errors.email.status = true
           this.errors.email.text = ''
-          console.log('ok')
         }
       },
       password() {
@@ -225,7 +217,6 @@ if ($('#login-form').length) {
         } else {
           this.errors.password.status = true
           this.errors.password.text = ''
-          console.log('ok')
         }
       },
       password_confirm() {
@@ -243,7 +234,6 @@ if ($('#login-form').length) {
         } else {
           this.errors.password_confirm.status = true
           this.errors.password_confirm.text = ''
-          console.log('ok')
         }
       }
     },
@@ -278,10 +268,6 @@ if ($('#login-form').length) {
 
       focusPasswordConfirm() {
         document.getElementById('password-confirm').focus()
-      },
-
-      submitRegistrationForm() {
-        if (!this.btnDisabled) document.getElementById('registration-form').submit()
       }
     }
   });

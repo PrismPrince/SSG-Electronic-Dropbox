@@ -55,7 +55,7 @@
                   value="{{ old('first_name') }}"
                   required
                   v-model.trim="first_name"
-                  @keyup.enter="focusMiddleName"
+                  @keyup.enter.prevent="focusMiddleName"
                 >
 
                 <span class="help-block" v-if="errors.first_name.status != errors.first_name.changed">
@@ -78,7 +78,7 @@
                   name="middle_name"
                   value="{{ old('middle_name') }}"
                   v-model.trim="middle_name"
-                  @keyup.enter="focusLastName"
+                  @keyup.enter.prevent="focusLastName"
                 >
 
                 <span class="help-block" v-if="errors.middle_name.status != errors.middle_name.changed">
@@ -102,7 +102,7 @@
                   value="{{ old('last_name') }}"
                   required
                   v-model.trim="last_name"
-                  @keyup.enter="focusEmail"
+                  @keyup.enter.prevent="focusEmail"
                 >
 
                 <span class="help-block" v-if="errors.last_name.status != errors.last_name.changed">
@@ -126,7 +126,7 @@
                   value="{{ old('email') }}"
                   required
                   v-model="email"
-                  @keyup.enter="focusPassword"
+                  @keyup.enter.prevent="focusPassword"
                 >
 
                 <span class="help-block" v-if="errors.email.status != errors.email.changed">
@@ -149,7 +149,7 @@
                   name="password"
                   required
                   v-model="password"
-                  @keyup.enter="focusPasswordConfirm"
+                  @keyup.enter.prevent="focusPasswordConfirm"
                 >
 
                 <span class="help-block" v-if="errors.password.status != errors.password.changed">
@@ -172,7 +172,6 @@
                   name="password_confirmation"
                   required
                   v-model="password_confirm"
-                  @keyup.enter="submitRegistrationForm"
                 >
 
                 <span class="help-block" v-if="errors.password_confirm.status != errors.password_confirm.changed">
@@ -183,7 +182,7 @@
 
             <div class="form-group">
               <div class="col-md-6 col-md-offset-4">
-                <button type="submit" class="btn btn-primary" @click.prevent="submitRegistrationForm" :disabled="btnDisabled">
+                <button type="submit" class="btn btn-primary" :disabled="btnDisabled">
                   Register
                 </button>
               </div>
