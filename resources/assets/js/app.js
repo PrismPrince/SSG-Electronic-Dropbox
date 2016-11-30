@@ -281,7 +281,7 @@ if ($('#login-form').length) {
       },
 
       submitRegistrationForm() {
-        if (!this.btnDisabled) document.getElementById('registration-form-form').submit()
+        if (!this.btnDisabled) document.getElementById('registration-form').submit()
       }
     }
   });
