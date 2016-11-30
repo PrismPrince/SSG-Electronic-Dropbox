@@ -14,5 +14,17 @@
     "lodash": "^4.16.2",
     "vue": "^2.0.1",
     "vue-resource": "^1.0.3"
-  }
+  },
+  "name": "this",
+  "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img width=\"150\"src=\"https://laravel.com/laravel.png\"></a></p>",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "author": "Dave Dane Pacilan",
+  "license": "ISC"
 }
