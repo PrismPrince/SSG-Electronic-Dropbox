@@ -15,7 +15,6 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            // $table->string('name'); // replace
             $table->string('fname');
             $table->string('mname')->nullable();
             $table->string('lname');
@@ -24,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('role')->default('student');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
