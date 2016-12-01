@@ -33,4 +33,9 @@ class User extends Authenticatable
   ];
 
   protected $dates = ['deleted_at'];
+
+  public function scopeWithRole($query, $role)
+  {
+    return $query->where('role', $role);
+  }
 }

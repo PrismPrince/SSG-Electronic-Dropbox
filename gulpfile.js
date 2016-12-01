@@ -16,5 +16,6 @@ require('laravel-elixir-vue-2');
 elixir((mix) => {
   mix.sass('app.scss')
     .webpack('app.js')
-    .copy('node_modules/bootstrap-sass/assets/fonts/', 'public/fonts/');
+    .copy('node_modules/bootstrap-sass/assets/fonts/', 'public/fonts/')
+    .copy('resources/assets/img/', 'public/images/');
 });

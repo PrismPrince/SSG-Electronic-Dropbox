@@ -7,6 +7,7 @@
 
       <!-- Branding Image -->
       <a class="navbar-brand" href="{{ url('/') }}">
+        {{-- <img src="/images/republic_seal.png" alt="Republic of the Philippines"> --}}
         {{ config('app.name', 'Laravel') }}
       </a>
     </div>
@@ -30,7 +31,7 @@
             </a>
 
             <ul class="dropdown-menu" role="menu">
-              <li><a href="{{ url('/profile') }}">Profile</a></li>
+              <li><a href="{{ url('/profile/' . Auth::id()) }}">Profile</a></li>
               <li class="divider"></li>
               <li><a href="/account">Setting</a></li>
               <li>

@@ -17,12 +17,10 @@ Vue.component('alert-danger', require('./components/alert-danger.vue'));
 Vue.component('navbar-hamburger', require('./components/navbar/hamburger.vue'));
 
 if ($('#login-form').length) {
-  var email = document.getElementById('email').value
-
   Vue.mixin({
     data() {
       return {
-        email: email,
+        email: document.getElementById('email').value,
         password: '',
         errors: {
           email: {
@@ -88,18 +86,13 @@ if ($('#login-form').length) {
     }
   });
 } else if ($('#registration-form').length) {
-  var first_name = document.getElementById('first-name').value
-  var middle_name = document.getElementById('middle-name').value
-  var last_name = document.getElementById('last-name').value
-  var email = document.getElementById('email').value
-
   Vue.mixin({
     data() {
       return {
-        first_name: first_name,
-        middle_name: middle_name,
-        last_name: last_name,
-        email: email,
+        first_name: document.getElementById('first-name').value,
+        middle_name: document.getElementById('middle-name').value,
+        last_name: document.getElementById('last-name').value,
+        email: document.getElementById('email').value,
         password: '',
         password_confirm: '',
         errors: {
@@ -271,7 +264,38 @@ if ($('#login-form').length) {
       }
     }
   });
-} // else var mixin = {};
+} else if ($('#profile').length) {
+  Vue.mixin({
+    data() {
+      return {
+        user: {
+          first_name: '',
+          middle_name: '',
+          last_name: '',
+          role: ''
+        }
+      }
+    },
+    created() {
+      this.$http.post(document.getElementById('url').value,
+        {
+          _method: 'post',
+          id: document.getElementById('code').value
+        }).then((response) => {
+          this.user.first_name = response.data.fname
+          this.user.middle_name = response.data.mname
+          this.user.last_name = response.data.lname
+          this.user.role = response.data.role
+
+          // this.user.id = response.data.id
+          console.log(response.data)
+          console.log(true)
+        }).catch((response) => {
+          console.error(response.error)
+        })
+    }
+  });
+}
 
 const app = new Vue({
   el: '#app',
@@ -281,3 +305,7 @@ const app = new Vue({
     }
   }
 });
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

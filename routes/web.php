@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 Route::get('/home', 'HomeController@index');
@@ -29,3 +29,12 @@ Route::post('register', 'Auth\RegisterController@register');
 // Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
 // Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 // Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+
+Route::resource('user', 'UserController', [
+ 'except' => [
+   'index',
+   'create',
+   'store'
+ ]
+]);
+Route::get('profile/{user}', 'UserController@show')->name('user.show');
