@@ -8,6 +8,7 @@
   </div>
 
   <!-- Scripts -->
+  <script src="/js/bootstrap.js"></script>
   @stack('scripts')
   <script src="/js/app.js"></script>
 </body>
