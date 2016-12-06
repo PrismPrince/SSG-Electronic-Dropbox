@@ -95,3 +95,7 @@
     </div>
   </div>
 @stop
+
+@push('scripts')
+  <script src="/js/profile.js"></script>
+@endpush

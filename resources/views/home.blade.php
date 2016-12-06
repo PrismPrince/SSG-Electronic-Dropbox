@@ -15,3 +15,7 @@
   </div>
 </div>
 @endsection
+
+@push('scripts')
+  {{-- <script src="/js/logout.js"></script> --}}
+@endpush
