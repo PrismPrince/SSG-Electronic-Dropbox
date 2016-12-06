@@ -14,7 +14,6 @@ require('./bootstrap');
  */
 
 Vue.component('alert-danger', require('./components/alert-danger.vue'));
-Vue.component('navbar-hamburger', require('./components/navbar/hamburger.vue'));
 
 if ($('#login-form').length) {
   Vue.mixin({
