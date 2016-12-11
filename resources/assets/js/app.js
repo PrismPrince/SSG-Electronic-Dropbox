@@ -17,7 +17,7 @@ Vue.component('alert-danger', require('./components/alert-danger.vue'));
 
 const app = new Vue({
   el: '#app'
-});
+})
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()

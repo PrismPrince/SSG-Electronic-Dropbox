@@ -1,16 +1,16 @@
 Vue.mixin({
   data() {
     return {
-      email: document.getElementById('email').value,
+      email: '',
       password: '',
       errors: {
         email: {
-          changed: false,
+          dirty: false,
           status: false,
           text: ''
         },
         password: {
-          changed: false,
+          dirty: false,
           status: false,
           text: ''
         }
@@ -20,7 +20,7 @@ Vue.mixin({
   },
   watch: {
     email() {
-      this.errors.email.changed = true
+      this.errors.email.dirty = true
 
       var e = this.email
       var at = e.indexOf('@')
@@ -40,7 +40,7 @@ Vue.mixin({
       }
     },
     password() {
-      this.errors.password.changed = true
+      this.errors.password.dirty = true
 
       if (this.password == '') {
         this.errors.password.status = false
@@ -61,8 +61,18 @@ Vue.mixin({
     }
   },
   methods: {
+    touch() {
+      if (document.getElementById('errEmail').value != '') {
+        this.errors.email.dirty = true
+        this.errors.email.status = true
+        this.email = document.getElementById('errEmail').value
+      }
+    },
     focusPassword() {
       document.getElementById('password').focus()
     }
+  },
+  mounted() {
+    this.touch()
   }
 });

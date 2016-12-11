@@ -11,7 +11,9 @@
           <strong>Error!</strong>
           <ul>
             @if ($errors->has('email'))
-              <li>{{ $errors->first('email') }}</li>
+              <li>
+                {{ $errors->first('email') }}
+              </li>
             @endif
             @if ($errors->has('password'))
               <li>{{ $errors->first('password') }}</li>
@@ -23,12 +25,13 @@
       <div class="panel panel-default">
         <div class="panel-heading">Login</div>
         <div class="panel-body">
+          <input type="hidden" id="errEmail" value="{{ old('email') }}">
           <form id="login-form" class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
             {{ csrf_field() }}
       
             <div
               class="form-group"
-              :class="errors.email.status != errors.email.changed ? 'has-error' : ''"
+              :class="errors.email.status != errors.email.dirty ? 'has-error' : ''"
             >
 
               <label for="email" class="col-md-4 control-label">E-Mail Address</label>
@@ -39,13 +42,12 @@
                   type="email"
                   class="form-control"
                   name="email"
-                  value="{{ old('email') }}"
                   required
                   v-model="email"
                   @keyup.enter.prevent="focusPassword"
                 >
-      
-                <span class="help-block" v-if="errors.email.status != errors.email.changed">
+
+                <span class="help-block" v-if="errors.email.status != errors.email.dirty">
                   <strong>@{{errors.email.text}}</strong>
                 </span>
               </div>
@@ -53,7 +55,7 @@
       
             <div
               class="form-group"
-              :class="errors.password.status != errors.password.changed ? 'has-error' : ''"
+              :class="errors.password.status != errors.password.dirty ? 'has-error' : ''"
             >
               <label for="password" class="col-md-4 control-label">Password</label>
       
@@ -67,7 +69,7 @@
                   v-model="password"
                 >
       
-                <span class="help-block" v-if="errors.password.status != errors.password.changed">
+                <span class="help-block" v-if="errors.password.status != errors.password.dirty">
                   <strong>@{{errors.password.text}}</strong>
                 </span>
               </div>

@@ -38,12 +38,16 @@
       <div class="panel panel-default">
         <div class="panel-heading">Register</div>
         <div class="panel-body">
+          <input type="hidden" id="errFname" value="{{ old('first_name') }}">
+          <input type="hidden" id="errMname" value="{{ old('middle_name') }}">
+          <input type="hidden" id="errLname" value="{{ old('last_name') }}">
+          <input type="hidden" id="errEmail" value="{{ old('email') }}">
           <form id="registration-form" class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
             {{ csrf_field() }}
 
             <div
               class="form-group"
-              :class="errors.first_name.status != errors.first_name.changed ? 'has-error' : ''"
+              :class="errors.first_name.status != errors.first_name.dirty ? 'has-error' : ''"
             >
               <label for="first-name" class="col-md-4 control-label">First Name</label>
 
@@ -53,13 +57,12 @@
                   type="text"
                   class="form-control"
                   name="first_name"
-                  value="{{ old('first_name') }}"
                   required
                   v-model.trim="first_name"
                   @keyup.enter.prevent="focusMiddleName"
                 >
 
-                <span class="help-block" v-if="errors.first_name.status != errors.first_name.changed">
+                <span class="help-block" v-if="errors.first_name.status != errors.first_name.dirty">
                   <strong>@{{errors.first_name.text}}</strong>
                 </span>
               </div>
@@ -67,7 +70,7 @@
 
             <div
               class="form-group"
-              :class="errors.middle_name.status != errors.middle_name.changed ? 'has-error' : ''"
+              :class="errors.middle_name.status != errors.middle_name.dirty ? 'has-error' : ''"
             >
               <label for="middle-name" class="col-md-4 control-label">Middle Name</label>
 
@@ -82,7 +85,7 @@
                   @keyup.enter.prevent="focusLastName"
                 >
 
-                <span class="help-block" v-if="errors.middle_name.status != errors.middle_name.changed">
+                <span class="help-block" v-if="errors.middle_name.status != errors.middle_name.dirty">
                   <strong>@{{errors.middle_name.text}}</strong>
                 </span>
               </div>
@@ -90,7 +93,7 @@
 
             <div
               class="form-group"
-              :class="errors.last_name.status != errors.last_name.changed ? 'has-error' : ''"
+              :class="errors.last_name.status != errors.last_name.dirty ? 'has-error' : ''"
             >
               <label for="last-name" class="col-md-4 control-label">Last Name</label>
 
@@ -100,13 +103,12 @@
                   type="text"
                   class="form-control"
                   name="last_name"
-                  value="{{ old('last_name') }}"
                   required
                   v-model.trim="last_name"
                   @keyup.enter.prevent="focusEmail"
                 >
 
-                <span class="help-block" v-if="errors.last_name.status != errors.last_name.changed">
+                <span class="help-block" v-if="errors.last_name.status != errors.last_name.dirty">
                   <strong>@{{errors.last_name.text}}</strong>
                 </span>
               </div>
@@ -114,7 +116,7 @@
 
             <div
               class="form-group"
-              :class="errors.email.status != errors.email.changed ? 'has-error' : ''"
+              :class="errors.email.status != errors.email.dirty ? 'has-error' : ''"
             >
               <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
@@ -124,13 +126,12 @@
                   type="email"
                   class="form-control"
                   name="email"
-                  value="{{ old('email') }}"
                   required
                   v-model="email"
                   @keyup.enter.prevent="focusPassword"
                 >
 
-                <span class="help-block" v-if="errors.email.status != errors.email.changed">
+                <span class="help-block" v-if="errors.email.status != errors.email.dirty">
                   <strong>@{{errors.email.text}}</strong>
                 </span>
               </div>
@@ -138,7 +139,7 @@
 
             <div
               class="form-group"
-              :class="errors.password.status != errors.password.changed ? 'has-error' : ''"
+              :class="errors.password.status != errors.password.dirty ? 'has-error' : ''"
             >
               <label for="password" class="col-md-4 control-label">Password</label>
 
@@ -153,7 +154,7 @@
                   @keyup.enter.prevent="focusPasswordConfirm"
                 >
 
-                <span class="help-block" v-if="errors.password.status != errors.password.changed">
+                <span class="help-block" v-if="errors.password.status != errors.password.dirty">
                   <strong>@{{errors.password.text}}</strong>
                 </span>
               </div>
@@ -161,7 +162,7 @@
 
             <div
               class="form-group"
-              :class="errors.password_confirm.status != errors.password_confirm.changed ? 'has-error' : ''"
+              :class="errors.password_confirm.status != errors.password_confirm.dirty ? 'has-error' : ''"
             >
               <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
@@ -175,7 +176,7 @@
                   v-model="password_confirm"
                 >
 
-                <span class="help-block" v-if="errors.password_confirm.status != errors.password_confirm.changed">
+                <span class="help-block" v-if="errors.password_confirm.status != errors.password_confirm.dirty">
                   <strong>@{{errors.password_confirm.text}}</strong>
                 </span>
               </div>
