@@ -18,7 +18,7 @@ Vue.component('panel-media', require('./components/panel-media.vue'));
 
 const app = new Vue({
   el: '#app'
-});
+})
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()

@@ -1,40 +1,40 @@
 Vue.mixin({
   data() {
     return {
-      first_name: document.getElementById('first-name').value,
-      middle_name: document.getElementById('middle-name').value,
-      last_name: document.getElementById('last-name').value,
-      email: document.getElementById('email').value,
+      first_name: '',
+      middle_name: '',
+      last_name: '',
+      email: '',
       password: '',
       password_confirm: '',
       errors: {
         first_name: {
-          changed: false,
+          dirty: false,
           status: false,
           text: ''
         },
         middle_name: {
-          changed: true,
+          dirty: true,
           status: true,
           text: ''
         },
         last_name: {
-          changed: false,
+          dirty: false,
           status: false,
           text: ''
         },
         email: {
-          changed: false,
+          dirty: false,
           status: false,
           text: ''
         },
         password: {
-          changed: false,
+          dirty: false,
           status: false,
           text: ''
         },
         password_confirm: {
-          changed: false,
+          dirty: false,
           status: false,
           text: ''
         }
@@ -44,7 +44,7 @@ Vue.mixin({
   },
   watch: {
     first_name() {
-      this.errors.first_name.changed = true
+      this.errors.first_name.dirty = true
 
       var f = this.first_name
 
@@ -60,7 +60,7 @@ Vue.mixin({
       }
     },
     middle_name() {
-      this.errors.middle_name.changed = true
+      this.errors.middle_name.dirty = true
 
       var m = this.middle_name
 
@@ -73,7 +73,7 @@ Vue.mixin({
       }
     },
     last_name() {
-      this.errors.last_name.changed = true
+      this.errors.last_name.dirty = true
 
       var l = this.last_name
 
@@ -89,7 +89,7 @@ Vue.mixin({
       }
     },
     email() {
-      this.errors.email.changed = true
+      this.errors.email.dirty = true
 
       var e = this.email
       var at = e.indexOf('@')
@@ -109,7 +109,7 @@ Vue.mixin({
       }
     },
     password() {
-      this.errors.password.changed = true
+      this.errors.password.dirty = true
 
       var p = this.password
 
@@ -125,7 +125,7 @@ Vue.mixin({
       }
     },
     password_confirm() {
-      this.errors.password_confirm.changed = true
+      this.errors.password_confirm.dirty = true
 
       var p = this.password
       var c = this.password_confirm
@@ -155,6 +155,26 @@ Vue.mixin({
     }
   },
   methods: {
+    touch() {
+      if (document.getElementById('errFname').value != '') {
+        this.errors.first_name.dirty = true
+        this.errors.first_name.status = true
+        this.first_name = document.getElementById('errFname').value
+      }
+      if (document.getElementById('errMname').value != '') {
+        this.middle_name = document.getElementById('errMname').value
+      }
+      if (document.getElementById('errLname').value != '') {
+        this.errors.last_name.dirty = true
+        this.errors.last_name.status = true
+        this.last_name = document.getElementById('errLname').value
+      }
+      if (document.getElementById('errEmail').value != '') {
+        this.errors.email.dirty = true
+        this.errors.email.status = true
+        this.email = document.getElementById('errEmail').value
+      }
+    },
     focusMiddleName() {
       document.getElementById('middle-name').focus()
     },
@@ -174,5 +194,8 @@ Vue.mixin({
     focusPasswordConfirm() {
       document.getElementById('password-confirm').focus()
     }
+  },
+  mounted() {
+    this.touch()
   }
 });
