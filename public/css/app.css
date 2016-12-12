@@ -7738,6 +7738,10 @@ button.close {
   height: 64px;
 }
 
+.media .media-body {
+  word-break: break-word;
+}
+
 .p-l-20 {
   padding-left: 20px;
 }
@@ -7752,6 +7756,10 @@ button.close {
 
 .user-full-name {
   text-transform: uppercase;
+}
+
+.modal textarea {
+  resize: vertical;
 }
 
 /*# sourceMappingURL=app.css.map */

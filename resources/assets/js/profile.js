@@ -12,7 +12,6 @@ Vue.mixin({
   created() {
     this.$http.post(document.getElementById('url').value,
       {
-        _method: 'post',
         id: document.getElementById('code').value
       }).then((response) => {
         this.user.first_name = response.data.fname
@@ -27,6 +26,6 @@ Vue.mixin({
         console.error(response.error)
       })
   }
-});
+})
 
-require('./logout');
+require('./logout')

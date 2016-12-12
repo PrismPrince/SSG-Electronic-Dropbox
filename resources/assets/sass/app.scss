@@ -13,3 +13,9 @@
 [v-cloak] {
   // display: none;
 }
+
+.modal {
+  textarea {
+    resize: vertical;
+  }
+}

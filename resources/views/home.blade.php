@@ -1,42 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="modal fade" id="create-post" tabindex="-1" role="dialog" aria-labelledby="createPost">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="createPost">Modal title</h4>
+
+<modal modal-id="create-post" aria-labelled-by="createPost" modal-title="Write a Post" @close=''>
+  <div class="row" slot="modal-body">
+    <div class="col-xs-12">
+    <div class="media">
+      <div class="media-left">
+        <a href="#">
+          <img class="media-object" src="/images/user.jpg" alt="hehe">
+        </a>
       </div>
-      <div class="modal-body">
-        <div
-          class="form-group"
-          :class="errors.email.status != errors.email.changed ? 'has-error' : ''"
-        >  
-          <div class="col-md-6">
-            <input
-              id="title"
-              type="text"
-              class="form-control"
-              name="title"
-              required
-              v-model="title"
-              @keyup.enter.prevent="focusDesc"
-            >
-  
-            <span class="help-block" v-if="errors.email.status != errors.email.changed">
-              <strong>@{{errors.email.text}}</strong>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Post</button>
+      <div class="media-body">
+        <h4 class="media-heading">
+          <input 
+            id="title"
+            type="text"
+            class="form-control"
+            placeholder="Write the title"
+            required
+            v-model="post.title"
+            @keyup.enter.prevent="focusDesc"
+          >
+        </h4>
+        <textarea id="desc" class="form-control" placeholder="Write about it" v-model="post.description"></textarea>
       </div>
     </div>
+    </div>
   </div>
-</div>
+
+  <div slot="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary" @click.prevent="submitPost('{{ url('api/post/create') }}')">Post</button>
+  </div>
+</modal>
 
 <div class="container">
   <div class="row">
@@ -86,5 +83,5 @@
 @endsection
 
 @push('scripts')
-  <script src="/js/logout.js"></script>
+  <script src="/js/post.js"></script>
 @endpush

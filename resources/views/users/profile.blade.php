@@ -2,7 +2,6 @@
 
 @section('content')
   <div id="profile">
-    <input type="hidden" id="code" value="{{ $user }}">
     <input type="hidden" id="url" value="{{ url('/api/user') }}">
     <div class="container">
       <div class="row">
