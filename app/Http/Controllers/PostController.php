@@ -17,6 +17,13 @@ class PostController extends Controller
     //
   }
 
+  public function getPosts(Request $request)
+  {
+    $posts = Post::with('user')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get();
+
+    return response()->json($posts);
+  }
+
   /**
    * Show the form for creating a new resource.
    *
@@ -41,13 +48,7 @@ class PostController extends Controller
     $post->desc = $request->desc;
     $post->save();
 
-    return response()->json([
-      'fname' => $post->user->fname,
-      'lname' => $post->user->lname,
-      'title' => $post->title,
-      'desc' => $post->desc,
-      'created_at' => $post->created_at,
-    ]);
+    return response()->json(Post::with('user')->find($post->id));
   }
 
   /**

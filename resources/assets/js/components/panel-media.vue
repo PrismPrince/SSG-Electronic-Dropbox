@@ -9,7 +9,7 @@
           </a>
         </div>
         <div class="media-body">
-          <h4 class="media-heading">{{fullname}}</h4>
+          <h4 class="media-heading">{{fullname}}<br><small>{{formatDate(date)}}</small></h4>
           <slot></slot>
         </div>
       </div>
@@ -20,6 +20,24 @@
 
 <script>
   export default {
-    props: ['image', 'fullname'],
+    props: {
+      image: {
+        type: String,
+        required: true
+      },
+      fullname: {
+        type: String,
+        required: true
+      },
+      date: {
+        type: String,
+        required: true
+      }
+    },
+    methods: {
+      formatDate(date) {
+        return moment(date).fromNow()
+      }
+    }
   }
 </script>
