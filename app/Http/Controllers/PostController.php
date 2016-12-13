@@ -7,6 +7,10 @@ use App\Post;
 
 class PostController extends Controller
 {
+  public function __construct()
+  {
+    # code...
+  }
   /**
    * Display a listing of the resource.
    *
@@ -43,7 +47,7 @@ class PostController extends Controller
   public function store(Request $request)
   {
     $post = new Post();
-    $post->user_id = decrypt($request->id);
+    $post->user_id = $request->id;
     $post->title = $request->title;
     $post->desc = $request->desc;
     $post->save();

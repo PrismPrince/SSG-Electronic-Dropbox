@@ -28,3 +28,36 @@
   opacity: 0;
   background: #d9edf7;
 }
+
+.media {
+  img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .media-body {
+    word-break: break-word;
+
+    .media-heading {
+      padding-right: 20px;
+    }
+
+    .dropdown {
+      float: right;
+
+      .opt {
+        padding: 0;
+        border: 0;
+      }
+
+      .dropdown-menu {
+        left: initial;
+        right: 0;
+      }
+    }
+  }
+}
+
+.media, .media-body {
+  overflow: visible;
+}

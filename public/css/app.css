@@ -7687,7 +7687,16 @@ button.close {
   }
 }
 
-#profile .profile-top .img-profile {
+.profile-top .panel-body {
+  padding-right: 185px;
+  padding-left: 185px;
+}
+
+.profile-top .profile-title {
+  left: -150px;
+}
+
+.img-profile {
   height: 150px;
   width: 150px;
   border: 1px solid #d3e0e9;
@@ -7697,30 +7706,21 @@ button.close {
   margin-left: 15px;
 }
 
-#profile .profile-top .img-profile img {
+.img-profile img {
   width: 100%;
   height: 100%;
 }
 
-#profile .profile-top .img-profile .img-upload {
+.img-profile .img-upload {
   position: absolute;
   bottom: 0;
 }
 
-#profile .profile-top .img-profile .btn-default {
+.img-profile .btn-default {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-#profile .profile-top .panel-body {
-  padding-right: 185px;
-  padding-left: 185px;
-}
-
-#profile .profile-top .profile-title {
-  left: -150px;
-}
-
-#profile .profile-top .change-role {
+.change-role {
   width: 150px;
   position: relative;
   float: right;
@@ -7728,18 +7728,9 @@ button.close {
   margin-right: 15px;
 }
 
-#profile .profile-top .change-role .dropdown-menu {
+.change-role .dropdown-menu {
   left: initial;
   right: 0;
-}
-
-.media img {
-  width: 64px;
-  height: 64px;
-}
-
-.media .media-body {
-  word-break: break-word;
 }
 
 .p-l-20 {
@@ -7772,6 +7763,37 @@ button.close {
 .fade-enter, .fade-leave-active {
   opacity: 0;
   background: #d9edf7;
+}
+
+.media img {
+  width: 64px;
+  height: 64px;
+}
+
+.media .media-body {
+  word-break: break-word;
+}
+
+.media .media-body .media-heading {
+  padding-right: 20px;
+}
+
+.media .media-body .dropdown {
+  float: right;
+}
+
+.media .media-body .dropdown .opt {
+  padding: 0;
+  border: 0;
+}
+
+.media .media-body .dropdown .dropdown-menu {
+  left: initial;
+  right: 0;
+}
+
+.media, .media-body {
+  overflow: visible;
 }
 
 /*# sourceMappingURL=app.css.map */

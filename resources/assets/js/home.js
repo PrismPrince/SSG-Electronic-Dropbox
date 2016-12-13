@@ -37,7 +37,7 @@ Vue.mixin({
       // post request with the input data
       vm.$http.post(url,
       {
-        id: vm.user,
+        id: vm.user.id,
         title: vm.post.title,
         desc: vm.post.description,
       }).then((response) => {
@@ -85,10 +85,13 @@ Vue.mixin({
     }
   },
   created() {
+    this.$http.get(document.getElementById('get-user').value + '?id=' + document.getElementById('code').value)
+      .then((response) => {
+        this.user = response.data
+      }).catch((response) => {
+        console.error(response.error)
+      })
     this.getPosts()
-  },
-  mounted() {
-    this.user = document.getElementById('code').value
   }
 });
 
