@@ -19,7 +19,7 @@ elixir((mix) => {
     .webpack('login.js')
     .webpack('logout.js')
     .webpack('register.js')
-    .webpack('post.js')
+    .webpack('home.js')
     .webpack('profile.js')
     .webpack('app.js')
     .copy('node_modules/bootstrap-sass/assets/fonts/', 'public/fonts/')

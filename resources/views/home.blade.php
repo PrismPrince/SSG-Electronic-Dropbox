@@ -83,5 +83,5 @@
 @endsection
 
 @push('scripts')
-  <script src="/js/post.js"></script>
+  <script src="/js/home.js"></script>
 @endpush
