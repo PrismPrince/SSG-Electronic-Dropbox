@@ -43,3 +43,6 @@ Vue.http.interceptors.push((request, next) => {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
+window.moment = require('moment');
+moment().format()
