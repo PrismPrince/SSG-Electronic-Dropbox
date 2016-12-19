@@ -74,7 +74,7 @@ class PostController extends Controller
    */
   public function edit($id)
   {
-    //
+    return response()->json(Post::with('user')->find($id));
   }
 
   /**
@@ -86,7 +86,12 @@ class PostController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //
+    $post = Post::with('user')->find($id);
+    $post->title = $request->title;
+    $post->desc = $request->desc;
+    $post->save();
+
+    return response()->json($post);
   }
 
   /**

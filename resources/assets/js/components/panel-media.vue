@@ -13,10 +13,7 @@
             <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               <span></span>
             </a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Edit</a></li>
-              <li><a href="#">Delete</a></li>
-            </ul>
+            <slot name="dropdown-menu"></slot>
           </div>
           <h4 class="media-heading"><a :href="profile">{{fullname}}</a><br><small>{{formatDate(date)}}</small></h4>
           <slot></slot>

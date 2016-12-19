@@ -2,72 +2,131 @@
 
 @section('content')
 
-<modal modal-id="create-post" aria-labelled-by="createPost" modal-title="Write a Post">
-  <div class="row" slot="modal-body">
-    <div class="col-xs-12">
-    <div class="media">
-      <div class="media-left">
-        <a href="#">
-          <img class="media-object" src="/images/user.jpg" alt="hehe">
-        </a>
+<div class="modal fade" id="post-modal" tabindex="-1" role="dialog" aria-labelledby="createPost">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="createPost">Write a Post</h4>
       </div>
-      <div class="media-body">
-        <h4 class="media-heading">
-          <input 
-            id="post-title"
-            type="text"
-            class="form-control"
-            placeholder="Write the title"
-            required
-            v-model="post.title"
-            @keyup.enter.prevent="focusDesc"
-          >
-        </h4>
-        <textarea id="post-desc" class="form-control" placeholder="Write about it" v-model="post.description"></textarea>
+      <div class="modal-body">
+        <div class="row" slot="modal-body">
+          <div class="col-xs-12">
+            <div class="media">
+
+              <div class="media-left">
+                <a href="#">
+                  <img class="media-object" src="/images/user.jpg" alt="hehe">
+                </a>
+              </div>
+
+              <div class="media-body">
+                <h4 class="media-heading">
+                  <input 
+                    id="post-title"
+                    type="text"
+                    class="form-control"
+                    placeholder="Write the title"
+                    required
+                    v-model="post.title"
+                    @keyup.enter.prevent="focusDesc"
+                  >
+                </h4>
+                <textarea id="post-desc" class="form-control" placeholder="Write about it" v-model="post.description"></textarea>
+              </div>
+
+            </div> {{-- .media --}}
+          </div> {{-- .col-xs-12 --}}
+        </div> {{-- .row --}}
+      </div> {{-- .modal-body --}}
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="post-submit" @click.prevent="submitPost()">@{{action}}</button>
       </div>
-    </div>
     </div>
   </div>
+</div>
+<!-- 
+<modal modal-id="post-modal" aria-labelled-by="createPost" modal-title="Write a Post">
+  <div class="row" slot="modal-body">
+    <div class="col-xs-12">
+      <div class="media">
+
+        <div class="media-left">
+          <a href="#">
+            <img class="media-object" src="/images/user.jpg" alt="hehe">
+          </a>
+        </div>
+
+        <div class="media-body">
+          <h4 class="media-heading">
+            <input 
+              id="post-title"
+              type="text"
+              class="form-control"
+              placeholder="Write the title"
+              required
+              v-model="post.title"
+              @keyup.enter.prevent="focusDesc"
+            >
+          </h4>
+          <textarea id="post-desc" class="form-control" placeholder="Write about it" v-model="post.description"></textarea>
+        </div>
+
+      </div> {{-- .media --}}
+    </div> {{-- .col-xs-12 --}}
+  </div> {{-- .row --}}
 
   <div slot="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-primary" id="post-submit" @click.prevent="submitPost('{{ url('api/post/create') }}')">Post</button>
+    <button type="button" class="btn btn-primary" id="post-submit" @click.prevent="submitPost()">@{{action}}</button>
   </div>
-</modal>
 
-<input type="hidden" id="get-posts" value="{{ url('/api/post') }}">
+</modal>
+ -->
 <div class="container">
   <div class="row">
     <div class="col-sm-4">
 
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <div class="col-xs-6">
-            <button type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#create-post">Write a Post</button>
-          </div>
-          <div class="col-xs-6">
-            <button type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#">Create a Poll</button>
-          </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <button type="button" class="btn btn-block btn-default" {{-- data-toggle="modal" data-target="#post-modal" --}} @click="showPostModal('Post')">Write a Post</button>
         </div>
-      </div>
 
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <button type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#">Suggest</button>
+        <div class="col-xs-6">
+          <button type="button" class="btn btn-block btn-default" {{-- data-toggle="modal" data-target="#poll-modal" --}} @click="showPollModal('Create')">Create a Poll</button>
         </div>
-      </div>
+
+        <div class="col-xs-12">
+          <button type="button" class="btn btn-block btn-default" {{-- data-toggle="modal" data-target="#suggestion-modal" --}} @click="showSuggestModal('Send')">Suggest</button>
+        </div>
+      </div> {{-- .row --}}
 
       <div class="panel panel-default">
         <ul class="list-group">
-          <li class="list-group-item"><a href="#">Posts</a></li>
-          <li class="list-group-item"><a href="#">Polls</a></li>
-          <li class="list-group-item"><a href="#">Suggestions</a></li>
+          <li class="list-group-item">
+            {{-- URL to load posts --}}
+            <input type="hidden" id="get-posts" value="{{ url('/api/post') }}">
+            <a href="#">Posts</a>
+          </li>
+          <li class="list-group-item">
+            {{-- URL to load polls --}}
+            <input type="hidden" id="get-polls" value="{{ url('/api/poll') }}">
+            <a href="#">Polls</a>
+          </li>
+          <li class="list-group-item">
+            {{-- URL to load suggestions --}}
+            <input type="hidden" id="get-suggestions" value="{{ url('/api/suggestion') }}">
+            <a href="#">Suggestions</a>
+          </li>
         </ul>
-      </div>
+      </div> {{-- .panel --}}
 
-    </div>
+      <pre>@{{$data}}</pre>
+    </div> {{-- .col-sm-4 --}}
 
-    <div class="col-sm-8">
+    <div id="activity" class="col-sm-8">
+
 
       <transition-group name="fade">
         <panel-media
@@ -78,8 +137,12 @@
           :date="post.created_at"
           :opt="post.user.id == user.id ? true : false"
           v-for="post in posts.data">
+          <ul slot="dropdown-menu" class="dropdown-menu">
+            <li><a href="#" @click="editPost(post.id)">Edit</a></li>
+            <li><a href="#" @click="deletePost(post.id)">Delete</a></li>
+          </ul>
           <h5>@{{post.title}}</h5>
-          @{{post.desc}}
+          <p>@{{post.desc}}</p>
         </panel-media>
       </transition-group>
 
@@ -88,9 +151,11 @@
           <a href="#" @click.prevent="getPosts">Load more...</a>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+
+    </div> {{-- #activity --}} 
+
+  </div> {{-- .row --}}
+</div> {{-- .container --}}
 @endsection
 
 @push('scripts')
