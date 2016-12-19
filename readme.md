@@ -1,40 +1,50 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img width="150"src="https://laravel.com/laravel.png"></a></p>
+# SSG-Poll-System
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+[Cebu Technological Univaersity - Main Campus](http://http://www.ctu.edu.ph): Supreme Student Government Poll System
 
-## About Laravel
+## Introduction
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+This system let the moderator or administrator post information and create a poll for the students and the students can suggest to the modertor or administrator
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Users
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+There are three users:
 
-## Learning Laravel
+* [Students](#students)
+* [Moderators](#moderators)
+* [Administrators](#administrators)
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+#### Students
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+They can read on the posts, vote on polls and send a suggestions or feedback.
+
+#### Moderators
+
+They can post information or announcements, create a poll and read suggestions.
+
+#### Administrators
+
+They can do the moderators' function but they are the only ones who can change the role of the user ("student", "moderator" or "administrator")
+
+## Deployment
+
+### Built With
+
+* [Laravel](https://laravel.com) - The web framework base on PHP
+* [MariaDB](https://mariadb.com) - Database
+* [Vue.js](https://vuejs.org) - Frontend
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+Please contact us on [Faceboook](https://www.facebook.com/prismprince.xx) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Security Vulnerabilities
+## Authors
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+* **[Dave Dane Pacilan](https:://www.facebook.com/prismprince.xx)** - *Initial work* - [PrismPrince](https://github.com/PrismPrince)
+* **[Chiarra Sebial](https:://www.facebook.com/chiarra.sebial)**
+* **[Rachel Anne Quiamco](https:://www.facebook.com/quiamco123)**
+* **[Maria Divina Alegre](https:://www.facebook.com/Iya.Alegre08)**
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
