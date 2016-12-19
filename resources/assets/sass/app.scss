@@ -29,33 +29,47 @@
   background: #d9edf7;
 }
 
-.media {
-  img {
-    width: 64px;
-    height: 64px;
+.media img {
+  width: 64px;
+  height: 64px;
+}
+
+.post {
+  .media-heading {
+    padding-right: 20px;
   }
 
-  .media-body {
-    word-break: break-word;
+  .dropdown {
+    font-size: 5px;
 
-    .media-heading {
-      padding-right: 20px;
+    .option {
+      padding: 0;
+      color: inherit;
+
+    & :hover {
+      }
+
+      span {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        vertical-align: middle;
+        border-top: 5px solid;
+        border-right: 5px solid rgba(0,0,0,0);
+        border-left: 5px solid rgba(0,0,0,0);
+      }
     }
 
-    .dropdown {
-      float: right;
-
-      .opt {
-        padding: 0;
-        border: 0;
-      }
-
-      .dropdown-menu {
-        left: initial;
-        right: 0;
-      }
+    .dropdown-menu {
+      margin-top: 0;
+      left: initial;
+      right: 0;
     }
   }
+}
+
+.media-body {
+  word-break: break-word;
 }
 
 .media, .media-body {

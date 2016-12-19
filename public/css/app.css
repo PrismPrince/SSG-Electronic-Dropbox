@@ -7770,26 +7770,37 @@ button.close {
   height: 64px;
 }
 
-.media .media-body {
-  word-break: break-word;
-}
-
-.media .media-body .media-heading {
+.post .media-heading {
   padding-right: 20px;
 }
 
-.media .media-body .dropdown {
-  float: right;
+.post .dropdown {
+  font-size: 5px;
 }
 
-.media .media-body .dropdown .opt {
+.post .dropdown .option {
   padding: 0;
-  border: 0;
+  color: inherit;
 }
 
-.media .media-body .dropdown .dropdown-menu {
+.post .dropdown .option span {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  border-top: 5px solid;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+}
+
+.post .dropdown .dropdown-menu {
+  margin-top: 0;
   left: initial;
   right: 0;
+}
+
+.media-body {
+  word-break: break-word;
 }
 
 .media, .media-body {

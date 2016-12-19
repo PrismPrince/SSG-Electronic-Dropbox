@@ -70,7 +70,14 @@
     <div class="col-sm-8">
 
       <transition-group name="fade">
-        <panel-media :key="post.id" :opt="post.user.id == user.id ? true : false" :fullname="post.user.fname + ' ' + post.user.lname" :date="post.created_at" :image="'/images/user.jpg'" v-for="post in posts.data">
+        <panel-media
+          :key="post.id"
+          :profile="'{{ url('/profile') }}/' + post.user.id"
+          :image="'/images/user.jpg'"
+          :fullname="post.user.fname + ' ' + post.user.lname"
+          :date="post.created_at"
+          :opt="post.user.id == user.id ? true : false"
+          v-for="post in posts.data">
           <h5>@{{post.title}}</h5>
           @{{post.desc}}
         </panel-media>
