@@ -1,4 +1,4 @@
-# SSG-Poll-System
+# SSG Poll System
 
 [Cebu Technological Univaersity - Main Campus](http://http://www.ctu.edu.ph): Supreme Student Government Poll System
 
