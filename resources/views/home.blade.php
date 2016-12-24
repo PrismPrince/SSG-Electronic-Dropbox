@@ -2,13 +2,15 @@
 
 @section('content')
 
-<div class="modal fade" id="post-modal" tabindex="-1" role="dialog" aria-labelledby="createPost">
+<div class="modal fade" id="post-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="createPost">Write a Post</h4>
+        <button type="button" class="close" @click="hidePostModal('#post-modal')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Write a Post</h4>
       </div>
+
       <div class="modal-body">
         <div class="row" slot="modal-body">
           <div class="col-xs-12">
@@ -39,15 +41,45 @@
           </div> {{-- .col-xs-12 --}}
         </div> {{-- .row --}}
       </div> {{-- .modal-body --}}
+
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" @click="hidePostModal('#post-modal')">Cancel</button>
         <button type="button" class="btn btn-primary" id="post-submit" @click.prevent="submitPost()">@{{action}}</button>
       </div>
+
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="confirm-post-modal" tabindex="-1" role="dialog" aria-labelledby="createPost">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" @click="hidePostModal('#confirm-post-modal')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="createPost">Delete Post</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="row" slot="modal-body">
+          <div class="col-xs-12">
+            Are you sure you want to delete this?
+          </div>
+        </div> {{-- .row --}}
+      </div> {{-- .modal-body --}}
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" @click="hidePostModal('#confirm-post-modal')">Cancel</button>
+        <button type="button" class="btn btn-primary" @click.prevent="deletePost()">@{{action}}</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 <!-- 
-<modal modal-id="post-modal" aria-labelled-by="createPost" modal-title="Write a Post">
+<modal modal-id="post-modal" modal-title="Write a Post">
   <div class="row" slot="modal-body">
     <div class="col-xs-12">
       <div class="media">
@@ -84,13 +116,15 @@
 
 </modal>
  -->
+
+
 <div class="container">
   <div class="row">
     <div class="col-sm-4">
 
       <div class="row">
         <div class="col-xs-6">
-          <button type="button" class="btn btn-block btn-default" {{-- data-toggle="modal" data-target="#post-modal" --}} @click="showPostModal('Post')">Write a Post</button>
+          <button type="button" class="btn btn-block btn-default" {{-- data-toggle="modal" data-target="#post-modal" --}} @click="showPostModal('#post-modal', 'Post')">Write a Post</button>
         </div>
 
         <div class="col-xs-6">
@@ -139,7 +173,7 @@
           v-for="post in posts.data">
           <ul slot="dropdown-menu" class="dropdown-menu">
             <li><a href="#" @click="editPost(post.id)">Edit</a></li>
-            <li><a href="#" @click="deletePost(post.id)">Delete</a></li>
+            <li><a href="#" @click="confirmDeletePost(post.id)">Delete</a></li>
           </ul>
           <h5>@{{post.title}}</h5>
           <p>@{{post.desc}}</p>

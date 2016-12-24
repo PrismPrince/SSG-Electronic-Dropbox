@@ -16,17 +16,16 @@ class PostController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
-  {
-    //
-  }
-
-  public function getPosts(Request $request)
+  public function index(Request $request)
   {
     $posts = Post::with('user')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get();
 
     return response()->json($posts);
   }
+
+  // public function getPosts(Request $request)
+  // {
+  // }
 
   /**
    * Show the form for creating a new resource.
@@ -72,9 +71,9 @@ class PostController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit($post)
   {
-    return response()->json(Post::with('user')->find($id));
+    return response()->json(Post::with('user')->find($post));
   }
 
   /**
@@ -84,9 +83,9 @@ class PostController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(Request $request, $post)
   {
-    $post = Post::with('user')->find($id);
+    $post = Post::with('user')->find($post);
     $post->title = $request->title;
     $post->desc = $request->desc;
     $post->save();
@@ -100,8 +99,11 @@ class PostController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy($post)
   {
-    //
+    $post = Post::with('user')->find($post);
+    $post->delete();
+
+    return response()->json($post);
   }
 }

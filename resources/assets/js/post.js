@@ -18,12 +18,29 @@ Vue.mixin({
     focusDesc() {
       document.getElementById('post-desc').focus()
     },
-    showPostModal(action, id = null, title = '', desc = '') {
+    showPostModal(selector, action = '', id = null, title = '', desc = '') {
       this.action = action
       this.post.id = id
       this.post.title = title
       this.post.description = desc
-      $('#post-modal').modal('show')
+
+      $(selector).modal('show')
+    },
+    hidePostModal(selector, action = '', id = null, title = '', desc = '') {
+      var vm = this
+
+      $(selector).modal('hide')
+
+      $(selector).on('hidden.bs.modal', function () {
+        vm.action = action
+        vm.post.id = id
+        vm.post.title = title
+        vm.post.description = desc
+
+        document.getElementById('post-title').disabled = false;
+        document.getElementById('post-desc').disabled = false;
+        document.getElementById('post-submit').disabled = false;
+      })
     },
     submitPost() {
       var vm = this
@@ -35,25 +52,16 @@ Vue.mixin({
         document.getElementById('post-submit').disabled = true;
 
         // post request with the input data
-        vm.$http.post(document.getElementById('get-posts').value + '/create',
+        vm.$http.post(document.getElementById('get-posts').value,
         {
           id: vm.user.id,
           title: vm.post.title,
           desc: vm.post.description,
         }).then((response) => {
 
-          $('#post-modal').modal('hide')
+          vm.posts.skip++
 
-          $('#post-modal').on('hidden.bs.modal', function () {
-            vm.action = ''
-            vm.post.title = ''
-            vm.post.description = ''
-            vm.posts.skip++
-
-            document.getElementById('post-title').disabled = false;
-            document.getElementById('post-desc').disabled = false;
-            document.getElementById('post-submit').disabled = false;
-          })
+          vm.hidePostModal('#post-modal')
 
           vm.posts.data.splice(0, 0, response.data)
 
@@ -61,13 +69,13 @@ Vue.mixin({
 
           console.error(response.error)
 
-          vm.action = ''
-          vm.post.title = ''
-          vm.post.description = ''
+          // vm.action = ''
+          // vm.post.title = ''
+          // vm.post.description = ''
 
-          document.getElementById('post-title').disabled = false;
-          document.getElementById('post-desc').disabled = false;
-          document.getElementById('post-submit').disabled = false;
+          // document.getElementById('post-title').disabled = false;
+          // document.getElementById('post-desc').disabled = false;
+          // document.getElementById('post-submit').disabled = false;
 
         })
       } else {
@@ -81,18 +89,8 @@ Vue.mixin({
           title: vm.post.title,
           desc: vm.post.description
         }).then((response) => {
-          $('#post-modal').modal('hide')
 
-          $('#post-modal').on('hidden.bs.modal', function () {
-            vm.action = ''
-            vm.post.id = null
-            vm.post.title = ''
-            vm.post.description = ''
-
-            document.getElementById('post-title').disabled = false;
-            document.getElementById('post-desc').disabled = false;
-            document.getElementById('post-submit').disabled = false;
-          })
+          vm.hidePostModal('#post-modal')
 
           var i = _.indexOf(vm.posts.data, _.find(vm.posts.data, {id: response.data.id}))
           vm.posts.data.splice(i, 1, response.data)
@@ -100,14 +98,14 @@ Vue.mixin({
         }).catch((response) => {
           console.error(response.error)
 
-          vm.action = ''
-          vm.post.id = null
-          vm.post.title = ''
-          vm.post.description = ''
+          // vm.action = ''
+          // vm.post.id = null
+          // vm.post.title = ''
+          // vm.post.description = ''
 
-          document.getElementById('post-title').disabled = false;
-          document.getElementById('post-desc').disabled = false;
-          document.getElementById('post-submit').disabled = false;
+          // document.getElementById('post-title').disabled = false;
+          // document.getElementById('post-desc').disabled = false;
+          // document.getElementById('post-submit').disabled = false;
         })
       }
     },
@@ -126,15 +124,30 @@ Vue.mixin({
         })
     },
     editPost(id) {
-      this.$http.get(document.getElementById('get-posts').value + '/' + id)
+      this.$http.get(document.getElementById('get-posts').value + '/' + id + '/edit')
         .then((response) => {
-          this.showPostModal('Update', response.data.id, response.data.title, response.data.desc)
+          this.showPostModal('#post-modal', 'Update', response.data.id, response.data.title, response.data.desc)
         }).catch((response) => {
           console.error(response.error)
         })
     },
-    deletePost(id) {
-      //
+    confirmDeletePost(id) {
+      this.showPostModal('#confirm-post-modal', 'Delete', id)
+    },
+    deletePost() {
+      this.$http.delete(document.getElementById('get-posts').value + '/' + this.post.id)
+        .then((response) => {
+
+          this.posts.skip--
+
+          var i = _.indexOf(this.posts.data, _.find(this.posts.data, {id: response.data.id}))
+          this.posts.data.splice(i, 1)
+
+          this.hidePostModal('#confirm-post-modal')
+
+        }).catch((response) => {
+          console.error(response.error)
+        })
     }
   }
 })
