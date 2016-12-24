@@ -15,7 +15,4 @@ use Illuminate\Http\Request;
 
 Route::get('/user', 'HomeController@getUser');
 
-Route::get('/post', 'PostController@getPosts');
-Route::post('/post/create', 'PostController@store');
-Route::get('/post/{id}', 'PostController@edit');
-Route::put('/post/{id}', 'PostController@update');
+Route::resource('/post', 'PostController', ['except' => ['create', 'show']]);
