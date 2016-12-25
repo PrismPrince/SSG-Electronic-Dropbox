@@ -1,5 +1,5 @@
 <template>
-  <div class="panel post panel-default">
+  <div class="panel list-item post panel-default">
     <div class="panel-body">
 
       <div class="media">

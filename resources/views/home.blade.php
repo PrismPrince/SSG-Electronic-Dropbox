@@ -122,7 +122,7 @@
     <div id="activity" class="col-sm-8">
 
 
-      <transition-group name="fade">
+      <transition-group name="list">
         <panel-media
           :key="post.id"
           :profile="'{{ url('/profile') }}/' + post.user.id"
