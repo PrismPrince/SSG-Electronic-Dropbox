@@ -72,6 +72,7 @@
   h4 {
     margin: 0;
     display: inline-block;
+    word-break: break-word;
   }
 }
 
@@ -79,6 +80,11 @@
 
   h3 {
     margin-top: 0;
+    word-break: break-word;
+  }
+
+  p {
+    word-break: break-word;
   }
 }
 

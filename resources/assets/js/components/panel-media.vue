@@ -13,7 +13,8 @@
       <h4><a :href="profile">{{fullname}}</a><br><small>{{formatDate(date)}}</small></h4>
     </div>
     <div class="panel-body">
-      <slot></slot>
+      <h3 v-html="title"></h3>
+      <p v-html="description"></p>
     </div>
   </div>
 </template>
@@ -34,6 +35,14 @@
         required: true
       },
       date: {
+        type: String,
+        required: true
+      },
+      title: {
+        type: String,
+        required: true
+      },
+      description: {
         type: String,
         required: true
       },

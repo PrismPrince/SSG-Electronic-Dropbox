@@ -20,6 +20,7 @@
             type="text"
             class="form-control"
             placeholder="Write the title"
+            maxlength="255"
             required
             :disabled="post.disabled"
             v-model="post.title"
@@ -36,7 +37,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-default" :disabled="post.disabled" @click="hidePostModal('#post-modal')">Cancel</button>
-        <button type="button" class="btn btn-primary" id="post-submit" :disabled="post.disabled" @click.prevent="submitPost()">@{{action}}</button>
+        <button type="button" class="btn btn-primary" id="post-submit" :disabled="post.disabled" @click.prevent="submitPost()">@{{post.action}}</button>
       </div>
 
     </div>
@@ -62,7 +63,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-default" :disabled="post.disabled" @click="hidePostModal('#confirm-post-modal')">Cancel</button>
-        <button type="button" class="btn btn-primary" :disabled="post.disabled" @click.prevent="deletePost()">@{{action}}</button>
+        <button type="button" class="btn btn-primary" :disabled="post.disabled" @click.prevent="deletePost()">@{{post.action}}</button>
       </div>
 
     </div>
@@ -92,17 +93,20 @@
           <li class="list-group-item">
             {{-- URL to load posts --}}
             <input type="hidden" id="get-posts" value="{{ url('/api/post') }}">
-            <a href="#">Posts</a>
+            <a v-if="active != 'post'" href="#" @click.prevent="switchActivity('post')">Posts</a>
+            <span v-else>Posts</span>
           </li>
           <li class="list-group-item">
             {{-- URL to load polls --}}
             <input type="hidden" id="get-polls" value="{{ url('/api/poll') }}">
-            <a href="#">Polls</a>
+            <a v-if="active != 'poll'" href="#" @click.prevent="switchActivity('poll')">Polls</a>
+            <span v-else>Polls</span>
           </li>
           <li class="list-group-item">
             {{-- URL to load suggestions --}}
             <input type="hidden" id="get-suggestions" value="{{ url('/api/suggestion') }}">
-            <a href="#">Suggestions</a>
+            <a v-if="active != 'suggestion'" href="#" @click.prevent="switchActivity('suggestion')">Suggestions</a>
+            <span v-else>Suggestions</span>
           </li>
         </ul>
       </div> {{-- .panel --}}
@@ -112,30 +116,40 @@
 
     <div id="activity" class="col-sm-8">
 
+      <div v-if="active == 'post'">
+        <transition-group name="list">
+          <panel-media
+            :key="post.id"
+            :profile="'{{ url('/profile') }}/' + post.user.id"
+            :image="'/images/user.jpg'"
+            :fullname="post.user.fname + ' ' + post.user.lname"
+            :date="post.created_at"
+            :title="post.title"
+            :description="post.desc"
+            :opt="post.user.id == user.id ? true : false"
+            v-for="post in posts.data">
+            <ul slot="dropdown-menu" class="dropdown-menu">
+              <li><a href="#" @click="editPost(post.id)">Edit</a></li>
+              <li><a href="#" @click="confirmDeletePost(post.id)">Delete</a></li>
+            </ul>
+          </panel-media>
+        </transition-group>
 
-      <transition-group name="list">
-        <panel-media
-          :key="post.id"
-          :profile="'{{ url('/profile') }}/' + post.user.id"
-          :image="'/images/user.jpg'"
-          :fullname="post.user.fname + ' ' + post.user.lname"
-          :date="post.created_at"
-          :opt="post.user.id == user.id ? true : false"
-          v-for="post in posts.data">
-          <ul slot="dropdown-menu" class="dropdown-menu">
-            <li><a href="#" @click="editPost(post.id)">Edit</a></li>
-            <li><a href="#" @click="confirmDeletePost(post.id)">Delete</a></li>
-          </ul>
-          <h3>@{{post.title}}</h3>
-          <p>@{{post.desc}}</p>
-        </panel-media>
-      </transition-group>
-
-      <div class="panel panel-default">
-        <div class="panel-body text-center">
-          <a v-if="!posts.full" href="#" @click.prevent="getPosts">Load more...</a>
-          <span v-else>No more post</span>
+        <div class="panel panel-default">
+          <div class="panel-body text-center">
+            <a v-if="!posts.full" href="#" @click.prevent="getPosts">Load more...</a>
+            <span v-else>No more post</span>
+          </div>
         </div>
+      </div>
+
+      <div v-else-if="active == 'poll'">
+      </div>
+
+      <div v-else-if="active == 'suggestion'">
+      </div>
+
+      <div v-else>
       </div>
 
     </div> {{-- #activity --}} 
