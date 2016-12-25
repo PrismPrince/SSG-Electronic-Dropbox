@@ -28,8 +28,8 @@ class PostController extends Controller
   {
     $post = new Post();
     $post->user_id = $request->id;
-    $post->title = htmlentities($request->title);
-    $post->desc = htmlentities($request->desc);
+    $post->title = $request->title;
+    $post->desc = $request->desc;
     $post->save();
 
     return response()->json(Post::with('user')->find($post->id));
@@ -48,8 +48,8 @@ class PostController extends Controller
   public function update(Request $request, $post)
   {
     $post = Post::with('user')->find($post);
-    $post->title = htmlentities($request->title);
-    $post->desc = htmlentities($request->desc);
+    $post->title = $request->title;
+    $post->desc = $request->desc;
     $post->save();
 
     return response()->json($post);

@@ -14,7 +14,7 @@
     </div>
     <div class="panel-body">
       <h3 v-html="title"></h3>
-      <p v-html="description"></p>
+      <p v-html="htmlEntities(description)"></p>
     </div>
   </div>
 </template>
@@ -51,12 +51,39 @@
         required: true
       }
     },
+    computed: {
+
+    },
     methods: {
       formatDate(date) {
         if (moment().diff(moment(date), 'second') <= 5) {
           return 'just now'
         }
         return moment(date).fromNow()
+      },
+      htmlEntities(text) {
+
+        text = text.replace(/[(<>"'&]/g, function (x) {
+          if (x == "<") return "&lt;"
+          else if (x == ">") return "&gt;"
+          else if (x == "\"") return "&quot;"
+          else if (x == "'") return "&apos;"
+          else if (x == "&") return "&amp;"
+        })
+
+        var hashed = text.match(/\s?#\w+\s?/g)
+        hashed = _.map(hashed, function (x) {return _.trim(x)})
+
+        _.forEach(hashed, function (x) {
+          if (/^#\d+$/.test(x)) return
+          else {
+            text = text.replace(x, '<a href="' + window.location.origin + '/search/' + x + '">' + x + '</a>')
+          }
+        })
+
+        text = text.replace(/[\n\r\f]/g, '<br>')
+
+        return text
       }
     }
   }
