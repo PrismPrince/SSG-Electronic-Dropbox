@@ -5,6 +5,7 @@ Vue.mixin({
         id: null,
         title: '',
         description: '',
+        action: '',
         disabled: true
         // error: {}
       },
@@ -21,7 +22,7 @@ Vue.mixin({
       document.getElementById('post-desc').focus()
     },
     showPostModal(selector, action = '', id = null, title = '', desc = '') {
-      this.action = action
+      this.post.action = action
       this.post.id = id
       this.post.title = title
       this.post.description = desc
@@ -36,7 +37,7 @@ Vue.mixin({
       $(selector).modal('hide')
 
       $(selector).on('hidden.bs.modal', function () {
-        vm.action = action
+        vm.post.action = action
         vm.post.id = id
         vm.post.title = title
         vm.post.description = desc
@@ -51,7 +52,7 @@ Vue.mixin({
     submitPost() {
       var vm = this
 
-      if (vm.action != 'Update') {
+      if (vm.post.action != 'Update') {
         // disable input fields and button
         vm.disablePostInput()
 
