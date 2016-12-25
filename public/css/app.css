@@ -7750,7 +7750,8 @@ button.close {
 }
 
 .modal textarea {
-  resize: vertical;
+  resize: none;
+  height: 105px;
 }
 
 .list-item {
@@ -7773,25 +7774,16 @@ button.close {
   position: absolute;
 }
 
-.media img {
-  width: 64px;
-  height: 64px;
-}
-
-.post .media-heading {
-  padding-right: 20px;
-}
-
-.post .dropdown {
+.panel .dropdown {
   font-size: 5px;
 }
 
-.post .dropdown .option {
+.panel .dropdown .option {
   padding: 0;
   color: inherit;
 }
 
-.post .dropdown .option span {
+.panel .dropdown .option span {
   display: inline-block;
   width: 0;
   height: 0;
@@ -7801,18 +7793,32 @@ button.close {
   border-left: 5px solid transparent;
 }
 
-.post .dropdown .dropdown-menu {
+.panel .dropdown .dropdown-menu {
   margin-top: 0;
   left: initial;
   right: 0;
 }
 
-.media-body {
-  word-break: break-word;
+.panel-head {
+  padding: 15px 15px 0 15px;
 }
 
-.media, .media-body {
-  overflow: visible;
+.panel-head h4 {
+  margin: 0;
+  display: inline-block;
+}
+
+.panel-body h3 {
+  margin-top: 0;
+}
+
+.profile-img {
+  display: inline-block;
+}
+
+.profile-img img {
+  height: 64px;
+  width: 64px;
 }
 
 /*# sourceMappingURL=app.css.map */

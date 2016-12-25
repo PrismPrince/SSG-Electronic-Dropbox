@@ -12,35 +12,26 @@
       </div>
 
       <div class="modal-body">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="media">
 
-              <div class="media-left">
-                <a href="#">
-                  <img class="media-object" src="/images/user.jpg" alt="hehe">
-                </a>
-              </div>
+        <div class="form-group">
+          <label for="post-title" class="control-label">Title</label>
+          <input
+            id="post-title"
+            type="text"
+            class="form-control"
+            placeholder="Write the title"
+            required
+            :disabled="post.disabled"
+            v-model="post.title"
+            @keyup.enter.prevent="focusDesc"
+          >
+        </div>
 
-              <div class="media-body">
-                <h4 class="media-heading">
-                  <input
-                    id="post-title"
-                    type="text"
-                    class="form-control"
-                    placeholder="Write the title"
-                    required
-                    :disabled="post.disabled"
-                    v-model="post.title"
-                    @keyup.enter.prevent="focusDesc"
-                  >
-                </h4>
-                <textarea id="post-desc" class="form-control" placeholder="Write about it" :disabled="post.disabled" v-model="post.description"></textarea>
-              </div>
+        <div class="form-group">
+          <label for="post-desc" class="control-label">Description</label>
+          <textarea id="post-desc" class="form-control" placeholder="Write about it" :disabled="post.disabled" v-model="post.description"></textarea>
+        </div>
 
-            </div> {{-- .media --}}
-          </div> {{-- .col-xs-12 --}}
-        </div> {{-- .row --}}
       </div> {{-- .modal-body --}}
 
       <div class="modal-footer">
@@ -135,7 +126,7 @@
             <li><a href="#" @click="editPost(post.id)">Edit</a></li>
             <li><a href="#" @click="confirmDeletePost(post.id)">Delete</a></li>
           </ul>
-          <h5>@{{post.title}}</h5>
+          <h3>@{{post.title}}</h3>
           <p>@{{post.desc}}</p>
         </panel-media>
       </transition-group>

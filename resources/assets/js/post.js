@@ -123,14 +123,12 @@ Vue.mixin({
     deletePost() {
       this.$http.delete(document.getElementById('get-posts').value + '/' + this.post.id)
         .then((response) => {
-
           this.posts.skip--
 
           var i = _.indexOf(this.posts.data, _.find(this.posts.data, {id: response.data.id}))
           this.posts.data.splice(i, 1)
 
           this.hidePostModal('#confirm-post-modal')
-
         }).catch((response) => {
           console.error(response.error)
         })

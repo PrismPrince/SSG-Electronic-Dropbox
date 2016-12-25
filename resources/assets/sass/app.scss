@@ -16,7 +16,8 @@
 
 .modal {
   textarea {
-    resize: vertical;
+    resize: none;
+    height: 105px;
   }
 }
 
@@ -35,15 +36,9 @@
   position: absolute;
 }
 
-.media img {
-  width: 64px;
-  height: 64px;
-}
+.panel {
 
-.post {
-  .media-heading {
-    padding-right: 20px;
-  }
+
 
   .dropdown {
     font-size: 5px;
@@ -51,9 +46,6 @@
     .option {
       padding: 0;
       color: inherit;
-
-    & :hover {
-      }
 
       span {
         display: inline-block;
@@ -74,10 +66,27 @@
   }
 }
 
-.media-body {
-  word-break: break-word;
+.panel-head {
+  padding: 15px 15px 0 15px;
+
+  h4 {
+    margin: 0;
+    display: inline-block;
+  }
 }
 
-.media, .media-body {
-  overflow: visible;
+.panel-body {
+
+  h3 {
+    margin-top: 0;
+  }
+}
+
+.profile-img {
+  display: inline-block;
+
+  img {
+    height: 64px;
+    width: 64px;
+  }
 }
