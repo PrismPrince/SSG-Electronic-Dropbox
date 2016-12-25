@@ -4,12 +4,14 @@ Vue.mixin({
       post: {
         id: null,
         title: '',
-        description: ''
+        description: '',
+        disabled: true
         // error: {}
       },
       posts: {
         skip: 0,
         take: 5,
+        full: null,
         data: []
       }
     }
@@ -24,6 +26,8 @@ Vue.mixin({
       this.post.title = title
       this.post.description = desc
 
+      this.enablePostInput()
+
       $(selector).modal('show')
     },
     hidePostModal(selector, action = '', id = null, title = '', desc = '') {
@@ -36,20 +40,20 @@ Vue.mixin({
         vm.post.id = id
         vm.post.title = title
         vm.post.description = desc
-
-        document.getElementById('post-title').disabled = false;
-        document.getElementById('post-desc').disabled = false;
-        document.getElementById('post-submit').disabled = false;
       })
+    },
+    disablePostInput() {
+      this.post.disabled = true
+    },
+    enablePostInput() {
+      this.post.disabled = false
     },
     submitPost() {
       var vm = this
 
       if (vm.action != 'Update') {
         // disable input fields and button
-        document.getElementById('post-title').disabled = true;
-        document.getElementById('post-desc').disabled = true;
-        document.getElementById('post-submit').disabled = true;
+        vm.disablePostInput()
 
         // post request with the input data
         vm.$http.post(document.getElementById('get-posts').value,
@@ -63,26 +67,16 @@ Vue.mixin({
 
           vm.hidePostModal('#post-modal')
 
+          vm.enablePostInput()
+
           vm.posts.data.splice(0, 0, response.data)
 
         }).catch((response) => {
-
           console.error(response.error)
-
-          // vm.action = ''
-          // vm.post.title = ''
-          // vm.post.description = ''
-
-          // document.getElementById('post-title').disabled = false;
-          // document.getElementById('post-desc').disabled = false;
-          // document.getElementById('post-submit').disabled = false;
-
         })
       } else {
         // disable input fields and button
-        document.getElementById('post-title').disabled = true;
-        document.getElementById('post-desc').disabled = true;
-        document.getElementById('post-submit').disabled = true;
+        vm.disablePostInput()
 
         // put request with the updated data
         vm.$http.put(document.getElementById('get-posts').value + '/' + vm.post.id, {
@@ -91,28 +85,20 @@ Vue.mixin({
         }).then((response) => {
 
           vm.hidePostModal('#post-modal')
+          vm.enablePostInput()
 
           var i = _.indexOf(vm.posts.data, _.find(vm.posts.data, {id: response.data.id}))
           vm.posts.data.splice(i, 1, response.data)
 
         }).catch((response) => {
           console.error(response.error)
-
-          // vm.action = ''
-          // vm.post.id = null
-          // vm.post.title = ''
-          // vm.post.description = ''
-
-          // document.getElementById('post-title').disabled = false;
-          // document.getElementById('post-desc').disabled = false;
-          // document.getElementById('post-submit').disabled = false;
         })
       }
     },
     getPosts() {
       this.$http.get(document.getElementById('get-posts').value + '?skip=' + this.posts.skip + '&take=' + this.posts.take)
         .then((response) => {
-          if (response.data.length == 0) {
+          if (response.data.length == 0 || response.data.length > 5) {
             // something to stop the button to load more.....
           }
           this.posts.skip += 5

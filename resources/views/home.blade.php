@@ -7,12 +7,12 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <button type="button" class="close" @click="hidePostModal('#post-modal')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" aria-label="Close" :disabled="post.disabled" @click="hidePostModal('#post-modal')"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Write a Post</h4>
       </div>
 
       <div class="modal-body">
-        <div class="row" slot="modal-body">
+        <div class="row">
           <div class="col-xs-12">
             <div class="media">
 
@@ -24,17 +24,18 @@
 
               <div class="media-body">
                 <h4 class="media-heading">
-                  <input 
+                  <input
                     id="post-title"
                     type="text"
                     class="form-control"
                     placeholder="Write the title"
                     required
+                    :disabled="post.disabled"
                     v-model="post.title"
                     @keyup.enter.prevent="focusDesc"
                   >
                 </h4>
-                <textarea id="post-desc" class="form-control" placeholder="Write about it" v-model="post.description"></textarea>
+                <textarea id="post-desc" class="form-control" placeholder="Write about it" :disabled="post.disabled" v-model="post.description"></textarea>
               </div>
 
             </div> {{-- .media --}}
@@ -43,8 +44,8 @@
       </div> {{-- .modal-body --}}
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" @click="hidePostModal('#post-modal')">Cancel</button>
-        <button type="button" class="btn btn-primary" id="post-submit" @click.prevent="submitPost()">@{{action}}</button>
+        <button type="button" class="btn btn-default" :disabled="post.disabled" @click="hidePostModal('#post-modal')">Cancel</button>
+        <button type="button" class="btn btn-primary" id="post-submit" :disabled="post.disabled" @click.prevent="submitPost()">@{{action}}</button>
       </div>
 
     </div>
@@ -56,7 +57,7 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <button type="button" class="close" @click="hidePostModal('#confirm-post-modal')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" aria-label="Close" :disabled="post.disabled" @click="hidePostModal('#confirm-post-modal')"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="createPost">Delete Post</h4>
       </div>
 
@@ -69,54 +70,13 @@
       </div> {{-- .modal-body --}}
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" @click="hidePostModal('#confirm-post-modal')">Cancel</button>
-        <button type="button" class="btn btn-primary" @click.prevent="deletePost()">@{{action}}</button>
+        <button type="button" class="btn btn-default" :disabled="post.disabled" @click="hidePostModal('#confirm-post-modal')">Cancel</button>
+        <button type="button" class="btn btn-primary" :disabled="post.disabled" @click.prevent="deletePost()">@{{action}}</button>
       </div>
 
     </div>
   </div>
 </div>
-
-
-<!-- 
-<modal modal-id="post-modal" modal-title="Write a Post">
-  <div class="row" slot="modal-body">
-    <div class="col-xs-12">
-      <div class="media">
-
-        <div class="media-left">
-          <a href="#">
-            <img class="media-object" src="/images/user.jpg" alt="hehe">
-          </a>
-        </div>
-
-        <div class="media-body">
-          <h4 class="media-heading">
-            <input 
-              id="post-title"
-              type="text"
-              class="form-control"
-              placeholder="Write the title"
-              required
-              v-model="post.title"
-              @keyup.enter.prevent="focusDesc"
-            >
-          </h4>
-          <textarea id="post-desc" class="form-control" placeholder="Write about it" v-model="post.description"></textarea>
-        </div>
-
-      </div> {{-- .media --}}
-    </div> {{-- .col-xs-12 --}}
-  </div> {{-- .row --}}
-
-  <div slot="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-primary" id="post-submit" @click.prevent="submitPost()">@{{action}}</button>
-  </div>
-
-</modal>
- -->
-
 
 <div class="container">
   <div class="row">
@@ -124,15 +84,15 @@
 
       <div class="row">
         <div class="col-xs-6">
-          <button type="button" class="btn btn-block btn-default" {{-- data-toggle="modal" data-target="#post-modal" --}} @click="showPostModal('#post-modal', 'Post')">Write a Post</button>
+          <button type="button" class="btn btn-block btn-default" @click="showPostModal('#post-modal', 'Post')">Write a Post</button>
         </div>
 
         <div class="col-xs-6">
-          <button type="button" class="btn btn-block btn-default" {{-- data-toggle="modal" data-target="#poll-modal" --}} @click="showPollModal('Create')">Create a Poll</button>
+          <button type="button" class="btn btn-block btn-default" @click="showPollModal('Create')">Create a Poll</button>
         </div>
 
         <div class="col-xs-12">
-          <button type="button" class="btn btn-block btn-default" {{-- data-toggle="modal" data-target="#suggestion-modal" --}} @click="showSuggestModal('Send')">Suggest</button>
+          <button type="button" class="btn btn-block btn-default" @click="showSuggestModal('Send')">Suggest</button>
         </div>
       </div> {{-- .row --}}
 
