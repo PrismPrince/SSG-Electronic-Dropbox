@@ -11,7 +11,7 @@ Vue.mixin({
       posts: {
         skip: 0,
         take: 5,
-        full: null,
+        full: false,
         data: []
       }
     }
@@ -98,8 +98,8 @@ Vue.mixin({
     getPosts() {
       this.$http.get(document.getElementById('get-posts').value + '?skip=' + this.posts.skip + '&take=' + this.posts.take)
         .then((response) => {
-          if (response.data.length == 0 || response.data.length > 5) {
-            // something to stop the button to load more.....
+          if (response.data.length == 0 || response.data.length < 5) {
+            this.posts.full = true
           }
           this.posts.skip += 5
           for (var i = 0; i <= response.data.length - 1; i++) {

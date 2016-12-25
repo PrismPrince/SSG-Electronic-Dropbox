@@ -141,8 +141,9 @@
       </transition-group>
 
       <div class="panel panel-default">
-        <div class="panel-body">
-          <a href="#" @click.prevent="getPosts">Load more...</a>
+        <div class="panel-body text-center">
+          <a v-if="!posts.full" href="#" @click.prevent="getPosts">Load more...</a>
+          <span v-else>No more post</span>
         </div>
       </div>
 
