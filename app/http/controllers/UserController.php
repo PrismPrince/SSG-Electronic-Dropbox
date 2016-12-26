@@ -28,19 +28,6 @@ class UserController extends Controller
     return view('users.profile')->withUser(encrypt($user->id));
   }
 
-  public function getUser(Request $user)
-  {
-    $user = User::findOrFail(decrypt($user->id));
-
-    if (request()->ajax()) return response()->json([
-      'fname' => $user->fname,
-      'mname' => $user->mname,
-      'lname' => $user->lname,
-      'role' => $user->role,
-    ]);
-    else return abort(404);
-  }
-
   public function edit(User $user)
   {
     //

@@ -57,9 +57,7 @@ Vue.mixin({
         vm.disablePostInput()
 
         // post request with the input data
-        vm.$http.post(document.getElementById('get-posts').value,
-        {
-          id: vm.user.id,
+        vm.$http.post(window.location.origin + '/api/post', {
           title: vm.post.title,
           desc: vm.post.description,
         }).then((response) => {
@@ -80,7 +78,7 @@ Vue.mixin({
         vm.disablePostInput()
 
         // put request with the updated data
-        vm.$http.put(document.getElementById('get-posts').value + '/' + vm.post.id, {
+        vm.$http.put(window.location.origin + '/api/post/' + vm.post.id, {
           title: vm.post.title,
           desc: vm.post.description
         }).then((response) => {
@@ -97,21 +95,24 @@ Vue.mixin({
       }
     },
     getPosts() {
-      this.$http.get(document.getElementById('get-posts').value + '?skip=' + this.posts.skip + '&take=' + this.posts.take)
+      this.$http.get(window.location.origin + '/api/post?skip=' + this.posts.skip + '&take=' + this.posts.take)
         .then((response) => {
           if (response.data.length == 0 || response.data.length < 5) {
             this.posts.full = true
           }
+
           this.posts.skip += 5
+
           for (var i = 0; i <= response.data.length - 1; i++) {
             this.posts.data.push(response.data[i])
           }
+
         }).catch((response) => {
           console.error(response.error)
         })
     },
     editPost(id) {
-      this.$http.get(document.getElementById('get-posts').value + '/' + id + '/edit')
+      this.$http.get(window.location.origin + '/api/post/' + id + '/edit')
         .then((response) => {
           this.showPostModal('#post-modal', 'Update', response.data.id, response.data.title, response.data.desc)
         }).catch((response) => {
@@ -122,7 +123,7 @@ Vue.mixin({
       this.showPostModal('#confirm-post-modal', 'Delete', id)
     },
     deletePost() {
-      this.$http.delete(document.getElementById('get-posts').value + '/' + this.post.id)
+      this.$http.delete(window.location.origin + '/api/post/' + this.post.id)
         .then((response) => {
           this.posts.skip--
 

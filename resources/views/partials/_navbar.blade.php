@@ -32,8 +32,7 @@
         @else
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                <input type="hidden" id="code" value="{{ encrypt(Auth::id()) }}">
-                <input type="hidden" id="get-user" value="{{ url('api/user') }}">
+                <input type="hidden" id="Authorization" value="{{ Auth::user()->api_token }}">
                 {{ Auth::user()->fname }} <span class="caret"></span>
             </a>
 

@@ -29,7 +29,7 @@ class User extends Authenticatable
    * @var array
    */
   protected $hidden = [
-    'email', 'password', 'remember_token', 'created_at', 'updated_at', 'deleted_at',
+    'email', 'password', 'api_token', 'remember_token', 'created_at', 'updated_at', 'deleted_at',
   ];
 
   protected $dates = ['deleted_at'];

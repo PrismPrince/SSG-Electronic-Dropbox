@@ -15,7 +15,8 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['getUser',],]);
+        $this->middleware('auth', ['only' => ['index']]);
+        $this->middleware('auth:api', ['only' => ['getUser']]);
     }
 
     /**
@@ -30,13 +31,6 @@ class HomeController extends Controller
 
     public function getUser(Request $request)
     {
-        $user = User::findOrFail(decrypt($request->id));
-        return response()->json([
-            'id' => $user->id,
-            'fname' => $user->fname,
-            'mname' => $user->mname,
-            'lname' => $user->lname,
-            'role' => $user->role,
-        ]);
+        return response()->json(Auth::guard('api')->user());
     }
 }

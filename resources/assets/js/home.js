@@ -1,3 +1,9 @@
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('Authorization', 'Bearer ' + document.getElementById('Authorization').value);
+
+    next();
+});
+
 Vue.mixin({
   data() {
     return {
@@ -6,20 +12,20 @@ Vue.mixin({
     }
   },
   created() {
-    this.$http.get(document.getElementById('get-user').value + '?id=' + document.getElementById('code').value)
+    this.$http.get(window.location.origin + '/api/user')
       .then((response) => {
         this.user = response.data
       }).catch((response) => {
         console.error(response.error)
       })
 
-    if (this.active == 'post') {
-      this.getPosts()
-    } else if (this.active == 'poll') {
-    } else if (this.active == 'suggestion') {
-    } else {
-      this.active = 'post'
-    }
+      if (this.active == 'post') {
+        this.getPosts()
+      } else if (this.active == 'poll') {
+      } else if (this.active == 'suggestion') {
+      } else {
+        this.active = 'post'
+      }
 
   },
   methods: {

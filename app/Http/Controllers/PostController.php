@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use Auth;
 
 class PostController extends Controller
 {
   public function __construct()
   {
-    # code...
+    $this->middleware('auth:api');
   }
 
   public function index(Request $request)
@@ -27,7 +28,7 @@ class PostController extends Controller
   public function store(Request $request)
   {
     $post = new Post();
-    $post->user_id = $request->id;
+    $post->user_id = Auth::guard('api')->id();
     $post->title = $request->title;
     $post->desc = $request->desc;
     $post->save();
