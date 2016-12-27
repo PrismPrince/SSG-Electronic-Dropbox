@@ -15,7 +15,6 @@
 
 Vue.component('alert-danger', require('./components/alert-danger.vue'));
 Vue.component('panel-media', require('./components/panel-media.vue'));
-Vue.component('modal', require('./components/modal.vue'));
 
 const app = new Vue({
   el: '#app'
