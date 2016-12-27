@@ -16,3 +16,4 @@ use Illuminate\Http\Request;
 Route::get('/user', 'HomeController@getUser');
 
 Route::resource('/post', 'PostController', ['except' => ['create', 'show']]);
+Route::resource('/suggestion', 'SuggestionController', ['except' => ['create', 'show']]);
