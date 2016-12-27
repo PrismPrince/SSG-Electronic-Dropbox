@@ -18,9 +18,6 @@ Vue.mixin({
     }
   },
   methods: {
-    focusDesc() {
-      document.getElementById('post-desc').focus()
-    },
     showPostModal(selector, action = '', id = null, title = '', desc = '') {
       this.post.action = action
       this.post.id = id
@@ -65,7 +62,6 @@ Vue.mixin({
           vm.posts.skip++
 
           vm.hidePostModal('#post-modal')
-
           vm.enablePostInput()
 
           vm.posts.data.splice(0, 0, response.data)

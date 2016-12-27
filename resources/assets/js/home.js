@@ -23,12 +23,16 @@ Vue.mixin({
         this.getPosts()
       } else if (this.active == 'poll') {
       } else if (this.active == 'suggestion') {
+        this.getSuggestions()
       } else {
         this.active = 'post'
       }
 
   },
   methods: {
+    focusNext(target) {
+      $(target).focus()
+    },
     switchActivity(activity) {
       this.active = activity
 
@@ -36,6 +40,7 @@ Vue.mixin({
         this.getPosts()
       } else if (this.active == 'poll') {
       } else if (this.active == 'suggestion') {
+        this.getSuggestions()
       } else {
         this.active = 'post'
       }
@@ -51,9 +56,20 @@ Vue.mixin({
       this.posts.data = []
     },
     clearPolls() {},
-    clearSuggestions() {}
+    clearSuggestions() {
+      this.suggestion.id = null
+      this.suggestion.title = ''
+      this.suggestion.direct = ''
+      this.suggestion.message = ''
+      this.suggestion.disabled = true
+      this.suggestions.skip = 0
+      this.suggestions.take = 5
+      this.suggestions.full = false
+      this.suggestions.data = []
+    }
   }
 })
 
 require('./post')
+require('./suggestion')
 require('./logout')
