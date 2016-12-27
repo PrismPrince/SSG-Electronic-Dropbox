@@ -7810,13 +7810,22 @@ button.close {
 }
 
 .panel-body h3 {
-  margin-top: 0;
+  margin: 0;
   word-break: break-word;
+}
+
+.panel-body hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .panel-body p {
   margin: 0;
   word-break: break-word;
+}
+
+.panel-body .enlarge {
+  font-size: 30px;
 }
 
 .profile-img {

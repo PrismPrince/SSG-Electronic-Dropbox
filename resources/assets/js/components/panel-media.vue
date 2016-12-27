@@ -10,11 +10,11 @@
       <a class="profile-img" :href="profile">
         <img :src="image" :alt="fullname">
       </a>
-      <h4><a :href="profile">{{fullname}}</a><br><small>{{formatDate(date)}}</small></h4>
+      <h4><a :href="profile">{{fullname}}</a><br><small>{{date | formatDate | capitalize}}</small></h4>
     </div>
     <div class="panel-body">
-      <h3 v-html="title"></h3>
-      <p v-html="htmlEntities(description)"></p>
+      <h3 v-html="title"></h3><hr>
+      <p :class="enlarge ? 'enlarge' : ''" v-html="htmlEntities(description)"></p>
     </div>
   </div>
 </template>
@@ -51,17 +51,14 @@
         required: true
       }
     },
-    computed: {
-
+    data() {
+      return {
+        enlarge: false
+      }
     },
     methods: {
-      formatDate(date) {
-        if (moment().diff(moment(date), 'second') <= 5) {
-          return 'just now'
-        }
-        return moment(date).fromNow()
-      },
       htmlEntities(text) {
+        if (text.length <= 85) this.enlarge = true
 
         text = text.replace(/[(<>"'&]/g, function (x) {
           if (x == "<") return "&lt;"
@@ -84,6 +81,28 @@
         text = text.replace(/[\n\r\f]/g, '<br>')
 
         return text
+      }
+    },
+    filters: {
+      formatDate(date) {
+        if (moment().diff(moment(date), 'second') <= 5) {
+          return 'just now'
+        } else if (moment().diff(moment(date), 'day') == 0) {
+          return moment().fromNow()
+        } else if (moment().diff(moment(date), 'day') == 1) {
+          return 'yesterday at ' + moment(date).format('h:mm a')
+        } else if (moment().diff(moment(date), 'day') < 7) {
+          return moment(date).format('ddd [at] h:mm a')
+        } else if (moment().diff(moment(date), 'year') == 0) {
+          return moment(date).format('MMM D [at] h:mm a')
+        } else {
+          return moment(date).format('MMM D, YYYY [at] h:mm a')
+        }
+      },
+      capitalize(value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
       }
     }
   }

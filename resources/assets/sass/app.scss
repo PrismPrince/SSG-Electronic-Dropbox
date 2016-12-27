@@ -38,8 +38,6 @@
 
 .panel {
 
-
-
   .dropdown {
     font-size: 5px;
 
@@ -79,13 +77,22 @@
 .panel-body {
 
   h3 {
-    margin-top: 0;
+    margin: 0;
     word-break: break-word;
+  }
+
+  hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   p {
     margin: 0;
     word-break: break-word;
+  }
+
+  .enlarge {
+    font-size: 30px;
   }
 }
 
