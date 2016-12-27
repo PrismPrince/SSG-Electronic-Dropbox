@@ -3,82 +3,64 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Suggestion;
+use Auth;
 
 class SuggestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+  public function __construct()
+  {
+    $this->middleware('auth:api');
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  public function index(Request $request)
+  {
+    return response()->json(Suggestion::with('user')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get());
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+  public function create()
+  {
+    //
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+  public function store(Request $request)
+  {
+    $suggestion = new Suggestion();
+    $suggestion->user_id = Auth::guard('api')->id();
+    $suggestion->title = $request->title;
+    $suggestion->direct = $request->direct;
+    $suggestion->message = $request->message;
+    $suggestion->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    return response()->json(Suggestion::with('user')->find($suggestion->id));
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+  public function show($id)
+  {
+    //
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  public function edit($suggestion)
+  {
+    return response()->json(Suggestion::with('user')->find($suggestion));
+  }
+
+  public function update(Request $request, $suggestion)
+  {
+    $suggestion = Suggestion::with('user')->find($suggestion);
+    $suggestion->title = $request->title;
+    $suggestion->direct = $request->direct;
+    $suggestion->message = $request->message;
+    $suggestion->save();
+
+    return response()->json($suggestion);
+  }
+
+  public function destroy($suggestion)
+  {
+    $suggestion = Suggestion::with('user')->find($suggestion);
+    $suggestion->delete();
+
+    return response()->json($suggestion);
+  }
 }
