@@ -13,9 +13,11 @@ class AddApiTokenOnUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
-            $table->string('api_token')->unique()->after('role');
-        });
+        if (Schema::hasTable('users')) {
+            Schema::table('users', function ($table) {
+                $table->string('api_token')->unique()->nullable()->after('role');
+            });
+        }
     }
 
     /**
@@ -25,8 +27,10 @@ class AddApiTokenOnUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function ($table) {
-            $table->dropColumn('api_token');
-        });
+        if (Schema::hasColumn('users', 'api_token')) {
+            Schema::table('users', function ($table) {
+                $table->dropColumn('api_token');
+            });
+        }
     }
 }
