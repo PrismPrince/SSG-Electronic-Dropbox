@@ -37,12 +37,22 @@ Vue.mixin({
       this.active = activity
 
       if (this.active == 'post') {
+        this.clearPolls()
+        this.clearSuggestions()
         this.getPosts()
       } else if (this.active == 'poll') {
+        this.clearSuggestions()
+        this.clearPosts()
+        //
       } else if (this.active == 'suggestion') {
+        this.clearPosts()
+        this.clearPolls()
         this.getSuggestions()
       } else {
         this.active = 'post'
+        this.clearPolls()
+        this.clearSuggestions()
+        this.getPosts()
       }
     },
     clearPosts() {
