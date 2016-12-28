@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Poll;
 use Auth;
 
@@ -31,6 +32,16 @@ class PollController extends Controller
     $poll->desc = $request->desc;
     $poll->start = Carbon::parse($request->start)->toDateTimeString();
     $poll->end = Carbon::parse($request->end)->toDateTimeString();
+    $poll->type = $request->type;
+
+    if (Carbon::now() >= Carbon::parse($request->start)) {
+      $poll->status = 'pending'
+    } else if (Carbon::now() >= Carbon::parse($request->end)) {
+      $poll->status = 'expire'
+    } else {
+      $poll->status = 'active'
+    }
+    
     $poll->save();
 
     return response()->json(Poll::with('user')->find($poll->id));
@@ -53,6 +64,16 @@ class PollController extends Controller
     $poll->desc = $request->desc;
     $poll->start = Carbon::parse($request->start)->toDateTimeString();
     $poll->end = Carbon::parse($request->end)->toDateTimeString();
+    $poll->type = $request->type;
+
+    if (Carbon::now() >= Carbon::parse($request->start)) {
+      $poll->status = 'pending'
+    } else if (Carbon::now() >= Carbon::parse($request->end)) {
+      $poll->status = 'expire'
+    } else {
+      $poll->status = 'active'
+    }
+
     $poll->save();
 
     return response()->json($poll);
