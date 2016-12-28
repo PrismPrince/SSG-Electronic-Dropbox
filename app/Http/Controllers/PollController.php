@@ -35,11 +35,11 @@ class PollController extends Controller
     $poll->type = $request->type;
 
     if (Carbon::now() >= Carbon::parse($request->start)) {
-      $poll->status = 'pending'
+      $poll->status = 'pending';
     } else if (Carbon::now() >= Carbon::parse($request->end)) {
-      $poll->status = 'expire'
+      $poll->status = 'expire';
     } else {
-      $poll->status = 'active'
+      $poll->status = 'active';
     }
     
     $poll->save();
@@ -67,11 +67,11 @@ class PollController extends Controller
     $poll->type = $request->type;
 
     if (Carbon::now() >= Carbon::parse($request->start)) {
-      $poll->status = 'pending'
+      $poll->status = 'pending';
     } else if (Carbon::now() >= Carbon::parse($request->end)) {
-      $poll->status = 'expire'
+      $poll->status = 'expire';
     } else {
-      $poll->status = 'active'
+      $poll->status = 'active';
     }
 
     $poll->save();

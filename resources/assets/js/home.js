@@ -43,7 +43,7 @@ Vue.mixin({
       } else if (this.active == 'poll') {
         this.clearSuggestions()
         this.clearPosts()
-        //
+        this.getPolls()
       } else if (this.active == 'suggestion') {
         this.clearPosts()
         this.clearPolls()
@@ -58,14 +58,26 @@ Vue.mixin({
     clearPosts() {
       this.post.id = null
       this.post.title = ''
-      this.post.description = ''
+      this.post.desc = ''
       this.post.disabled = true
       this.posts.skip = 0
       this.posts.take = 5
       this.posts.full = false
       this.posts.data = []
     },
-    clearPolls() {},
+    clearPolls() {
+      this.poll.id = null
+      this.poll.title = ''
+      this.poll.desc = ''
+      this.poll.start = ''
+      this.poll.end = ''
+      this.poll.type = ''
+      this.poll.disabled = true
+      this.polls.skip = 0
+      this.polls.take = 5
+      this.polls.full = false
+      this.polls.data = []
+    },
     clearSuggestions() {
       this.suggestion.id = null
       this.suggestion.title = ''
@@ -81,5 +93,6 @@ Vue.mixin({
 })
 
 require('./post')
+require('./poll')
 require('./suggestion')
 require('./logout')
