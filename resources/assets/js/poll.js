@@ -8,6 +8,8 @@ Vue.mixin({
         start: '',
         end: '',
         type: '',
+        answer: '',
+        answers: [],
         action: '',
         disabled: true
         // error: {}
@@ -21,7 +23,15 @@ Vue.mixin({
     }
   },
   methods: {
-    showPollModal(selector, action = '', id = null, title = '', desc = '', start = '', end = '', type = '') {
+    addAnswer(answer) {
+      if (answer == '') return
+      this.poll.answers.push(answer)
+      this.poll.answer = ''
+    },
+    removeAnswer(key) {
+      this.poll.answers.splice(key, 1)
+    },
+    showPollModal(selector, action = '', id = null, title = '', desc = '', start = '', end = '', type = '', answer = '', answers = []) {
       this.poll.action = action
       this.poll.id = id
       this.poll.title = title
@@ -29,12 +39,14 @@ Vue.mixin({
       this.poll.start = start
       this.poll.end = end
       this.poll.type = type
+      this.poll.answer = answer
+      this.poll.answers = answers
 
       this.enablePollInput()
 
       $(selector).modal('show')
     },
-    hidePollModal(selector, action = '', id = null, title = '', desc = '', start = '', end = '', type = '') {
+    hidePollModal(selector, action = '', id = null, title = '', desc = '', start = '', end = '', type = '', answer = '', answers = []) {
       var vm = this
 
       $(selector).modal('hide')
@@ -47,6 +59,8 @@ Vue.mixin({
         vm.poll.start = start
         vm.poll.end = end
         vm.poll.type = type
+        vm.poll.answer = answer
+        vm.poll.answers = answers
       })
     },
     disablePollInput() {

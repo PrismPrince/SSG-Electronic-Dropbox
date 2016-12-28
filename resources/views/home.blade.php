@@ -5,47 +5,47 @@
 <div class="modal fade" id="post-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <fieldset :disabled="post.disabled">
 
-      <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" :disabled="post.disabled" @click="hidePostModal('#post-modal')"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Write a Post</h4>
-      </div>
-
-      <div class="modal-body">
-
-        <div class="form-group">
-          <label for="post-title" class="control-label">Title</label>
-          <input
-            id="post-title"
-            type="text"
-            class="form-control"
-            placeholder="Write the title"
-            maxlength="255"
-            required
-            :disabled="post.disabled"
-            v-model="post.title"
-            @keyup.enter.prevent="focusNext('#post-desc')"
-          >
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" @click="hidePostModal('#post-modal')"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Write a Post</h4>
         </div>
 
-        <div class="form-group">
-          <label for="post-desc" class="control-label">Description</label>
-          <textarea
-            id="post-desc"
-            class="form-control"
-            placeholder="Write about it"
-            :disabled="post.disabled"
-            v-model="post.description"
-          ></textarea>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="post-title" class="control-label">Title</label>
+            <input
+              id="post-title"
+              type="text"
+              class="form-control"
+              placeholder="Write the title"
+              maxlength="255"
+              required
+              v-model.trim="post.title"
+              @keyup.enter.prevent="focusNext('#post-desc')"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="post-desc" class="control-label">Description</label>
+            <textarea
+              id="post-desc"
+              class="form-control"
+              placeholder="Write about it"
+              v-model.trim="post.desc"
+            ></textarea>
+          </div>
+
+        </div> {{-- .modal-body --}}
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" @click="hidePostModal('#post-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" id="post-submit" @click.prevent="submitPost()">@{{post.action}}</button>
         </div>
 
-      </div> {{-- .modal-body --}}
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" :disabled="post.disabled" @click="hidePostModal('#post-modal')">Cancel</button>
-        <button type="button" class="btn btn-primary" id="post-submit" :disabled="post.disabled" @click.prevent="submitPost()">@{{post.action}}</button>
-      </div>
-
+      </fieldset>
     </div>
   </div>
 </div>
@@ -53,114 +53,27 @@
 <div class="modal fade" id="confirm-post-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <fieldset :disabled="post.disabled">
 
-      <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" :disabled="post.disabled" @click="hidePostModal('#confirm-post-modal')"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Delete Post</h4>
-      </div>
-
-      <div class="modal-body">
-        <div class="row" slot="modal-body">
-          <div class="col-xs-12">
-            Are you sure you want to delete this?
-          </div>
-        </div> {{-- .row --}}
-      </div> {{-- .modal-body --}}
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" :disabled="post.disabled" @click="hidePostModal('#confirm-post-modal')">Cancel</button>
-        <button type="button" class="btn btn-primary" :disabled="post.disabled" @click.prevent="deletePost()">@{{post.action}}</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="suggestion-modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" :disabled="suggestion.disabled" @click="hideSuggestionModal('#suggestion-modal')"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Send a Suggestion</h4>
-      </div>
-
-      <div class="modal-body">
-
-        <div class="form-group">
-          <label for="suggestion-title" class="control-label">Title</label>
-          <input
-            id="suggestion-title"
-            type="text"
-            class="form-control"
-            placeholder="Write the title"
-            maxlength="255"
-            required
-            :disabled="suggestion.disabled"
-            v-model="suggestion.title"
-            @keyup.enter.prevent="focusNext('#suggestion-direct')"
-          >
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" @click="hidePostModal('#confirm-post-modal')"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Delete Post</h4>
         </div>
 
-        <div class="form-group">
-          <label for="suggestion-direct" class="control-label">Direct</label>
-          <input
-            id="suggestion-direct"
-            type="text"
-            class="form-control"
-            placeholder="To whom is the concern"
-            maxlength="255"
-            required
-            :disabled="suggestion.disabled"
-            v-model="suggestion.direct"
-            @keyup.enter.prevent="focusNext('#suggestion-message')"
-          >
+        <div class="modal-body">
+          <div class="row" slot="modal-body">
+            <div class="col-xs-12">
+              Are you sure you want to delete this?
+            </div>
+          </div> {{-- .row --}}
+        </div> {{-- .modal-body --}}
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" @click="hidePostModal('#confirm-post-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" @click.prevent="deletePost()">@{{post.action}}</button>
         </div>
 
-        <div class="form-group">
-          <label for="suggestion-message" class="control-label">Message</label>
-          <textarea
-            id="suggestion-message"
-            class="form-control"
-            placeholder="Write about it"
-            :disabled="suggestion.disabled"
-            v-model="suggestion.message"
-          ></textarea>
-        </div>
-
-      </div> {{-- .modal-body --}}
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" :disabled="suggestion.disabled" @click="hidePostModal('#suggestion-modal')">Cancel</button>
-        <button type="button" class="btn btn-primary" id="suggestion-submit" :disabled="suggestion.disabled" @click.prevent="submitSuggestion()">@{{suggestion.action}}</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="confirm-suggestion-modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" :disabled="suggestion.disabled" @click="hideSuggestionModal('#confirm-suggestion-modal')"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Delete Suggestion</h4>
-      </div>
-
-      <div class="modal-body">
-        <div class="row" slot="modal-body">
-          <div class="col-xs-12">
-            Are you sure you want to delete this?
-          </div>
-        </div> {{-- .row --}}
-      </div> {{-- .modal-body --}}
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" :disabled="suggestion.disabled" @click="hideSuggestionModal('#confirm-suggestion-modal')">Cancel</button>
-        <button type="button" class="btn btn-primary" :disabled="suggestion.disabled" @click.prevent="deleteSuggestion()">@{{suggestion.action}}</button>
-      </div>
-
+      </fieldset>
     </div>
   </div>
 </div>
@@ -168,92 +81,122 @@
 <div class="modal fade" id="poll-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <fieldset :disabled="poll.disabled">
 
-      <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" :disabled="poll.disabled" @click="hidePollModal('#poll-modal')"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Create a Poll</h4>
-      </div>
-
-      <div class="modal-body">
-
-        <div class="form-group">
-          <label for="poll-title" class="control-label">Title</label>
-          <input
-            id="poll-title"
-            type="text"
-            class="form-control"
-            placeholder="Write the title"
-            maxlength="255"
-            required
-            :disabled="poll.disabled"
-            v-model="poll.title"
-            @keyup.enter.prevent="focusNext('#poll-start')"
-          >
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" @click="hidePollModal('#poll-modal')"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Create a Poll</h4>
         </div>
 
-        <div class="form-group">
-          <label for="poll-start" class="control-label">Start Date</label>
-          <input
-            id="poll-start"
-            type="text"
-            class="form-control"
-            placeholder="Write the start"
-            maxlength="255"
-            required
-            :disabled="poll.disabled"
-            v-model="poll.start"
-            @keyup.enter.prevent="focusNext('#poll-end')"
-          >
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="poll-title" class="control-label">Title</label>
+            <input
+              id="poll-title"
+              type="text"
+              class="form-control"
+              placeholder="Write the title"
+              maxlength="255"
+              required
+              v-model.trim="poll.title"
+              @keyup.enter.prevent="focusNext('#poll-start')"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="poll-start" class="control-label">Start Date</label>
+            <input
+              id="poll-start"
+              type="text"
+              class="form-control"
+              placeholder="When the poll starts"
+              maxlength="255"
+              required
+              v-model.trim="poll.start"
+              @keyup.enter.prevent="focusNext('#poll-end')"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="poll-end" class="control-label">End Date</label>
+            <input
+              id="poll-end"
+              type="text"
+              class="form-control"
+              placeholder="When the poll ends"
+              maxlength="255"
+              required
+              v-model.trim="poll.end"
+              @keyup.enter.prevent="focusNext('#poll-type')"
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Type</label>
+            <select
+              id="poll-type"
+              class="form-control"
+              required
+              v-model.trim="poll.type"
+              @keyup.enter.prevent="focusNext('#poll-desc')"
+            >
+              <option value="" disabled hidden>Choose how the users vote</option>
+              <option value="once">One answer</option>
+              <option value="multi">Multiple answers</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="poll-desc" class="control-label">Description</label>
+            <textarea
+              id="poll-desc"
+              class="form-control"
+              placeholder="Write about it"
+              v-model.trim="poll.desc"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="poll-answers" class="control-label">Answers</label>
+            <div class="input-group">
+              <input
+                id="poll-answers"
+                type="text"
+                class="form-control"
+                placeholder="Add an answer"
+                maxlength="255"
+                required
+                v-model.trim="poll.answer"
+                @keyup.enter.prevent="addAnswer(poll.answer)"
+              >
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button" @click="addAnswer(poll.answer)">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+
+          <ul>
+            <li
+              v-for="(answer, key) in poll.answers"
+            >
+              <button v-if="poll.answers.length > 2" class="btn btn-xs btn-info" type="button" @click="removeAnswer(key)">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+              @{{answer}}
+            </li>
+          </ul>
+
+        </div> {{-- .modal-body --}}
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" @click="hidePollModal('#poll-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" id="poll-submit" @click.prevent="submitPoll()">@{{poll.action}}</button>
         </div>
 
-        <div class="form-group">
-          <label for="poll-end" class="control-label">End Date</label>
-          <input
-            id="poll-end"
-            type="text"
-            class="form-control"
-            placeholder="Write the end"
-            maxlength="255"
-            required
-            :disabled="poll.disabled"
-            v-model="poll.end"
-            @keyup.enter.prevent="focusNext('#poll-type')"
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="poll-type" class="control-label">Type</label>
-          <input
-            id="poll-type"
-            type="text"
-            class="form-control"
-            placeholder="Write the type"
-            maxlength="255"
-            required
-            :disabled="poll.disabled"
-            v-model="poll.type"
-            @keyup.enter.prevent="focusNext('#poll-desc')"
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="poll-desc" class="control-label">Description</label>
-          <textarea
-            id="poll-desc"
-            class="form-control"
-            placeholder="Write about it"
-            :disabled="poll.disabled"
-            v-model="poll.desc"
-          ></textarea>
-        </div>
-
-      </div> {{-- .modal-body --}}
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" :disabled="poll.disabled" @click="hidePollModal('#poll-modal')">Cancel</button>
-        <button type="button" class="btn btn-primary" id="poll-submit" :disabled="poll.disabled" @click.prevent="submitPoll()">@{{poll.action}}</button>
-      </div>
-
+      </fieldset>
     </div>
   </div>
 </div>
@@ -261,25 +204,120 @@
 <div class="modal fade" id="confirm-poll-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <fieldset :disabled="poll.disabled">
 
-      <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" :disabled="poll.disabled" @click="hidePollModal('#confirm-poll-modal')"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Delete Poll</h4>
-      </div>
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" @click="hidePollModal('#confirm-poll-modal')"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Delete Poll</h4>
+        </div>
 
-      <div class="modal-body">
-        <div class="row" slot="modal-body">
-          <div class="col-xs-12">
-            Are you sure you want to delete this?
+        <div class="modal-body">
+          <div class="row" slot="modal-body">
+            <div class="col-xs-12">
+              Are you sure you want to delete this?
+            </div>
+          </div> {{-- .row --}}
+        </div> {{-- .modal-body --}}
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" @click="hidePollModal('#confirm-poll-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" @click.prevent="deletePoll()">@{{poll.action}}</button>
+        </div>
+
+      </fieldset>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="suggestion-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <fieldset :disabled="suggestion.disabled">
+
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" @click="hideSuggestionModal('#suggestion-modal')"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Send a Suggestion</h4>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label for="suggestion-title" class="control-label">Title</label>
+            <input
+              id="suggestion-title"
+              type="text"
+              class="form-control"
+              placeholder="Write the title"
+              maxlength="255"
+              required
+             
+              v-model.trim="suggestion.title"
+              @keyup.enter.prevent="focusNext('#suggestion-direct')"
+            >
           </div>
-        </div> {{-- .row --}}
-      </div> {{-- .modal-body --}}
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" :disabled="poll.disabled" @click="hidePollModal('#confirm-poll-modal')">Cancel</button>
-        <button type="button" class="btn btn-primary" :disabled="poll.disabled" @click.prevent="deletePoll()">@{{poll.action}}</button>
-      </div>
+          <div class="form-group">
+            <label for="suggestion-direct" class="control-label">Direct</label>
+            <input
+              id="suggestion-direct"
+              type="text"
+              class="form-control"
+              placeholder="To whom is the concern"
+              maxlength="255"
+              required
+             
+              v-model.trim="suggestion.direct"
+              @keyup.enter.prevent="focusNext('#suggestion-message')"
+            >
+          </div>
 
+          <div class="form-group">
+            <label for="suggestion-message" class="control-label">Message</label>
+            <textarea
+              id="suggestion-message"
+              class="form-control"
+              placeholder="Write about it"
+             
+              v-model.trim="suggestion.message"
+            ></textarea>
+          </div>
+
+        </div> {{-- .modal-body --}}
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" @click="hidePostModal('#suggestion-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" id="suggestion-submit" @click.prevent="submitSuggestion()">@{{suggestion.action}}</button>
+        </div>
+
+      </fieldset>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="confirm-suggestion-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <fieldset :disabled="suggestion.disabled">
+
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" @click="hideSuggestionModal('#confirm-suggestion-modal')"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Delete Suggestion</h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="row" slot="modal-body">
+            <div class="col-xs-12">
+              Are you sure you want to delete this?
+            </div>
+          </div> {{-- .row --}}
+        </div> {{-- .modal-body --}}
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" @click="hideSuggestionModal('#confirm-suggestion-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" @click.prevent="deleteSuggestion()">@{{suggestion.action}}</button>
+        </div>
+
+      </fieldset>
     </div>
   </div>
 </div>
