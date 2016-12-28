@@ -243,7 +243,7 @@
             class="form-control"
             placeholder="Write about it"
             :disabled="poll.disabled"
-            v-model="poll.description"
+            v-model="poll.desc"
           ></textarea>
         </div>
 

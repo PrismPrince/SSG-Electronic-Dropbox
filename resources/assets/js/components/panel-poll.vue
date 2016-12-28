@@ -17,9 +17,9 @@
         <span v-html="title"></span>
         <span class="label label-info">{{status}}</span>
         <br>
-        <small><b>Start:</b> {{start | formatDate | capitalize}}</small>
+        <small><b>Start:</b> {{start | formatDateTimeNormal}}</small>
         <br>
-        <small><b>End:</b> {{end | formatDate | capitalize}}</small>
+        <small><b>End:</b> {{end | formatDateTimeNormal}}</small>
       </h3><hr>
       <p :class="enlarge ? 'enlarge' : ''" v-html="htmlEntities(desc)"></p>
     </div>
@@ -103,6 +103,9 @@
       }
     },
     filters: {
+      formatDateTimeNormal(date) {
+        return moment(date).format('MMM D, YYYY [at] h:mm a')
+      },
       formatDate(date) {
         if (moment().diff(moment(date), 'second') <= 5) {
           return 'just now'
