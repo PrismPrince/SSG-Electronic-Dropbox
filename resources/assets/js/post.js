@@ -4,7 +4,7 @@ Vue.mixin({
       post: {
         id: null,
         title: '',
-        description: '',
+        desc: '',
         action: '',
         disabled: true
         // error: {}
@@ -22,7 +22,7 @@ Vue.mixin({
       this.post.action = action
       this.post.id = id
       this.post.title = title
-      this.post.description = desc
+      this.post.desc = desc
 
       this.enablePostInput()
 
@@ -37,7 +37,7 @@ Vue.mixin({
         vm.post.action = action
         vm.post.id = id
         vm.post.title = title
-        vm.post.description = desc
+        vm.post.desc = desc
       })
     },
     disablePostInput() {
@@ -56,7 +56,7 @@ Vue.mixin({
         // post request with the input data
         vm.$http.post(window.location.origin + '/api/post', {
           title: vm.post.title,
-          desc: vm.post.description,
+          desc: vm.post.desc
         }).then((response) => {
 
           vm.posts.skip++
@@ -76,7 +76,7 @@ Vue.mixin({
         // put request with the updated data
         vm.$http.put(window.location.origin + '/api/post/' + vm.post.id, {
           title: vm.post.title,
-          desc: vm.post.description
+          desc: vm.post.desc
         }).then((response) => {
 
           vm.hidePostModal('#post-modal')

@@ -14,7 +14,7 @@
     </div>
     <div class="panel-body">
       <h3 v-html="title"></h3><hr>
-      <p :class="enlarge ? 'enlarge' : ''" v-html="htmlEntities(description)"></p>
+      <p :class="enlarge ? 'enlarge' : ''" v-html="htmlEntities(desc)"></p>
     </div>
   </div>
 </template>
@@ -42,7 +42,7 @@
         type: String,
         required: true
       },
-      description: {
+      desc: {
         type: String,
         required: true
       },
