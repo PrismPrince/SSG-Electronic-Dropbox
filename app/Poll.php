@@ -15,7 +15,7 @@ class Poll extends Model
 
   protected $dates = ['deleted_at'];
 
-  public function users()
+  public function user()
   {
     return $this->belongsTo(User::class);
   }
