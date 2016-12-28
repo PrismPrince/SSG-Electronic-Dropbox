@@ -3,82 +3,66 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Poll;
+use Auth;
 
 class PollController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+  public function __construct()
+  {
+    $this->middleware('auth:api');
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  public function index(Request $request)
+  {
+    return response()->json(Poll::with('user')->with('answers')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get());
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+  public function create()
+  {
+    //
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+  public function store(Request $request)
+  {
+    $poll = new Poll();
+    $poll->user_id = Auth::guard('api')->id();
+    $poll->title = $request->title;
+    $poll->desc = $request->desc;
+    $poll->start = Carbon::parse($request->start)->toDateTimeString();
+    $poll->end = Carbon::parse($request->end)->toDateTimeString();
+    $poll->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    return response()->json(Poll::with('user')->find($poll->id));
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+  public function show($id)
+  {
+    //
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  public function edit($poll)
+  {
+    return response()->json(Poll::with('user')->find($poll));
+  }
+
+  public function update(Request $request, $poll)
+  {
+    $poll = Poll::with('user')->find($poll);
+    $poll->title = $request->title;
+    $poll->desc = $request->desc;
+    $poll->start = Carbon::parse($request->start)->toDateTimeString();
+    $poll->end = Carbon::parse($request->end)->toDateTimeString();
+    $poll->save();
+
+    return response()->json($poll);
+  }
+
+  public function destroy($poll)
+  {
+    $poll = Poll::with('user')->find($poll);
+    $poll->delete();
+
+    return response()->json($poll);
+  }
 }
