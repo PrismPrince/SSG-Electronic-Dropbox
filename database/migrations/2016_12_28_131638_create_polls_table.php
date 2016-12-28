@@ -15,7 +15,15 @@ class CreatePollsTable extends Migration
     {
         Schema::create('polls', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->string('title');
+            $table->text('desc');
+            $table->timestamp('start')->nullable();
+            $table->timestamp('end')->nullable();
+            $table->string('status')->default('active');
+            $table->string('type')->default('once');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
