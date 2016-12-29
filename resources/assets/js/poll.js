@@ -32,17 +32,48 @@ Vue.mixin({
       this.poll.answers.splice(key, 1)
     },
     showPollModal(selector, action = '', id = null, title = '', desc = '', start = '', end = '', type = '', answer = '', answers = []) {
-      this.poll.action = action
-      this.poll.id = id
-      this.poll.title = title
-      this.poll.desc = desc
-      this.poll.start = start
-      this.poll.end = end
-      this.poll.type = type
-      this.poll.answer = answer
-      this.poll.answers = answers
+      var vm = this
 
-      this.enablePollInput()
+      if (start == '' && end == '') {
+        $('#poll-start').datetimepicker({
+          format: 'MMM D, YYYY h:mm a'
+        })
+        $('#poll-end').datetimepicker({
+          format: 'MMM D, YYYY h:mm a'
+        })
+
+        vm.poll.start = ''
+        vm.poll.end = ''
+      } else {
+        $('#poll-start').datetimepicker({
+          format: 'MMM D, YYYY h:mm a',
+          defaultDate: moment(start, 'YYYY-MM-DD HH:mm:ss')
+        })
+        $('#poll-end').datetimepicker({
+          format: 'MMM D, YYYY h:mm a',
+          defaultDate: moment(end, 'YYYY-MM-DD HH:mm:ss')
+        })
+
+        vm.poll.start = moment(start, 'YYYY-MM-DD HH:mm:ss').format('MMM D, YYYY h:mm a')
+        vm.poll.end = moment(end, 'YYYY-MM-DD HH:mm:ss').format('MMM D, YYYY h:mm a')
+      }
+
+      vm.poll.action = action
+      vm.poll.id = id
+      vm.poll.title = title
+      vm.poll.desc = desc
+      vm.poll.type = type
+      vm.poll.answer = answer
+      vm.poll.answers = answers
+
+      $("#poll-start").on("dp.change", function (e) {
+        vm.poll.start = e.date.format('MMM D, YYYY h:mm a')
+      })
+      $("#poll-end").on("dp.change", function (e) {
+        vm.poll.end = e.date.format('MMM D, YYYY h:mm a')
+      })
+
+      vm.enablePollInput()
 
       $(selector).modal('show')
     },
@@ -50,6 +81,8 @@ Vue.mixin({
       var vm = this
 
       $(selector).modal('hide')
+
+      console.log('hidden')
 
       $(selector).on('hidden.bs.modal', function () {
         vm.poll.action = action
@@ -62,6 +95,9 @@ Vue.mixin({
         vm.poll.answer = answer
         vm.poll.answers = answers
       })
+
+      $('#poll-start').data('DateTimePicker').destroy()
+      $('#poll-end').data('DateTimePicker').destroy()
     },
     disablePollInput() {
       this.poll.disabled = true
@@ -162,24 +198,5 @@ Vue.mixin({
           console.error(response.error)
         })
     }
-  },
-  mounted() {
-    var vm = this
-
-    $('#poll-start').datetimepicker({
-      format: 'MMM D, YYYY h:mm a'
-    })
-    $('#poll-end').datetimepicker({
-      useCurrent: false, //Important! See issue #1075
-      format: 'MMM D, YYYY h:mm a'
-    })
-    $("#poll-start").on("dp.change", function (e) {
-      $('#poll-end').data("DateTimePicker").minDate(e.date)
-      vm.poll.start = e.date.format('MMM D, YYYY h:mm a')
-    })
-    $("#poll-end").on("dp.change", function (e) {
-      $('#poll-start').data("DateTimePicker").maxDate(e.date)
-      vm.poll.end = e.date.format('MMM D, YYYY h:mm a')
-    })
   }
 })
