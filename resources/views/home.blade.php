@@ -13,31 +13,37 @@
         </div>
 
         <div class="modal-body">
+          <div class="row">
 
-          <div class="form-group">
-            <label for="post-title" class="control-label">Title</label>
-            <input
-              id="post-title"
-              type="text"
-              class="form-control"
-              placeholder="Write the title"
-              maxlength="255"
-              required
-              v-model.trim="post.title"
-              @keyup.enter.prevent="focusNext('#post-desc')"
-            >
-          </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="post-title" class="control-label">Title</label>
+                <input
+                  id="post-title"
+                  type="text"
+                  class="form-control"
+                  placeholder="Write the title"
+                  maxlength="255"
+                  required
+                  v-model.trim="post.title"
+                  @keyup.enter.prevent="focusNext('#post-desc')"
+                >
+              </div>
+            </div>
 
-          <div class="form-group">
-            <label for="post-desc" class="control-label">Description</label>
-            <textarea
-              id="post-desc"
-              class="form-control"
-              placeholder="Write about it"
-              v-model.trim="post.desc"
-            ></textarea>
-          </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="post-desc" class="control-label">Description</label>
+                <textarea
+                  id="post-desc"
+                  class="form-control"
+                  placeholder="Write about it"
+                  v-model.trim="post.desc"
+                ></textarea>
+              </div>
+            </div>
 
+          </div> {{-- .row --}}
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
@@ -89,106 +95,137 @@
         </div>
 
         <div class="modal-body">
+          <div class="row">
 
-          <div class="form-group">
-            <label for="poll-title" class="control-label">Title</label>
-            <input
-              id="poll-title"
-              type="text"
-              class="form-control"
-              placeholder="Write the title"
-              maxlength="255"
-              required
-              v-model.trim="poll.title"
-              @keyup.enter.prevent="focusNext('#poll-start')"
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="poll-start" class="control-label">Start Date</label>
-            <input
-              id="poll-start"
-              type="text"
-              class="form-control"
-              placeholder="When the poll starts"
-              maxlength="255"
-              required
-              v-model.trim="poll.start"
-              @keyup.enter.prevent="focusNext('#poll-end')"
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="poll-end" class="control-label">End Date</label>
-            <input
-              id="poll-end"
-              type="text"
-              class="form-control"
-              placeholder="When the poll ends"
-              maxlength="255"
-              required
-              v-model.trim="poll.end"
-              @keyup.enter.prevent="focusNext('#poll-type')"
-            >
-          </div>
-
-          <div class="form-group">
-            <label class="control-label">Type</label>
-            <select
-              id="poll-type"
-              class="form-control"
-              required
-              v-model.trim="poll.type"
-              @keyup.enter.prevent="focusNext('#poll-desc')"
-            >
-              <option value="" disabled hidden>Choose how the users vote</option>
-              <option value="once">One answer</option>
-              <option value="multi">Multiple answers</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="poll-desc" class="control-label">Description</label>
-            <textarea
-              id="poll-desc"
-              class="form-control"
-              placeholder="Write about it"
-              v-model.trim="poll.desc"
-            ></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="poll-answers" class="control-label">Answers</label>
-            <div class="input-group">
-              <input
-                id="poll-answers"
-                type="text"
-                class="form-control"
-                placeholder="Add an answer"
-                maxlength="255"
-                required
-                v-model.trim="poll.answer"
-                @keyup.enter.prevent="addAnswer(poll.answer)"
-              >
-              <span class="input-group-btn">
-                <button class="btn btn-info" type="button" @click="addAnswer(poll.answer)">
-                  <span class="glyphicon glyphicon-plus"></span>
-                </button>
-              </span>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="poll-title" class="control-label">Title</label>
+                <input
+                  id="poll-title"
+                  type="text"
+                  class="form-control"
+                  placeholder="Write the title"
+                  maxlength="255"
+                  required
+                  v-model.trim="poll.title"
+                  @keyup.enter.prevent="focusNext('#poll-start')"
+                >
+              </div>
             </div>
-          </div>
 
-          <ul>
-            <li
-              v-for="(answer, key) in poll.answers"
-            >
-              <button v-if="poll.answers.length > 2" class="btn btn-xs btn-info" type="button" @click="removeAnswer(key)">
-                <span class="glyphicon glyphicon-remove"></span>
-              </button>
-              @{{answer}}
-            </li>
-          </ul>
+            <div class="col-sm-5">
+              <div class="form-group">
+                <label for="poll-start" class="control-label">Start Date</label>
+                <input
+                  id="poll-start"
+                  type="text"
+                  class="form-control"
+                  placeholder="When the poll starts"
+                  maxlength="255"
+                  required
+                  v-model.trim="poll.start"
+                  @keyup.enter.prevent="focusNext('#poll-end')"
+                >
+              </div>
+            </div>
 
+            <div class="col-sm-5">
+              <div class="form-group">
+                <label for="poll-end" class="control-label">End Date</label>
+                <input
+                  id="poll-end"
+                  type="text"
+                  class="form-control"
+                  placeholder="When the poll ends"
+                  maxlength="255"
+                  required
+                  v-model.trim="poll.end"
+                  @keyup.enter.prevent="focusNext('#poll-type')"
+                >
+              </div>
+            </div>
+
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label for="poll-status" class="control-label">Status</label>
+                <input
+                  id="poll-status"
+                  type="text"
+                  class="form-control"
+                  placeholder="When the poll ends"
+                  maxlength="255"
+                  {{-- required --}}
+                  value="N/A" readonly
+                  {{-- v-model.trim="poll.status" --}}
+                  {{-- @keyup.enter.prevent="focusNext('#poll-type')" --}}
+                >
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label class="control-label">Type</label>
+                <select
+                  id="poll-type"
+                  class="form-control"
+                  required
+                  v-model.trim="poll.type"
+                  @keyup.enter.prevent="focusNext('#poll-desc')"
+                >
+                  <option value="" disabled hidden>Choose how the users vote</option>
+                  <option value="once">One answer</option>
+                  <option value="multi">Multiple answers</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="poll-desc" class="control-label">Description</label>
+                <textarea
+                  id="poll-desc"
+                  class="form-control"
+                  placeholder="Write about it"
+                  v-model.trim="poll.desc"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="poll-answers" class="control-label">Answers</label>
+                <div class="input-group">
+                  <input
+                    id="poll-answers"
+                    type="text"
+                    class="form-control"
+                    placeholder="Add an answer"
+                    maxlength="255"
+                    required
+                    v-model.trim="poll.answer"
+                    @keyup.enter.prevent="addAnswer(poll.answer)"
+                  >
+                  <span class="input-group-btn">
+                    <button class="btn btn-info" type="button" @click="addAnswer(poll.answer)">
+                      <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <ul>
+              <li
+                v-for="(answer, key) in poll.answers"
+              >
+                <button v-if="poll.answers.length > 2" class="btn btn-xs btn-info" type="button" @click="removeAnswer(key)">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                @{{answer}}
+              </li>
+            </ul>
+
+          </div> {{-- .row --}}
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
@@ -240,48 +277,56 @@
         </div>
 
         <div class="modal-body">
+          <div class="row">
 
-          <div class="form-group">
-            <label for="suggestion-title" class="control-label">Title</label>
-            <input
-              id="suggestion-title"
-              type="text"
-              class="form-control"
-              placeholder="Write the title"
-              maxlength="255"
-              required
-             
-              v-model.trim="suggestion.title"
-              @keyup.enter.prevent="focusNext('#suggestion-direct')"
-            >
-          </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="suggestion-title" class="control-label">Title</label>
+                <input
+                  id="suggestion-title"
+                  type="text"
+                  class="form-control"
+                  placeholder="Write the title"
+                  maxlength="255"
+                  required
+                 
+                  v-model.trim="suggestion.title"
+                  @keyup.enter.prevent="focusNext('#suggestion-direct')"
+                >
+              </div>
+            </div>
 
-          <div class="form-group">
-            <label for="suggestion-direct" class="control-label">Direct</label>
-            <input
-              id="suggestion-direct"
-              type="text"
-              class="form-control"
-              placeholder="To whom is the concern"
-              maxlength="255"
-              required
-             
-              v-model.trim="suggestion.direct"
-              @keyup.enter.prevent="focusNext('#suggestion-message')"
-            >
-          </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="suggestion-direct" class="control-label">Direct</label>
+                <input
+                  id="suggestion-direct"
+                  type="text"
+                  class="form-control"
+                  placeholder="To whom is the concern"
+                  maxlength="255"
+                  required
+                 
+                  v-model.trim="suggestion.direct"
+                  @keyup.enter.prevent="focusNext('#suggestion-message')"
+                >
+              </div>
+            </div>
 
-          <div class="form-group">
-            <label for="suggestion-message" class="control-label">Message</label>
-            <textarea
-              id="suggestion-message"
-              class="form-control"
-              placeholder="Write about it"
-             
-              v-model.trim="suggestion.message"
-            ></textarea>
-          </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="suggestion-message" class="control-label">Message</label>
+                <textarea
+                  id="suggestion-message"
+                  class="form-control"
+                  placeholder="Write about it"
+                 
+                  v-model.trim="suggestion.message"
+                ></textarea>
+              </div>
+            </div>
 
+          </div> {{-- .row --}}
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
