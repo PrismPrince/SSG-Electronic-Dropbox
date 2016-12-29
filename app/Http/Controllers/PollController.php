@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Poll;
+use App\Answer;
 use Auth;
 
 class PollController extends Controller
@@ -34,17 +35,26 @@ class PollController extends Controller
     $poll->end = Carbon::parse($request->end)->toDateTimeString();
     $poll->type = $request->type;
 
-    if (Carbon::now() >= Carbon::parse($request->start)) {
+    if (Carbon::now() > Carbon::parse($request->end)) {
+      $poll->status = 'expired';
+    } else if (Carbon::now() < Carbon::parse($request->start)) {
       $poll->status = 'pending';
-    } else if (Carbon::now() >= Carbon::parse($request->end)) {
-      $poll->status = 'expire';
-    } else {
+    } else if (Carbon::now() >= Carbon::parse($request->start) && Carbon::now() <= Carbon::parse($request->end)) {
       $poll->status = 'active';
     }
     
     $poll->save();
 
-    return response()->json(Poll::with('user')->find($poll->id));
+    $answers = [];
+
+    foreach ($request->answers as $key => $answer) {
+      $answers[$key] = new Answer();
+      $answers[$key]->answer = $answer;
+    }
+
+    $poll->answers()->saveMany($answers);
+
+    return response()->json(Poll::with('user')->with('answers')->find($poll->id));
   }
 
   public function show($id)

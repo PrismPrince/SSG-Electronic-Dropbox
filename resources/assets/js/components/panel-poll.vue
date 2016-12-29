@@ -15,13 +15,33 @@
     <div class="panel-body">
       <h3>
         <span v-html="title"></span>
-        <span class="label label-info">{{status}}</span>
+        <span v-if="status == 'active'" class="label label-success">Active</span>
+        <span v-if="status == 'pending'" class="label label-default">Pending</span>
+        <span v-if="status == 'expired'" class="label label-danger">Expired</span>
         <br>
         <small><b>Start:</b> {{start | formatDateTimeNormal}}</small>
         <br>
         <small><b>End:</b> {{end | formatDateTimeNormal}}</small>
       </h3><hr>
       <p :class="enlarge ? 'enlarge' : ''" v-html="htmlEntities(desc)"></p>
+      <hr>
+      <h4>Answers</h4>
+      <div class="answer" v-for="answer in answers">
+        <div class="input-group">
+          <span class="form-control bar-wrapper">
+            <span class="bar" :style="'width: 60%;'">
+              <span class="bar-label">{{answer.answer}}</span>
+            </span>
+          </span>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" @click="selectAnswer(answer.id)">
+              <input v-if="type == 'once'" v-show="false" type="radio" name="answer" :value="answer.id" v-model="selected">
+              <input v-if="type == 'multi'" v-show="false" type="checkbox" name="answer" :value="answer.id" v-model="selected">
+              <span class="glyphicon" :class="hasValue(answer.id) ? 'glyphicon-ok-sign' : 'glyphicon-ok-circle'"></span>
+            </button>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -65,6 +85,14 @@
         type: String,
         required: true
       },
+      type: {
+        type: String,
+        required: true
+      },
+      answers: {
+        type: Array,
+        required: true
+      },
       opt: {
         type: Boolean,
         required: true
@@ -72,10 +100,29 @@
     },
     data() {
       return {
-        enlarge: false
+        enlarge: false,
+        selected: []
       }
     },
     methods: {
+      hasValue(id) {
+        return _.indexOf(this.selected, id) != -1
+      },
+      selectAnswer(id) {
+        if (this.type == 'once') {
+          this.selected.splice(0, 1, id)
+        }
+
+        if (this.type == 'multi') {
+          var i = _.indexOf(this.selected, id)
+
+          if (i == -1) {
+            this.selected.push(id)
+          } else {
+            this.selected.splice(i, 1)
+          }
+        }
+      },
       htmlEntities(text) {
         if (text.length <= 85) this.enlarge = true
 

@@ -409,6 +409,8 @@
             :start="poll.start"
             :end="poll.end"
             :status="poll.status"
+            :type="poll.type"
+            :answers="poll.answers"
             :opt="poll.user.id == user.id ? true : false">
             <ul slot="dropdown-menu" class="dropdown-menu">
               <li><a href="#" @click="editPoll(poll.id)">Edit</a></li>
@@ -464,4 +466,9 @@
 
 @push('scripts')
   <script src="/js/home.js"></script>
+  <script src="/js/bootstrap-datetimepicker.min.js"></script>
+@endpush
+
+@push('styles')
+  <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 @endpush

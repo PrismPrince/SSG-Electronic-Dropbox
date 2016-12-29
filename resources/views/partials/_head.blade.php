@@ -10,6 +10,7 @@
 
   <!-- Styles -->
   <link href="/css/app.css" rel="stylesheet">
+  @stack('styles')
 
   <!-- Scripts -->
   <script>

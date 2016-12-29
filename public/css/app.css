@@ -7837,4 +7837,28 @@ button.close {
   width: 64px;
 }
 
+.answer {
+  margin-bottom: 10px;
+}
+
+.answer .form-control {
+  padding: 0;
+}
+
+.bar-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.bar {
+  position: absolute;
+  height: 100%;
+  background: #4FC3F7;
+}
+
+.bar-label {
+  margin: 6px 12px;
+  position: absolute;
+}
+
 /*# sourceMappingURL=app.css.map */

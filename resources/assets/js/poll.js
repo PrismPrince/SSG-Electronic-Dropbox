@@ -82,7 +82,8 @@ Vue.mixin({
           desc: vm.poll.desc,
           start: vm.poll.start,
           end: vm.poll.end,
-          type: vm.poll.type
+          type: vm.poll.type,
+          answers: vm.poll.answers
         }).then((response) => {
 
           vm.polls.skip++
@@ -105,7 +106,8 @@ Vue.mixin({
           desc: vm.poll.desc,
           start: vm.poll.start,
           end: vm.poll.end,
-          type: vm.poll.type
+          type: vm.poll.type,
+          answers: vm.poll.answers
         }).then((response) => {
 
           vm.hidePollModal('#poll-modal')
@@ -160,5 +162,24 @@ Vue.mixin({
           console.error(response.error)
         })
     }
+  },
+  mounted() {
+    var vm = this
+
+    $('#poll-start').datetimepicker({
+      format: 'MMM D, YYYY h:mm a'
+    })
+    $('#poll-end').datetimepicker({
+      useCurrent: false, //Important! See issue #1075
+      format: 'MMM D, YYYY h:mm a'
+    })
+    $("#poll-start").on("dp.change", function (e) {
+      $('#poll-end').data("DateTimePicker").minDate(e.date)
+      vm.poll.start = e.date.format('MMM D, YYYY h:mm a')
+    })
+    $("#poll-end").on("dp.change", function (e) {
+      $('#poll-start').data("DateTimePicker").maxDate(e.date)
+      vm.poll.end = e.date.format('MMM D, YYYY h:mm a')
+    })
   }
 })
