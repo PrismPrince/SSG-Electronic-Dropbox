@@ -10,10 +10,10 @@
       <a class="profile-img" :href="profile">
         <img :src="image" :alt="fullname">
       </a>
-      <h4><a :href="profile">{{fullname}}</a><br><small>{{date | formatDate | capitalize}}</small></h4>
+      <h4><a :href="profile">{{fullname}}</a><br><small class="text-capitalize">{{date | formatDate}}</small></h4>
     </div>
     <div class="panel-body">
-      <h3 v-html="title"></h3><hr>
+      <h3>{{title}}</h3><hr>
       <p :class="enlarge ? 'enlarge' : ''" v-html="htmlEntities(desc)"></p>
     </div>
   </div>
@@ -98,11 +98,6 @@
         } else {
           return moment(date).format('MMM D, YYYY [at] h:mm a')
         }
-      },
-      capitalize(value) {
-        if (!value) return ''
-        value = value.toString()
-        return value.charAt(0).toUpperCase() + value.slice(1)
       }
     }
   }

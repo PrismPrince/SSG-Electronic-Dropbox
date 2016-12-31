@@ -49,7 +49,7 @@ class PollController extends Controller
 
     foreach ($request->answers as $key => $answer) {
       $answers[$key] = new Answer();
-      $answers[$key]->answer = $answer;
+      $answers[$key]->answer = $answer['answer'];
     }
 
     $poll->answers()->saveMany($answers);
@@ -64,34 +64,61 @@ class PollController extends Controller
 
   public function edit($poll)
   {
-    return response()->json(Poll::with('user')->find($poll));
+    return response()->json(Poll::with('user')->with('answers')->find($poll));
   }
 
   public function update(Request $request, $poll)
   {
-    $poll = Poll::with('user')->find($poll);
+    $id = $poll;
+
+    $poll = Poll::with('user')->with('answers')->find($id);
     $poll->title = $request->title;
     $poll->desc = $request->desc;
     $poll->start = Carbon::parse($request->start)->toDateTimeString();
     $poll->end = Carbon::parse($request->end)->toDateTimeString();
     $poll->type = $request->type;
 
-    if (Carbon::now() >= Carbon::parse($request->start)) {
+    if (Carbon::now() > Carbon::parse($request->end)) {
+      $poll->status = 'expired';
+    } else if (Carbon::now() < Carbon::parse($request->start)) {
       $poll->status = 'pending';
-    } else if (Carbon::now() >= Carbon::parse($request->end)) {
-      $poll->status = 'expire';
-    } else {
+    } else if (Carbon::now() >= Carbon::parse($request->start) && Carbon::now() <= Carbon::parse($request->end)) {
       $poll->status = 'active';
     }
 
+    $oldAnswers = array_pluck($poll->answers()->get()->toArray(), 'id'); // [1, 2, 3]
+
+    $modAnswers = array_pluck($request->answers, 'id'); // [0, 2, 3, null, null]
+
+    $dropAnswers = array_diff($oldAnswers, $modAnswers); // [1 => 2, 2 => 3]
+
+    $answers = [];
+
+    foreach ($request->answers as $key => $answer) {
+      if ($answer['id'] == null) {
+        $answers[$key] = new Answer();
+        $answers[$key]->answer = $answer['answer'];
+      } else {
+        $answers[$key] = Answer::find($answer['id']);
+        $answers[$key]->answer = $answer['answer'];
+      }
+    }
+
+    foreach ($dropAnswers as $ans) {
+      $poll->answers()->find($ans)->delete();
+    }
+
+
+    $poll->answers()->saveMany($answers);
+
     $poll->save();
 
-    return response()->json($poll);
+    return response()->json(Poll::with('user')->with('answers')->find($id));
   }
 
   public function destroy($poll)
   {
-    $poll = Poll::with('user')->find($poll);
+    $poll = Poll::with('user')->with('answers')->find($poll);
     $poll->delete();
 
     return response()->json($poll);

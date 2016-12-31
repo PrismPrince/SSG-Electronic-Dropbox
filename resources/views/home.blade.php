@@ -2,13 +2,13 @@
 
 @section('content')
 
-<div class="modal fade" id="post-modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="post-modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <fieldset :disabled="post.disabled">
+      <fieldset :disabled="disabled">
 
         <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" @click="hidePostModal('#post-modal')"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" aria-label="Close" @click="hideModal('#post-modal')"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Write a Post</h4>
         </div>
 
@@ -26,7 +26,7 @@
                   maxlength="255"
                   required
                   v-model.trim="post.title"
-                  @keyup.enter.prevent="focusNext('#post-desc')"
+                  @keyup.enter.prevent="focus('#post-desc')"
                 >
               </div>
             </div>
@@ -47,8 +47,8 @@
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" @click="hidePostModal('#post-modal')">Cancel</button>
-          <button type="button" class="btn btn-primary" id="post-submit" @click.prevent="submitPost()">@{{post.action}}</button>
+          <button type="button" class="btn btn-default" @click="hideModal('#post-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" @click.prevent="submitAct">@{{action}}</button>
         </div>
 
       </fieldset>
@@ -56,13 +56,13 @@
   </div>
 </div>
 
-<div class="modal fade" id="confirm-post-modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="confirm-post-modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <fieldset :disabled="post.disabled">
+      <fieldset :disabled="disabled">
 
         <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" @click="hidePostModal('#confirm-post-modal')"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" aria-label="Close" @click="hideModal('#confirm-post-modal')"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Delete Post</h4>
         </div>
 
@@ -75,8 +75,8 @@
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" @click="hidePostModal('#confirm-post-modal')">Cancel</button>
-          <button type="button" class="btn btn-primary" @click.prevent="deletePost()">@{{post.action}}</button>
+          <button type="button" class="btn btn-default" @click="hideModal('#confirm-post-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" @click.prevent="destroy">@{{action}}</button>
         </div>
 
       </fieldset>
@@ -84,13 +84,13 @@
   </div>
 </div>
 
-<div class="modal fade" id="poll-modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="poll-modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <fieldset :disabled="poll.disabled">
+      <fieldset :disabled="disabled">
 
         <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" @click="hidePollModal('#poll-modal')"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" aria-label="Close" @click="hideModal('#poll-modal')"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Create a Poll</h4>
         </div>
 
@@ -108,7 +108,7 @@
                   maxlength="255"
                   required
                   v-model.trim="poll.title"
-                  @keyup.enter.prevent="focusNext('#poll-start')"
+                  @keyup.enter.prevent="focus('#poll-start')"
                 >
               </div>
             </div>
@@ -124,7 +124,7 @@
                   maxlength="255"
                   required
                   v-model.trim="poll.start"
-                  @keyup.enter.prevent="focusNext('#poll-end')"
+                  @keyup.enter.prevent="focus('#poll-end')"
                 >
               </div>
             </div>
@@ -140,7 +140,7 @@
                   maxlength="255"
                   required
                   v-model.trim="poll.end"
-                  @keyup.enter.prevent="focusNext('#poll-type')"
+                  @keyup.enter.prevent="focus('#poll-status')"
                 >
               </div>
             </div>
@@ -152,12 +152,12 @@
                   id="poll-status"
                   type="text"
                   class="form-control"
-                  placeholder="When the poll ends"
+                  placeholder="Status"
                   maxlength="255"
-                  {{-- required --}}
-                  value="N/A" readonly
-                  {{-- v-model.trim="poll.status" --}}
-                  {{-- @keyup.enter.prevent="focusNext('#poll-type')" --}}
+                  required
+                  readonly
+                  v-model.trim="poll.status"
+                  @keyup.enter.prevent="focus('#poll-type')"
                 >
               </div>
             </div>
@@ -170,7 +170,7 @@
                   class="form-control"
                   required
                   v-model.trim="poll.type"
-                  @keyup.enter.prevent="focusNext('#poll-desc')"
+                  @keyup.enter.prevent="focus('#poll-desc')"
                 >
                   <option value="" disabled hidden>Choose how the users vote</option>
                   <option value="once">One answer</option>
@@ -214,23 +214,23 @@
               </div>
             </div>
 
-            <ul>
-              <li
-                v-for="(answer, key) in poll.answers"
-              >
-                <button v-if="poll.answers.length > 2" class="btn btn-xs btn-info" type="button" @click="removeAnswer(key)">
+          <div class="col-sm-12">
+            <ul class="list-group">
+              <li class="list-group-item" v-for="(answer, key) in poll.answers">
+                <button v-if="poll.answers.length > 2" class="remove btn btn-xs btn-danger" type="button" @click="removeAnswer(key)">
                   <span class="glyphicon glyphicon-remove"></span>
                 </button>
-                @{{answer}}
+                @{{answer.answer}}
               </li>
             </ul>
+          </div>
 
           </div> {{-- .row --}}
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" @click="hidePollModal('#poll-modal')">Cancel</button>
-          <button type="button" class="btn btn-primary" id="poll-submit" @click.prevent="submitPoll()">@{{poll.action}}</button>
+          <button type="button" class="btn btn-default" @click="hideModal('#poll-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" @click.prevent="submitAct">@{{action}}</button>
         </div>
 
       </fieldset>
@@ -238,13 +238,13 @@
   </div>
 </div>
 
-<div class="modal fade" id="confirm-poll-modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="confirm-poll-modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <fieldset :disabled="poll.disabled">
+      <fieldset :disabled="disabled">
 
         <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" @click="hidePollModal('#confirm-poll-modal')"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" aria-label="Close" @click="hideModal('#confirm-poll-modal')"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Delete Poll</h4>
         </div>
 
@@ -257,8 +257,8 @@
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" @click="hidePollModal('#confirm-poll-modal')">Cancel</button>
-          <button type="button" class="btn btn-primary" @click.prevent="deletePoll()">@{{poll.action}}</button>
+          <button type="button" class="btn btn-default" @click="hideModal('#confirm-poll-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" @click.prevent="destroy">@{{action}}</button>
         </div>
 
       </fieldset>
@@ -266,13 +266,13 @@
   </div>
 </div>
 
-<div class="modal fade" id="suggestion-modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="suggestion-modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <fieldset :disabled="suggestion.disabled">
+      <fieldset :disabled="disabled">
 
         <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" @click="hideSuggestionModal('#suggestion-modal')"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" aria-label="Close" @click="hideModal('#suggestion-modal')"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Send a Suggestion</h4>
         </div>
 
@@ -291,7 +291,7 @@
                   required
                  
                   v-model.trim="suggestion.title"
-                  @keyup.enter.prevent="focusNext('#suggestion-direct')"
+                  @keyup.enter.prevent="focus('#suggestion-direct')"
                 >
               </div>
             </div>
@@ -308,7 +308,7 @@
                   required
                  
                   v-model.trim="suggestion.direct"
-                  @keyup.enter.prevent="focusNext('#suggestion-message')"
+                  @keyup.enter.prevent="focus('#suggestion-message')"
                 >
               </div>
             </div>
@@ -330,8 +330,8 @@
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" @click="hidePostModal('#suggestion-modal')">Cancel</button>
-          <button type="button" class="btn btn-primary" id="suggestion-submit" @click.prevent="submitSuggestion()">@{{suggestion.action}}</button>
+          <button type="button" class="btn btn-default" @click="hideModal('#suggestion-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" @click.prevent="submitAct">@{{action}}</button>
         </div>
 
       </fieldset>
@@ -339,13 +339,13 @@
   </div>
 </div>
 
-<div class="modal fade" id="confirm-suggestion-modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="confirm-suggestion-modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <fieldset :disabled="suggestion.disabled">
+      <fieldset :disabled="disabled">
 
         <div class="modal-header">
-          <button type="button" class="close" aria-label="Close" @click="hideSuggestionModal('#confirm-suggestion-modal')"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" aria-label="Close" @click="hideModal('#confirm-suggestion-modal')"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Delete Suggestion</h4>
         </div>
 
@@ -358,8 +358,8 @@
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" @click="hideSuggestionModal('#confirm-suggestion-modal')">Cancel</button>
-          <button type="button" class="btn btn-primary" @click.prevent="deleteSuggestion()">@{{suggestion.action}}</button>
+          <button type="button" class="btn btn-default" @click="hideModal('#confirm-suggestion-modal')">Cancel</button>
+          <button type="button" class="btn btn-primary" @click.prevent="destroy">@{{action}}</button>
         </div>
 
       </fieldset>
@@ -372,43 +372,31 @@
     <div class="col-sm-4">
 
       <div class="row">
-        <div class="col-xs-6">
-          <button type="button" class="btn btn-block btn-default" @click="showPostModal('#post-modal', 'Post')">Write a Post</button>
+        <div v-if="active == 'post'" class="col-xs-12">
+          <button type="button" class="btn btn-block btn-default" @click="showModal('#post-modal', 'Post')">Write a Post</button>
         </div>
 
-        <div class="col-xs-6">
-          <button type="button" class="btn btn-block btn-default" @click="showPollModal('#poll-modal', 'Create')">Create a Poll</button>
+        <div v-if="active == 'poll'" class="col-xs-12">
+          <button type="button" class="btn btn-block btn-default" @click="showModal('#poll-modal', 'Create')">Create a Poll</button>
         </div>
 
-        <div class="col-xs-12">
-          <button type="button" class="btn btn-block btn-default" @click="showSuggestionModal('#suggestion-modal', 'Send')">Send a Suggest</button>
+        <div v-if="active == 'suggestion'" class="col-xs-12">
+          <button type="button" class="btn btn-block btn-default" @click="showModal('#suggestion-modal', 'Send')">Send a Suggest</button>
         </div>
       </div> {{-- .row --}}
 
       <div class="panel panel-default">
-        <ul class="list-group">
-          <li class="list-group-item">
-            {{-- URL to load posts --}}
-            <input type="hidden" id="get-posts" value="{{ url('/api/post') }}">
-            <a v-if="active != 'post'" href="#" @click.prevent="switchActivity('post')">Posts</a>
-            <span v-else>Posts</span>
-          </li>
-          <li class="list-group-item">
-            {{-- URL to load polls --}}
-            <input type="hidden" id="get-polls" value="{{ url('/api/poll') }}">
-            <a v-if="active != 'poll'" href="#" @click.prevent="switchActivity('poll')">Polls</a>
-            <span v-else>Polls</span>
-          </li>
-          <li class="list-group-item">
-            {{-- URL to load suggestions --}}
-            <input type="hidden" id="get-suggestions" value="{{ url('/api/suggestion') }}">
-            <a v-if="active != 'suggestion'" href="#" @click.prevent="switchActivity('suggestion')">Suggestions</a>
-            <span v-else>Suggestions</span>
-          </li>
-        </ul>
+        <div class="list-group">
+          <button v-if="active != 'post'" class="list-group-item" @click="switchActivity('post')">Posts</button>
+          <span class="list-group-item active" v-else>Posts</span>
+          <button v-if="active != 'poll'" class="list-group-item" @click="switchActivity('poll')">Polls</button>
+          <span class="list-group-item active" v-else>Polls</span>
+          <button v-if="active != 'suggestion'" class="list-group-item" @click="switchActivity('suggestion')">Suggestions</button>
+          <span class="list-group-item active" v-else>Suggestions</span>
+        </div>
       </div> {{-- .panel --}}
 
-      <pre>@{{$data}}</pre>
+    <pre>@{{$data}}</pre>
     </div> {{-- .col-sm-4 --}}
 
     <div id="activity" class="col-sm-8">
@@ -416,7 +404,7 @@
       <div v-if="active == 'post'">
         <transition-group name="list">
           <panel-post
-            v-for="post in posts.data"
+            v-for="post in posts"
             :key="post.id"
             :profile="'{{ url('/profile') }}/' + post.user.id"
             :image="'/images/user.jpg'"
@@ -426,15 +414,15 @@
             :desc="post.desc"
             :opt="post.user.id == user.id ? true : false">
             <ul slot="dropdown-menu" class="dropdown-menu">
-              <li><a href="#" @click="editPost(post.id)">Edit</a></li>
-              <li><a href="#" @click="confirmDeletePost(post.id)">Delete</a></li>
+              <li><a href="#" @click.prevent="edit(post.id)">Edit</a></li>
+              <li><a href="#" @click.prevent="showModal('#confirm-post-modal', 'Delete', post.id)">Delete</a></li>
             </ul>
           </panel-post>
         </transition-group>
 
         <div class="panel panel-default">
           <div class="panel-body text-center">
-            <a v-if="!posts.full" href="#" @click.prevent="getPosts">Load more...</a>
+            <a v-if="!full" href="#" @click.prevent="getAct">Load more...</a>
             <span v-else>No more post</span>
           </div>
         </div>
@@ -443,7 +431,7 @@
       <div v-else-if="active == 'poll'">
         <transition-group name="list">
           <panel-poll
-            v-for="poll in polls.data"
+            v-for="poll in polls"
             :key="poll.id"
             :profile="'{{ url('/profile') }}/' + poll.user.id"
             :image="'/images/user.jpg'"
@@ -458,15 +446,15 @@
             :answers="poll.answers"
             :opt="poll.user.id == user.id ? true : false">
             <ul slot="dropdown-menu" class="dropdown-menu">
-              <li><a href="#" @click="editPoll(poll.id)">Edit</a></li>
-              <li><a href="#" @click="confirmDeletePoll(poll.id)">Delete</a></li>
+              <li><a href="#" @click.prevent="edit(poll.id)">Edit</a></li>
+              <li><a href="#" @click.prevent="showModal('#confirm-poll-modal', 'Delete', poll.id)">Delete</a></li>
             </ul>
           </panel-poll>
         </transition-group>
 
         <div class="panel panel-default">
           <div class="panel-body text-center">
-            <a v-if="!polls.full" href="#" @click.prevent="getPolls">Load more...</a>
+            <a v-if="!full" href="#" @click.prevent="getAct">Load more...</a>
             <span v-else>No more poll</span>
           </div>
         </div>
@@ -475,7 +463,7 @@
       <div v-else-if="active == 'suggestion'">
         <transition-group name="list">
           <panel-suggestion
-            v-for="suggestion in suggestions.data"
+            v-for="suggestion in suggestions"
             :key="suggestion.id"
             :profile="'{{ url('/profile') }}/' + suggestion.user.id"
             :image="'/images/user.jpg'"
@@ -486,27 +474,29 @@
             :message="suggestion.message"
             :opt="suggestion.user.id == user.id ? true : false">
             <ul slot="dropdown-menu" class="dropdown-menu">
-              <li><a href="#" @click="editSuggestion(suggestion.id)">Edit</a></li>
-              <li><a href="#" @click="confirmDeleteSuggestion(suggestion.id)">Delete</a></li>
+              <li><a href="#" @click.prevent="edit(suggestion.id)">Edit</a></li>
+              <li><a href="#" @click.prevent="showModal('#confirm-suggestion-modal', 'Delete', suggestion.id)">Delete</a></li>
             </ul>
           </panel-suggestion>
         </transition-group>
 
         <div class="panel panel-default">
           <div class="panel-body text-center">
-            <a v-if="!suggestions.full" href="#" @click.prevent="getSuggestions">Load more...</a>
+            <a v-if="!full" href="#" @click.prevent="getAct">Load more...</a>
             <span v-else>No more suggestion</span>
           </div>
         </div>
       </div>
 
       <div v-else>
+        Invalid!
       </div>
 
     </div> {{-- #activity --}} 
 
   </div> {{-- .row --}}
 </div> {{-- .container --}}
+
 @endsection
 
 @push('scripts')

@@ -21,7 +21,3 @@ Vue.component('panel-suggestion', require('./components/panel-suggestion.vue'));
 const app = new Vue({
   el: '#app'
 })
-
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
