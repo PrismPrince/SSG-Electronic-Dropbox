@@ -13,13 +13,13 @@ Vue.mixin({
 
       // init
       user:         null,
-      active:       'poll',
+      active:       'post',
       action:       '',
       skip:         0,
       take:         5,
       full:         false,
       disabled:     true,
-      enlarge:      false,
+      // enlarge:      false,
 
       // view data handlers
       posts:        [],
@@ -518,6 +518,8 @@ Vue.mixin({
       }
 
     }, // addAnswer
+
+    
 
     removeAnswer(key) {
 

@@ -406,17 +406,17 @@
           <panel-post
             v-for="post in posts"
             :key="post.id"
-            :profile="'{{ url('/profile') }}/' + post.user.id"
-            :image="'/images/user.jpg'"
-            :fullname="post.user.fname + ' ' + post.user.lname"
-            :date="post.created_at"
-            :title="post.title"
-            :desc="post.desc"
-            :opt="post.user.id == user.id ? true : false">
-            <ul slot="dropdown-menu" class="dropdown-menu">
-              <li><a href="#" @click.prevent="edit(post.id)">Edit</a></li>
-              <li><a href="#" @click.prevent="showModal('#confirm-post-modal', 'Delete', post.id)">Delete</a></li>
-            </ul>
+            :post-act="post"
+          >
+            <div v-if="post.user.id == user.id" slot="dropdown-menu" class="dropdown pull-right">
+              <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#" @click.prevent="edit(post.id)">Edit</a></li>
+                <li><a href="#" @click.prevent="showModal('#confirm-post-modal', 'Delete', post.id)">Delete</a></li>
+              </ul>
+            </div>
           </panel-post>
         </transition-group>
 
@@ -432,10 +432,13 @@
         <transition-group name="list">
           <panel-poll
             v-for="poll in polls"
+            :polls="polls"
+            :auth-user="user"
             :key="poll.id"
             :profile="'{{ url('/profile') }}/' + poll.user.id"
             :image="'/images/user.jpg'"
             :fullname="poll.user.fname + ' ' + poll.user.lname"
+            @vote="selectAnswer(ans)"
             :date="poll.created_at"
             :title="poll.title"
             :desc="poll.desc"

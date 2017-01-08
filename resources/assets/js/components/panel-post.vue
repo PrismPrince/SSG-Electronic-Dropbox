@@ -1,20 +1,15 @@
 <template>
   <div class="panel list-item post panel-default">
     <div class="panel-head">
-      <div v-if="opt" class="dropdown pull-right">
-        <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          <span></span>
-        </a>
-        <slot name="dropdown-menu"></slot>
-      </div>
+      <slot name="dropdown-menu"></slot>
       <a class="profile-img" :href="profile">
         <img :src="image" :alt="fullname">
       </a>
-      <h4><a :href="profile">{{fullname}}</a><br><small class="text-capitalize">{{date | formatDate}}</small></h4>
+      <h4><a :href="profile">{{fullname}}</a><br><small class="text-capitalize">{{date}}</small></h4>
     </div>
     <div class="panel-body">
-      <h3>{{title}}</h3><hr>
-      <p :class="enlarge ? 'enlarge' : ''" v-html="htmlEntities(desc)"></p>
+      <h3>{{postAct.title}}</h3><hr>
+      <p :class="enlarge ? 'enlarge' : ''" v-html="desc"></p>
     </div>
   </div>
 </template>
@@ -22,69 +17,28 @@
 <script>
   export default {
     props: {
-      profile: {
-        type: String,
-        required: true
-      },
-      image: {
-        type: String,
-        required: true
-      },
-      fullname: {
-        type: String,
-        required: true
-      },
-      date: {
-        type: String,
-        required: true
-      },
-      title: {
-        type: String,
-        required: true
-      },
-      desc: {
-        type: String,
-        required: true
-      },
-      opt: {
-        type: Boolean,
+      postAct: {
+        type: Object,
         required: true
       }
     },
-    data() {
-      return {
-        enlarge: false
-      }
-    },
-    methods: {
-      htmlEntities(text) {
-        if (text.length <= 85) this.enlarge = true
+    computed: {
+      enlarge() {
+        if (this.desc.length <= 85) return true
+        else return false
+      },
+      image() {
+        return window.location.origin + '/images/user.jpg'
+      },
+      profile() {
+        return window.location.origin + '/profile/' + this.postAct.user.id
+      },
+      fullname() {
+        return this.postAct.user.fname + ' ' + this.postAct.user.lname
+      },
+      date() {
+        var date = this.postAct.created_at
 
-        text = text.replace(/[(<>"'&]/g, function (x) {
-          if (x == "<") return "&lt;"
-          else if (x == ">") return "&gt;"
-          else if (x == "\"") return "&quot;"
-          else if (x == "'") return "&apos;"
-          else if (x == "&") return "&amp;"
-        })
-
-        var hashed = text.match(/\s?#\w+\s?/g)
-        hashed = _.map(hashed, function (x) {return _.trim(x)})
-
-        _.forEach(hashed, function (x) {
-          if (/^#\d+$/.test(x)) return
-          else {
-            text = text.replace(x, '<a href="' + window.location.origin + '/search/' + x + '">' + x + '</a>')
-          }
-        })
-
-        text = text.replace(/[\n\r\f]/g, '<br>')
-
-        return text
-      }
-    },
-    filters: {
-      formatDate(date) {
         if (moment().diff(moment(date), 'second') <= 5) {
           return 'just now'
         } else if (moment().diff(moment(date), 'day') == 0) {
@@ -98,6 +52,31 @@
         } else {
           return moment(date).format('MMM D, YYYY [at] h:mm a')
         }
+      },
+      desc() {
+        var text = this.postAct.desc
+
+        text = text.replace(/[(<>"'&]/g, function (char) {
+          if (char == "<") return "&lt;"
+          else if (char == ">") return "&gt;"
+          else if (char == "\"") return "&quot;"
+          else if (char == "'") return "&apos;"
+          else if (char == "&") return "&amp;"
+        })
+
+        var hashed = text.match(/\s?#\w+\s?/g)
+        hashed = _.map(hashed, function (word) {return _.trim(word)})
+
+        _.forEach(hashed, function (word) {
+          if (/^#\d+$/.test(word)) return
+          else {
+            text = text.replace(word, '<a href="' + window.location.origin + '/search/' + word + '">' + word + '</a>')
+          }
+        })
+
+        text = text.replace(/[\n\r\f]/g, '<br>')
+
+        return text
       }
     }
   }
