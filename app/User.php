@@ -54,4 +54,9 @@ class User extends Authenticatable
   {
     return $this->hasMany(Suggestion::class);
   }
+
+  public function answers()
+  {
+    return $this->belongsToMany(Answer::class, 'votes');
+  }
 }

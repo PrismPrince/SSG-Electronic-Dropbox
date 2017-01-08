@@ -34,12 +34,10 @@
               selected: hasValue(answer.id) ? true : false,
               disabled: disabled
             }"
-            data-toggle="tooltip"
-            data-placement="left"
-            :data-title="'40% 12 votes'"
-            @click="selectAnswer(answer.id)"
+            :data-title="tooltip(answer.users.length)"
+            @click="vote(answer.id)"
           >
-            <div class="bar" :style="'width: 60%;'"></div>
+            <div class="bar" :style="'width: ' + bar(answer.users.length) + '%;'"></div>
             <div class="bar-label">
               <span class="glyphicon" :class="hasValue(answer.id) ? 'glyphicon-ok-sign' : 'glyphicon-ok-circle'"></span>
               <span>{{answer.answer}}</span>
@@ -56,6 +54,10 @@
 <script>
   export default {
     props: {
+      authUser: {
+        type: Object,
+        required: true
+      },
       profile: {
         type: String,
         required: true
@@ -109,66 +111,118 @@
       return {
         enlarge: false,
         disabled: false,
-        selected: []
+        selected: [],
+        voters: []
       }
     },
+    mounted() {
+
+      for (var i = 0; i < this.answers.length; i++) {
+        var answer = this.answers[i] //obj
+
+        for (var j = 0; j < answer.users.length; j++) {
+          var user = answer.users[j] //obj
+
+          this.voters.push(user)
+
+          if (user.id == this.authUser.id) {
+            this.selected.push(answer.id)
+          }
+        }
+      }
+
+    },
     methods: {
+      bar(i) {
+        if (this.voters.length == 0) return 0
+        return ((i / this.voters.length) * 100)
+      },
+      tooltip(users) {
+        _.delay(function () {
+          $('.bar-wrapper').tooltip({
+            placement: 'left'
+          })
+        }, 1000)
+
+        return (Math.round(this.bar(users) * 100) / 100) + '% ' + users + ' vote' + (users == 1 ? '' : 's')
+      },
       hasValue(id) {
         return _.indexOf(this.selected, id) != -1
       },
       selectAnswer(id) {
 
-        var vm = this
+      // this.disabled = true
 
-        vm.disabled = true
+      this.$http
+        .post(window.location.origin + '/api/vote', {
+          answer: id
+        })
 
+        .then((response) => {
 
-        // _.delay(function () {
+          var i = _.indexOf(this.polls, _.find(this.polls, {id: response.data.id}))
 
-          vm.$http
-            .post(window.location.origin + '/api/vote', {
-              answer: id
-            },
-            {
-              before() {
+          this.polls.splice(i, 1, response.data)
+          
+          // if (this. type == 'once') {
+          //   this.selected.splice(0, 1, id)
+          // }
+          // if (this.type == 'multi') {
+          //   var i = _.indexOf(this.selected, id)
+          //   if (i == -1) {
+          //     this.selected.push(id)
+          //   } else {
+          //     this.selected.splice(i, 1)
+          //   }
+          // }
 
-                if (vm.type == 'once') {
-                  vm.selected.splice(0, 1, id)
+          // this.disabled = false
 
-                }
+        })
 
-                if (vm.type == 'multi') {
-                  var i = _.indexOf(vm.selected, id)
+        .catch((response) => {
+          console.error(response.error)
 
-                  if (i == -1) {
-                    vm.selected.push(id)
+          // this.disabled = false
 
-                  } else {
-                    vm.selected.splice(i, 1)
+        })
 
-                  }
+    },
+      // selectAnswer(id) {
 
-                }
+      //   this.disabled = true
 
-              }
-            })
+      //   this.$http
+      //     .post(window.location.origin + '/api/vote', {
+      //       answer: id
+      //     })
 
-            .then((response) => {
-              console.log(response.data)
+      //     .then((response) => {
+            
+      //       if (this. type == 'once') {
+      //         this.selected.splice(0, 1, id)
+      //       }
+      //       if (this.type == 'multi') {
+      //         var i = _.indexOf(this.selected, id)
+      //         if (i == -1) {
+      //           this.selected.push(id)
+      //         } else {
+      //           this.selected.splice(i, 1)
+      //         }
+      //       }
 
-              vm.disabled = false
+      //       this.disabled = false
 
-            })
+      //     })
 
-            .catch((response) => {
-              console.error(response.error)
+      //     .catch((response) => {
+      //       console.error(response.error)
 
-            })
+      //       this.disabled = false
 
+      //     })
 
-        // }, 1000)
-
-      },
+      // },
       htmlEntities(text) {
         if (text.length <= 85) this.enlarge = true
 

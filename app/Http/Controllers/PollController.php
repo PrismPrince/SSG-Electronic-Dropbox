@@ -17,7 +17,7 @@ class PollController extends Controller
 
   public function index(Request $request)
   {
-    return response()->json(Poll::with('user')->with('answers')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get());
+    return response()->json(Poll::with('user')->with('answers.users')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get());
   }
 
   public function create()
@@ -54,7 +54,7 @@ class PollController extends Controller
 
     $poll->answers()->saveMany($answers);
 
-    return response()->json(Poll::with('user')->with('answers')->find($poll->id));
+    return response()->json(Poll::with('user')->with('answers.users')->find($poll->id));
   }
 
   public function show($id)
@@ -113,7 +113,7 @@ class PollController extends Controller
 
     $poll->save();
 
-    return response()->json(Poll::with('user')->with('answers')->find($id));
+    return response()->json(Poll::with('user')->with('answers.users')->find($id));
   }
 
   public function destroy($poll)
@@ -122,5 +122,25 @@ class PollController extends Controller
     $poll->delete();
 
     return response()->json($poll);
+  }
+
+  public function vote(Request $request)
+  {
+    $answer = Answer::find($request->answer);
+
+    if ($answer->poll->type == 'once') {
+      foreach ($answer->poll->answers()->get() as $ans) {
+        if ($ans->users()->get()->contains(Auth::guard('api')->id())) {
+          $ans->users()->toggle(Auth::guard('api')->id());
+        }
+      }
+      $answer->users()->toggle(Auth::guard('api')->id());
+    } else if ($answer->poll->type == 'multi') {
+      $answer->users()->toggle(Auth::guard('api')->id());
+    }
+
+    // $user = Auth::guard('api')->user();
+    // $user->answers()->toggle($request->answer);
+    return response()->json(Poll::with('user')->with('answers.users')->find($answer->poll->id));
   }
 }
