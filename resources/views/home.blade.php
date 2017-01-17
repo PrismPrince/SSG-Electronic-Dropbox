@@ -396,7 +396,7 @@
         </div>
       </div> {{-- .panel --}}
 
-    <pre>@{{$data}}</pre>
+      <pre>@{{$data}}</pre>
     </div> {{-- .col-sm-4 --}}
 
     <div id="activity" class="col-sm-8">
@@ -422,8 +422,9 @@
 
         <div class="panel panel-default">
           <div class="panel-body text-center">
-            <a v-if="!full" href="#" @click.prevent="getAct">Load more...</a>
-            <span v-else>No more post</span>
+            <div class="loading-circle" v-show="loadmore"><span class="sr-only">loading...</span></div>
+            <a v-if="!full" v-show="!loadmore" href="#" @click.prevent="getAct">Load more...</a>
+            <span v-else v-show="!loadmore">No more post</span>
           </div>
         </div>
       </div>
@@ -432,33 +433,27 @@
         <transition-group name="list">
           <panel-poll
             v-for="poll in polls"
-            :polls="polls"
             :auth-user="user"
             :key="poll.id"
-            :profile="'{{ url('/profile') }}/' + poll.user.id"
-            :image="'/images/user.jpg'"
-            :fullname="poll.user.fname + ' ' + poll.user.lname"
-            @vote="selectAnswer(ans)"
-            :date="poll.created_at"
-            :title="poll.title"
-            :desc="poll.desc"
-            :start="poll.start"
-            :end="poll.end"
-            :status="poll.status"
-            :type="poll.type"
-            :answers="poll.answers"
-            :opt="poll.user.id == user.id ? true : false">
+            :poll-act="poll"
+          >
+          <div slot="dropdown-menu" v-if="poll.user.id == user.id" class="dropdown pull-right">
+            <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <span></span>
+            </a>
             <ul slot="dropdown-menu" class="dropdown-menu">
               <li><a href="#" @click.prevent="edit(poll.id)">Edit</a></li>
               <li><a href="#" @click.prevent="showModal('#confirm-poll-modal', 'Delete', poll.id)">Delete</a></li>
             </ul>
+          </div>
           </panel-poll>
         </transition-group>
 
         <div class="panel panel-default">
           <div class="panel-body text-center">
-            <a v-if="!full" href="#" @click.prevent="getAct">Load more...</a>
-            <span v-else>No more poll</span>
+            <div class="loading-circle" v-show="loadmore"><span class="sr-only">loading...</span></div>
+            <a v-if="!full" v-show="!loadmore" href="#" @click.prevent="getAct">Load more...</a>
+            <span v-else v-show="!loadmore">No more poll</span>
           </div>
         </div>
       </div>
@@ -468,31 +463,31 @@
           <panel-suggestion
             v-for="suggestion in suggestions"
             :key="suggestion.id"
-            :profile="'{{ url('/profile') }}/' + suggestion.user.id"
-            :image="'/images/user.jpg'"
-            :fullname="suggestion.user.fname + ' ' + suggestion.user.lname"
-            :date="suggestion.created_at"
-            :title="suggestion.title"
-            :direct="suggestion.direct"
-            :message="suggestion.message"
-            :opt="suggestion.user.id == user.id ? true : false">
+            :suggestion-act="suggestion"
+          >
+          <div v-if="suggestion.user.id == user.id" class="dropdown pull-right">
+            <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <span></span>
+            </a>
             <ul slot="dropdown-menu" class="dropdown-menu">
               <li><a href="#" @click.prevent="edit(suggestion.id)">Edit</a></li>
               <li><a href="#" @click.prevent="showModal('#confirm-suggestion-modal', 'Delete', suggestion.id)">Delete</a></li>
             </ul>
+          </div>
           </panel-suggestion>
         </transition-group>
 
         <div class="panel panel-default">
           <div class="panel-body text-center">
-            <a v-if="!full" href="#" @click.prevent="getAct">Load more...</a>
-            <span v-else>No more suggestion</span>
+            <div class="loading-circle" v-show="loadmore"><span class="sr-only">loading...</span></div>
+            <a v-if="!full" v-show="!loadmore" href="#" @click.prevent="getAct">Load more...</a>
+            <span v-else v-show="!loadmore">No more suggestion</span>
           </div>
         </div>
       </div>
 
-      <div v-else>
-        Invalid!
+      <div class="text-center" v-else>
+        No Activities!
       </div>
 
     </div> {{-- #activity --}} 
@@ -503,8 +498,8 @@
 @endsection
 
 @push('scripts')
-  <script src="/js/home.js"></script>
   <script src="/js/bootstrap-datetimepicker.min.js"></script>
+  <script src="/js/home.js"></script>
 @endpush
 
 @push('styles')
