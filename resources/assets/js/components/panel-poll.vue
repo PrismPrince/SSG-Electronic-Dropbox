@@ -1,273 +1,240 @@
 <template>
   <div class="panel list-item post panel-default">
+
     <div class="panel-head">
-      <div v-if="opt" class="dropdown pull-right">
-        <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          <span></span>
-        </a>
-        <slot name="dropdown-menu"></slot>
-      </div>
+      <slot name="dropdown-menu"></slot>
       <a class="profile-img" :href="profile">
         <img :src="image" :alt="fullname">
       </a>
-      <h4><a :href="profile">{{fullname}}</a><br><small class="text-capitalize">{{date | formatDate}}</small></h4>
-    </div>
+      <h4><a :href="profile">{{fullname}}</a><br><small class="text-capitalize">{{date}}</small></h4>
+    </div> <!-- .panel-head -->
+
     <div class="panel-body">
+
       <h3>
-        <span>{{title}}</span>
-        <span v-if="status == 'active'" class="label label-success">Active</span>
-        <span v-if="status == 'pending'" class="label label-default">Pending</span>
-        <span v-if="status == 'expired'" class="label label-danger">Expired</span>
+        <span>{{pollAct.title}}</span>
+        <span v-if="pollAct.status == 'active'" class="label label-success">Active</span>
+        <span v-else-if="pollAct.status == 'pending'" class="label label-default">Pending</span>
+        <span v-else-if="pollAct.status == 'expired'" class="label label-danger">Expired</span>
         <br>
-        <small><b>Start:</b> {{start | formatDateTimeNormal}}</small>
+        <small><b>Start:</b> {{pollAct.start | formatDateTimeNormal}}</small>
         <br>
-        <small><b>End:</b> {{end | formatDateTimeNormal}}</small>
+        <small><b>End:</b> {{pollAct.end | formatDateTimeNormal}}</small>
       </h3><hr>
-      <p :class="enlarge ? 'enlarge' : ''" v-html="htmlEntities(desc)"></p>
+
+      <p :class="enlarge ? 'enlarge' : ''" v-html="desc"></p>
       <hr>
+
       <h4>Answers</h4>
-      <fieldset :disabled="disabled">
-        <div class="answer" v-for="answer in answers">
-          <button
-            class="bar-wrapper btn-default"
-            :class="{
-              selected: hasValue(answer.id) ? true : false,
-              disabled: disabled
-            }"
-            :data-title="tooltip(answer.users.length)"
-            @click="vote(answer.id)"
-          >
-            <div class="bar" :style="'width: ' + bar(answer.users.length) + '%;'"></div>
-            <div class="bar-label">
-              <span class="glyphicon" :class="hasValue(answer.id) ? 'glyphicon-ok-sign' : 'glyphicon-ok-circle'"></span>
-              <span>{{answer.answer}}</span>
-            </div>
-          </button>
-          <input v-if="type == 'once'" v-show="false" type="radio" name="answer" :value="answer.id" v-model="selected">
-          <input v-if="type == 'multi'" v-show="false" type="checkbox" name="answer" :value="answer.id" v-model="selected">
-        </div>
+
+      <fieldset :disabled="ansDisabled">
+        <div class="loading-circle" v-if="!answers"><span class="sr-only">Loading...</span></div>
+        <bar-answer
+          v-else
+          v-for="answer in answers"
+          :auth-user="authUser"
+          :answer="answer"
+          :all-voters="allVoters"
+          :poll-type="pollAct.type"
+          :btn-disabled="ansDisabled"
+          @updateanswers="getAnswers"
+        >
+        </bar-answer>
       </fieldset>
-    </div>
+
+    </div> <!-- .panel-body -->
+
   </div>
 </template>
 
 <script>
   export default {
+
     props: {
+
       authUser: {
-        type: Object,
-        required: true
+        type:       Object,
+        required:   true
       },
-      profile: {
-        type: String,
-        required: true
-      },
-      image: {
-        type: String,
-        required: true
-      },
-      fullname: {
-        type: String,
-        required: true
-      },
-      date: {
-        type: String,
-        required: true
-      },
-      title: {
-        type: String,
-        required: true
-      },
-      desc: {
-        type: String,
-        required: true
-      },
-      start: {
-        type: String,
-        required: true
-      },
-      end: {
-        type: String,
-        required: true
-      },
-      status: {
-        type: String,
-        required: true
-      },
-      type: {
-        type: String,
-        required: true
-      },
-      answers: {
-        type: Array,
-        required: true
-      },
-      opt: {
-        type: Boolean,
-        required: true
+
+      pollAct: {
+        type:       Object,
+        required:   true
       }
+
     },
+
     data() {
+
       return {
-        enlarge: false,
-        disabled: false,
-        selected: [],
-        voters: []
+
+        ansDisabled:  false,
+        answers:      null,
+        allVoters:    []
+
       }
+
     },
     mounted() {
 
-      for (var i = 0; i < this.answers.length; i++) {
-        var answer = this.answers[i] //obj
-
-        for (var j = 0; j < answer.users.length; j++) {
-          var user = answer.users[j] //obj
-
-          this.voters.push(user)
-
-          if (user.id == this.authUser.id) {
-            this.selected.push(answer.id)
-          }
-        }
-      }
+      this.getAnswers()
 
     },
-    methods: {
-      bar(i) {
-        if (this.voters.length == 0) return 0
-        return ((i / this.voters.length) * 100)
+
+    computed: {
+
+      enlarge() {
+
+        if (this.pollAct.desc.length <= 85)   return true
+        else                                  return false
+
       },
-      tooltip(users) {
-        _.delay(function () {
-          $('.bar-wrapper').tooltip({
-            placement: 'left'
-          })
-        }, 1000)
 
-        return (Math.round(this.bar(users) * 100) / 100) + '% ' + users + ' vote' + (users == 1 ? '' : 's')
+      image() {
+
+        return window.location.origin + '/images/user.jpg'
+
       },
-      hasValue(id) {
-        return _.indexOf(this.selected, id) != -1
+
+      profile() {
+
+        return window.location.origin + '/profile/' + this.pollAct.user.id
+
       },
-      selectAnswer(id) {
 
-      // this.disabled = true
+      fullname() {
 
-      this.$http
-        .post(window.location.origin + '/api/vote', {
-          answer: id
-        })
+        return this.pollAct.user.fname + ' ' + this.pollAct.user.lname
 
-        .then((response) => {
+      },
 
-          var i = _.indexOf(this.polls, _.find(this.polls, {id: response.data.id}))
+      date() {
 
-          this.polls.splice(i, 1, response.data)
-          
-          // if (this. type == 'once') {
-          //   this.selected.splice(0, 1, id)
-          // }
-          // if (this.type == 'multi') {
-          //   var i = _.indexOf(this.selected, id)
-          //   if (i == -1) {
-          //     this.selected.push(id)
-          //   } else {
-          //     this.selected.splice(i, 1)
-          //   }
-          // }
+        var date = this.pollAct.created_at
 
-          // this.disabled = false
+        if      (moment().diff(moment(date), 'second') <= 5)  return 'just now'
+        else if (moment().diff(moment(date), 'day') == 0)     return moment().fromNow()
+        else if (moment().diff(moment(date), 'day') == 1)     return 'yesterday at ' + moment(date).format('h:mm a')
+        else if (moment().diff(moment(date), 'day') < 7)      return moment(date).format('ddd [at] h:mm a')
+        else if (moment().diff(moment(date), 'year') == 0)    return moment(date).format('MMM D [at] h:mm a')
+        else                                                  return moment(date).format('MMM D, YYYY [at] h:mm a')
 
-        })
+      },
 
-        .catch((response) => {
-          console.error(response.error)
+      desc() {
 
-          // this.disabled = false
+        var text = this.pollAct.desc
 
-        })
+        text = text.replace(/[(<>"'&]/g, function (char) {
 
-    },
-      // selectAnswer(id) {
+          if      (char == "<")   return "&lt;"
+          else if (char == ">")   return "&gt;"
+          else if (char == "\"")  return "&quot;"
+          else if (char == "'")   return "&apos;"
+          else if (char == "&")   return "&amp;"
 
-      //   this.disabled = true
-
-      //   this.$http
-      //     .post(window.location.origin + '/api/vote', {
-      //       answer: id
-      //     })
-
-      //     .then((response) => {
-            
-      //       if (this. type == 'once') {
-      //         this.selected.splice(0, 1, id)
-      //       }
-      //       if (this.type == 'multi') {
-      //         var i = _.indexOf(this.selected, id)
-      //         if (i == -1) {
-      //           this.selected.push(id)
-      //         } else {
-      //           this.selected.splice(i, 1)
-      //         }
-      //       }
-
-      //       this.disabled = false
-
-      //     })
-
-      //     .catch((response) => {
-      //       console.error(response.error)
-
-      //       this.disabled = false
-
-      //     })
-
-      // },
-      htmlEntities(text) {
-        if (text.length <= 85) this.enlarge = true
-
-        text = text.replace(/[(<>"'&]/g, function (x) {
-          if (x == "<") return "&lt;"
-          else if (x == ">") return "&gt;"
-          else if (x == "\"") return "&quot;"
-          else if (x == "'") return "&apos;"
-          else if (x == "&") return "&amp;"
         })
 
         var hashed = text.match(/\s?#\w+\s?/g)
-        hashed = _.map(hashed, function (x) {return _.trim(x)})
+        
+        hashed = _.map(hashed, function (word) {
 
-        _.forEach(hashed, function (x) {
-          if (/^#\d+$/.test(x)) return
-          else {
-            text = text.replace(x, '<a href="' + window.location.origin + '/search/' + x + '">' + x + '</a>')
-          }
+          return _.trim(word)
+
+        })
+
+        _.forEach(hashed, function (word) {
+
+          if (/^#\d+$/.test(word))  return
+          else                      text = text.replace(word, '<a href="' + window.location.origin + '/search/' + word + '">' + word + '</a>')
+
         })
 
         text = text.replace(/[\n\r\f]/g, '<br>')
 
         return text
+
       }
+
     },
-    filters: {
-      formatDateTimeNormal(date) {
-        return moment(date).format('MMM D, YYYY [at] h:mm a')
+
+    methods: {
+
+      getAllVotes() {
+
+        this.allVoters = []
+
+        this.$http
+          .get(window.location.origin + '/api/poll/' + this.pollAct.id + '/voters')
+
+          .then((response) => {
+
+            for (var i = 0; i <= response.data.length - 1; i++) this.allVoters.push(response.data[i])
+
+            this.enableAnswers()
+
+          })
+
+          .catch((response) => {
+
+            console.error('error')
+
+          })
+
       },
-      formatDate(date) {
-        if (moment().diff(moment(date), 'second') <= 5) {
-          return 'just now'
-        } else if (moment().diff(moment(date), 'day') == 0) {
-          return moment().fromNow()
-        } else if (moment().diff(moment(date), 'day') == 1) {
-          return 'yesterday at ' + moment(date).format('h:mm a')
-        } else if (moment().diff(moment(date), 'day') < 7) {
-          return moment(date).format('ddd [at] h:mm a')
-        } else if (moment().diff(moment(date), 'year') == 0) {
-          return moment(date).format('MMM D [at] h:mm a')
-        } else {
-          return moment(date).format('MMM D, YYYY [at] h:mm a')
-        }
+
+      getAnswers() {
+
+        this.disableAnswers()
+
+        this.answers = null
+
+        this.$http
+          .get(window.location.origin + '/api/poll/' + this.pollAct.id + '/answers')
+
+          .then((response) => {
+
+            this.answers = response.data
+
+            this.$nextTick(function () {
+
+              this.getAllVotes()
+
+            })
+
+          })
+
+          .catch((response) => {
+
+            console.error('error')
+
+          })
+
+      },
+
+      disableAnswers() {
+
+        this.ansDisabled = true
+
+      },
+
+      enableAnswers() {
+
+        this.ansDisabled = false
+
       }
+
+    },
+
+    filters: {
+
+      formatDateTimeNormal(date) {
+
+        return moment(date).format('MMM D, YYYY [at] h:mm a')
+
+      }
+
     }
+
   }
 </script>

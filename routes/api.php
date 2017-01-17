@@ -17,5 +17,8 @@ Route::get('/user', 'HomeController@getUser');
 
 Route::resource('/post', 'PostController', ['except' => ['create', 'show']]);
 Route::resource('/poll', 'PollController', ['except' => ['create', 'show']]);
+Route::get('/poll/{poll}/answers', 'PollController@getAnswers');
+Route::get('/poll/{poll}/voters', 'PollController@getAllVoters');
+Route::get('/answer/{answer}/voters', 'AnswerController@getVoters');
 Route::post('/vote', 'PollController@vote');
 Route::resource('/suggestion', 'SuggestionController', ['except' => ['create', 'show']]);
