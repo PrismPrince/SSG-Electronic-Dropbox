@@ -19,7 +19,7 @@ Vue.mixin({
       take:         5,
       full:         false,
       disabled:     true,
-      // enlarge:      false,
+      loadmore:     false,
 
       // view data handlers
       posts:        [],
@@ -285,6 +285,8 @@ Vue.mixin({
 
     getAct() {
 
+      this.loadmore = true
+
       this.$http
         .get(window.location.origin + '/api/' + this.active + '?skip=' + this.skip + '&take=' + this.take)
 
@@ -293,14 +295,18 @@ Vue.mixin({
 
           this.skip += 5
 
-          if (this.active == 'post')              for (var i = 0; i <= response.data.length - 1; i++)     this.posts.push(response.data[i])
+          if      (this.active == 'post')         for (var i = 0; i <= response.data.length - 1; i++)     this.posts.push(response.data[i])
           else if (this.active == 'poll')         for (var i = 0; i <= response.data.length - 1; i++)     this.polls.push(response.data[i])
           else if (this.active == 'suggestion')   for (var i = 0; i <= response.data.length - 1; i++)     this.suggestions.push(response.data[i])
+
+          this.loadmore = false
 
         })
 
         .catch((response) => {
           console.error(response.error)
+
+          this.loadmore = false
 
         })
 
@@ -425,7 +431,7 @@ Vue.mixin({
 
     destroy() {
 
-      if (this.active == 'post')              var id = this.post.id
+      if      (this.active == 'post')         var id = this.post.id
       else if (this.active == 'poll')         var id = this.poll.id
       else if (this.active == 'suggestion')   var id = this.suggestion.id
 
@@ -518,8 +524,6 @@ Vue.mixin({
       }
 
     }, // addAnswer
-
-    
 
     removeAnswer(key) {
 

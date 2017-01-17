@@ -7930,4 +7930,42 @@ button.close {
   right: 10px;
 }
 
+.tooltip-answer {
+  opacity: 1;
+  margin-top: -25px;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.loading-circle {
+  margin: auto;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  border: 0.4rem solid #8eb4cb;
+  border-top-color: #3097D1;
+  -webkit-animation: spin 1s infinite linear;
+  animation: spin 1s infinite linear;
+}
+
 /*# sourceMappingURL=app.css.map */
