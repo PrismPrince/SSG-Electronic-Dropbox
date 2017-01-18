@@ -5,7 +5,7 @@
       <a class="profile-img" :href="profile">
         <img :src="image" :alt="fullname">
       </a>
-      <h4><a :href="profile">{{fullname}}</a> suggest to <b>{{suggestionAct.direct}}</b><br><small class="text-capitalize">{{date}}</small></h4>
+      <h4><a :href="profile">{{fullname}}</a> suggest to <b>{{suggestionAct.direct}}</b><br><small>{{date}}</small></h4>
     </div>
     <div class="panel-body">
       <h3>{{suggestionAct.title}}</h3><hr>
