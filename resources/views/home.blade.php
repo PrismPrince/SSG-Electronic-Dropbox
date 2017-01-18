@@ -13,10 +13,14 @@
         </div>
 
         <div class="modal-body">
+
           <div class="row">
 
             <div class="col-sm-12">
-              <div class="form-group">
+              <div
+                class="form-group"
+                :class="post.errors.title.status != post.errors.title.dirty ? 'has-error' : ''"
+              >
                 <label for="post-title" class="control-label">Title</label>
                 <input
                   id="post-title"
@@ -28,11 +32,23 @@
                   v-model.trim="post.title"
                   @keyup.enter.prevent="focus('#post-desc')"
                 >
+
+                <span class="help-block" v-if="post.errors.title.status != post.errors.title.dirty">
+                  <strong>@{{post.errors.title.text}}</strong>
+                </span>
+
               </div>
             </div>
 
+          </div> {{-- .row --}}
+
+          <div class="row">
+
             <div class="col-sm-12">
-              <div class="form-group">
+              <div
+                class="form-group"
+                :class="post.errors.desc.status != post.errors.desc.dirty ? 'has-error' : ''"
+              >
                 <label for="post-desc" class="control-label">Description</label>
                 <textarea
                   id="post-desc"
@@ -40,15 +56,21 @@
                   placeholder="Write about it"
                   v-model.trim="post.desc"
                 ></textarea>
+
+                <span class="help-block" v-if="post.errors.desc.status != post.errors.desc.dirty">
+                  <strong>@{{post.errors.desc.text}}</strong>
+                </span>
+
               </div>
             </div>
 
           </div> {{-- .row --}}
+
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" @click="hideModal('#post-modal')">Cancel</button>
-          <button type="button" class="btn btn-primary" @click.prevent="submitAct">@{{action}}</button>
+          <button type="button" class="btn btn-primary" :disabled="btnPostDisabled" @click.prevent="submitAct">@{{action}}</button>
         </div>
 
       </fieldset>
@@ -95,10 +117,14 @@
         </div>
 
         <div class="modal-body">
+
           <div class="row">
 
             <div class="col-sm-12">
-              <div class="form-group">
+              <div
+                class="form-group"
+                :class="poll.errors.title.status != poll.errors.title.dirty ? 'has-error' : ''"
+              >
                 <label for="poll-title" class="control-label">Title</label>
                 <input
                   id="poll-title"
@@ -110,11 +136,23 @@
                   v-model.trim="poll.title"
                   @keyup.enter.prevent="focus('#poll-start')"
                 >
+
+                <span class="help-block" v-if="poll.errors.title.status != poll.errors.title.dirty">
+                  <strong>@{{poll.errors.title.text}}</strong>
+                </span>
+
               </div>
             </div>
 
-            <div class="col-sm-5">
-              <div class="form-group">
+          </div> {{-- .row --}}
+
+          <div class="row">
+
+            <div class="col-sm-6">
+              <div
+                class="form-group"
+                :class="poll.errors.start.status != poll.errors.start.dirty ? 'has-error' : ''"
+              >
                 <label for="poll-start" class="control-label">Start Date</label>
                 <input
                   id="poll-start"
@@ -126,11 +164,19 @@
                   v-model.trim="poll.start"
                   @keyup.enter.prevent="focus('#poll-end')"
                 >
+
+                <span class="help-block" v-if="poll.errors.start.status != poll.errors.start.dirty">
+                  <strong>@{{poll.errors.start.text}}</strong>
+                </span>
+
               </div>
             </div>
 
-            <div class="col-sm-5">
-              <div class="form-group">
+            <div class="col-sm-6">
+              <div
+                class="form-group"
+                :class="poll.errors.end.status != poll.errors.end.dirty ? 'has-error' : ''"
+              >
                 <label for="poll-end" class="control-label">End Date</label>
                 <input
                   id="poll-end"
@@ -140,13 +186,25 @@
                   maxlength="255"
                   required
                   v-model.trim="poll.end"
-                  @keyup.enter.prevent="focus('#poll-status')"
+                  @keyup.enter.prevent="focus('#poll-type')"
                 >
+
+                <span class="help-block" v-if="poll.errors.end.status != poll.errors.end.dirty">
+                  <strong>@{{poll.errors.end.text}}</strong>
+                </span>
+
               </div>
             </div>
 
-            <div class="col-sm-2">
-              <div class="form-group">
+          </div> {{-- .row --}}
+
+          <div class="row">
+
+            <div class="col-sm-6">
+              <div
+                class="form-group"
+                {{-- :class="poll.errors.status.status != poll.errors.status.dirty ? 'has-error' : ''" --}}
+              >
                 <label for="poll-status" class="control-label">Status</label>
                 <input
                   id="poll-status"
@@ -156,14 +214,21 @@
                   maxlength="255"
                   required
                   readonly
-                  v-model.trim="poll.status"
-                  @keyup.enter.prevent="focus('#poll-type')"
+                  v-model.trim="pollstatus"
                 >
+
+                {{-- <span class="help-block" v-if="poll.errors.status.status != poll.errors.status.dirty">
+                  <strong>@{{poll.errors.status.text}}</strong>
+                </span> --}}
+
               </div>
             </div>
 
-            <div class="col-sm-12">
-              <div class="form-group">
+            <div class="col-sm-6">
+              <div
+                class="form-group"
+                :class="poll.errors.type.status != poll.errors.type.dirty ? 'has-error' : ''"
+              >
                 <label class="control-label">Type</label>
                 <select
                   id="poll-type"
@@ -176,11 +241,23 @@
                   <option value="once">One answer</option>
                   <option value="multi">Multiple answers</option>
                 </select>
+
+                <span class="help-block" v-if="poll.errors.type.status != poll.errors.type.dirty">
+                  <strong>@{{poll.errors.type.text}}</strong>
+                </span>
+
               </div>
             </div>
 
+          </div> {{-- .row --}}
+
+          <div class="row">
+
             <div class="col-sm-12">
-              <div class="form-group">
+              <div
+                class="form-group"
+                :class="poll.errors.desc.status != poll.errors.desc.dirty ? 'has-error' : ''"
+              >
                 <label for="poll-desc" class="control-label">Description</label>
                 <textarea
                   id="poll-desc"
@@ -188,11 +265,23 @@
                   placeholder="Write about it"
                   v-model.trim="poll.desc"
                 ></textarea>
+
+                <span class="help-block" v-if="poll.errors.desc.status != poll.errors.desc.dirty">
+                  <strong>@{{poll.errors.desc.text}}</strong>
+                </span>
+
               </div>
             </div>
 
+          </div> {{-- .row --}}
+
+          <div class="row">
+
             <div class="col-sm-12">
-              <div class="form-group">
+              <div
+                class="form-group"
+                :class="poll.errors.answer.status != poll.errors.answer.dirty ? 'has-error' : ''"
+              >
                 <label for="poll-answers" class="control-label">Answers</label>
                 <div class="input-group">
                   <input
@@ -211,26 +300,32 @@
                     </button>
                   </span>
                 </div>
+
+                <span class="help-block" v-if="poll.errors.answer.status != poll.errors.answer.dirty">
+                  <strong>@{{poll.errors.answer.text}}</strong>
+                </span>
+
               </div>
             </div>
 
-          <div class="col-sm-12">
-            <ul class="list-group">
-              <li class="list-group-item" v-for="(answer, key) in poll.answers">
-                <button v-if="poll.answers.length > 2" class="remove btn btn-xs btn-danger" type="button" @click="removeAnswer(key)">
-                  <span class="glyphicon glyphicon-remove"></span>
-                </button>
-                @{{answer.answer}}
-              </li>
-            </ul>
-          </div>
+            <div class="col-sm-12">
+              <ul class="list-group">
+                <li class="list-group-item" v-for="(answer, key) in poll.answers">
+                  <button v-if="poll.answers.length > 2" class="remove btn btn-xs btn-danger" type="button" @click="removeAnswer(key)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                  @{{answer.answer}}
+                </li>
+              </ul>
+            </div>
 
           </div> {{-- .row --}}
+
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" @click="hideModal('#poll-modal')">Cancel</button>
-          <button type="button" class="btn btn-primary" @click.prevent="submitAct">@{{action}}</button>
+          <button type="button" class="btn btn-primary" :disabled="btnPollDisabled" @click.prevent="submitAct">@{{action}}</button>
         </div>
 
       </fieldset>
@@ -277,10 +372,14 @@
         </div>
 
         <div class="modal-body">
+
           <div class="row">
 
             <div class="col-sm-12">
-              <div class="form-group">
+              <div
+                class="form-group"
+                :class="suggestion.errors.title.status != suggestion.errors.title.dirty ? 'has-error' : ''"
+              >
                 <label for="suggestion-title" class="control-label">Title</label>
                 <input
                   id="suggestion-title"
@@ -293,11 +392,23 @@
                   v-model.trim="suggestion.title"
                   @keyup.enter.prevent="focus('#suggestion-direct')"
                 >
+
+                <span class="help-block" v-if="suggestion.errors.title.status != suggestion.errors.title.dirty">
+                  <strong>@{{suggestion.errors.title.text}}</strong>
+                </span>
+
               </div>
             </div>
 
+          </div> {{-- .row --}}
+
+          <div class="row">
+
             <div class="col-sm-12">
-              <div class="form-group">
+              <div
+                class="form-group"
+                :class="suggestion.errors.direct.status != suggestion.errors.direct.dirty ? 'has-error' : ''"
+              >
                 <label for="suggestion-direct" class="control-label">Direct</label>
                 <input
                   id="suggestion-direct"
@@ -310,11 +421,23 @@
                   v-model.trim="suggestion.direct"
                   @keyup.enter.prevent="focus('#suggestion-message')"
                 >
+
+                <span class="help-block" v-if="suggestion.errors.direct.status != suggestion.errors.direct.dirty">
+                  <strong>@{{suggestion.errors.direct.text}}</strong>
+                </span>
+
               </div>
             </div>
 
+          </div> {{-- .row --}}
+
+          <div class="row">
+
             <div class="col-sm-12">
-              <div class="form-group">
+              <div
+                class="form-group"
+                :class="suggestion.errors.message.status != suggestion.errors.message.dirty ? 'has-error' : ''"
+              >
                 <label for="suggestion-message" class="control-label">Message</label>
                 <textarea
                   id="suggestion-message"
@@ -323,15 +446,21 @@
                  
                   v-model.trim="suggestion.message"
                 ></textarea>
+
+                <span class="help-block" v-if="suggestion.errors.message.status != suggestion.errors.message.dirty">
+                  <strong>@{{suggestion.errors.message.text}}</strong>
+                </span>
+
               </div>
             </div>
 
           </div> {{-- .row --}}
+
         </div> {{-- .modal-body --}}
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" @click="hideModal('#suggestion-modal')">Cancel</button>
-          <button type="button" class="btn btn-primary" @click.prevent="submitAct">@{{action}}</button>
+          <button type="button" class="btn btn-primary" :disabled="btnSuggestionDisabled" @click.prevent="submitAct">@{{action}}</button>
         </div>
 
       </fieldset>

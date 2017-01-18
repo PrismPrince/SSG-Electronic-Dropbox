@@ -12,49 +12,145 @@ Vue.mixin({
     return {
 
       // init
-      user:         null,
-      active:       'post',
-      action:       '',
-      skip:         0,
-      take:         5,
-      full:         false,
-      disabled:     true,
-      loadmore:     false,
+      user:           null,
+      active:         'post',
+      action:         '',
+      skip:           0,
+      take:           5,
+      full:           false,
+      disabled:       true,
+      loadmore:       false,
 
       // view data handlers
-      posts:        [],
-      polls:        [],
-      suggestions:  [],
+      posts:          [],
+      polls:          [],
+      suggestions:    [],
 
       // post modification handler
       post: {
-        id:         null,
-        title:      '',
-        desc:       ''
-        // error: {}
+        id:           null,
+        title:        '',
+        desc:         '',
+        errors: {
+
+          title: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          desc: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          }
+
+        }
+
       },
 
       // poll modification handler
       poll: {
-        id:         null,
-        title:      '',
-        desc:       '',
-        start:      '',
-        end:        '',
-        type:       '',
-        status:     '',
-        answer:     '',
-        answers:    []
-        // error: {}
+        id:           null,
+        title:        '',
+        desc:         '',
+        start:        '',
+        end:          '',
+        type:         '',
+        answer:       '',
+        answers:      [],
+        errors: {
+
+          title: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          desc: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          start: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          end: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          type: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          answer: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+        }
+
       },
 
       // suggestion modification handler
       suggestion: {
-        id:         null,
-        title:      '',
-        direct:     '',
-        message:    ''
-        // error: {}
+        id:           null,
+        title:        '',
+        direct:       '',
+        message:      '',
+        errors: {
+
+          title: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          direct: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          message: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          }
+
+        }
+
       }
 
     }
@@ -85,6 +181,254 @@ Vue.mixin({
     this.getAct()
 
   }, // mounted
+
+  watch: {
+
+    'post.title': function () {
+
+      this.post.errors.title.dirty              = true
+
+      if (this.post.title == '') {
+        this.post.errors.title.status           = false
+        this.post.errors.title.text             = 'Title cannot be empty.'
+      } else {
+        this.post.errors.title.status           = true
+        this.post.errors.title.text             = ''
+      }
+
+    }, // post.title
+
+    'post.desc': function () {
+
+      this.post.errors.desc.dirty               = true
+
+      if (this.post.desc == '') {
+        this.post.errors.desc.status            = false
+        this.post.errors.desc.text              = 'Description cannot be empty.'
+      } else {
+        this.post.errors.desc.status            = true
+        this.post.errors.desc.text              = ''
+      }
+
+    }, // post.desc
+
+    'poll.title': function () {
+
+      this.poll.errors.title.dirty              = true
+
+      if (this.poll.title == '') {
+        this.poll.errors.title.status           = false
+        this.poll.errors.title.text             = 'Title cannot be empty.'
+
+      } else {
+        this.poll.errors.title.status           = true
+        this.poll.errors.title.text             = ''
+
+      }
+
+    }, // poll.title
+
+    'poll.desc': function () {
+
+      this.poll.errors.desc.dirty               = true
+
+      if (this.poll.desc == '') {
+        this.poll.errors.desc.status            = false
+        this.poll.errors.desc.text              = 'Description cannot be empty.'
+
+      } else {
+        this.poll.errors.desc.status            = true
+        this.poll.errors.desc.text              = ''
+
+      }
+
+    }, // poll.desc
+
+    'poll.start': function () {
+
+      this.poll.errors.start.dirty              = true
+
+      var start                                 = moment(this.poll.start, 'MMM D, YYYY h:mm a').format('YYYY-MM-DD HH:mm:ss')
+
+      if (this.poll.end == '') var end          = ''
+      else                     var end          = moment(this.poll.end, 'MMM D, YYYY h:mm a').format('YYYY-MM-DD HH:mm:ss')
+
+      if (this.poll.start == '') {
+        this.poll.errors.start.status           = false
+        this.poll.errors.start.text             = 'Start date cannot be empty.'
+      } else if (moment().isAfter(start)) {
+        this.poll.errors.start.status           = false
+        this.poll.errors.start.text             = 'Start date must set after current date.'
+      } else if (moment(start).isAfter(end)) {
+        this.poll.errors.start.status           = false
+        this.poll.errors.start.text             = 'Start date must set before end date.'
+      } else {
+        this.poll.errors.start.status           = true
+        this.poll.errors.start.text             = ''
+      }
+
+    }, // poll.start
+
+    'poll.end': function () {
+
+      this.poll.errors.end.dirty                = true
+
+      if (this.poll.start == '')  var start     = ''
+      else                        var start     = moment(this.poll.start, 'MMM D, YYYY h:mm a').format('YYYY-MM-DD HH:mm:ss')
+
+      var end                                   = moment(this.poll.end, 'MMM D, YYYY h:mm a').format('YYYY-MM-DD HH:mm:ss')
+
+      if (this.poll.end == '') {
+        this.poll.errors.end.status             = false
+        this.poll.errors.end.text               = 'End date cannot be empty.'
+      } else if (moment().isAfter(end)) {
+        this.poll.errors.end.status             = false
+        this.poll.errors.end.text               = 'End date must set after start date.'
+      } else if (moment(end).isBefore(start)) {
+        this.poll.errors.end.status             = false
+        this.poll.errors.end.text               = 'End date must set after start date.'
+      } else {
+        this.poll.errors.end.status             = true
+        this.poll.errors.end.text               = ''
+      }
+
+    }, // poll.end
+
+    'poll.type': function () {
+
+      this.poll.errors.type.dirty               = true
+
+      if (this.poll.type == '') {
+        this.poll.errors.type.status            = false
+        this.poll.errors.type.text              = 'Select a type.'
+
+      } else {
+        this.poll.errors.type.status            = true
+        this.poll.errors.type.text              = ''
+
+      }
+
+    }, // poll.type
+
+    'poll.answer': function () {
+
+      this.poll.errors.answer.dirty             = true
+
+      if (this.poll.answers.length == 0) {
+        this.poll.errors.answer.status          = false
+        this.poll.errors.answer.text            = 'Add answers.'
+
+      } else if (this.poll.answers.length < 2) {
+        this.poll.errors.answer.status          = false
+        this.poll.errors.answer.text            = 'Must have atleast two answers.'
+
+      } else {
+        this.poll.errors.answer.status          = true
+        this.poll.errors.answer.text            = ''
+
+      }
+
+    }, // poll.answer
+
+    'suggestion.title': function () {
+
+      this.suggestion.errors.title.dirty        = true
+
+      if (this.suggestion.title == '') {
+        this.suggestion.errors.title.status     = false
+        this.suggestion.errors.title.text       = 'Title cannot be empty.'
+
+      } else {
+        this.suggestion.errors.title.status     = true
+        this.suggestion.errors.title.text       = ''
+
+      }
+
+    }, // suggestion.title
+
+    'suggestion.direct': function () {
+
+      this.suggestion.errors.direct.dirty       = true
+
+      if (this.suggestion.direct == '') {
+        this.suggestion.errors.direct.status    = false
+        this.suggestion.errors.direct.text      = 'Direct cannot be empty.'
+
+      } else {
+        this.suggestion.errors.direct.status    = true
+        this.suggestion.errors.direct.text      = ''
+
+      }
+
+    }, // suggestion.direct
+
+    'suggestion.message': function () {
+
+      this.suggestion.errors.message.dirty      = true
+
+      if (this.suggestion.message == '') {
+        this.suggestion.errors.message.status   = false
+        this.suggestion.errors.message.text     = 'Message cannot be empty.'
+
+      } else {
+        this.suggestion.errors.message.status   = true
+        this.suggestion.errors.message.text     = ''
+
+      }
+
+    } // suggestion.message
+
+  }, // watch
+
+  computed: {
+
+    'pollstatus': function () {
+
+      if (this.poll.start == '')  var start   = ''
+      else                        var start   = moment(this.poll.start, 'MMM D, YYYY h:mm a').format('YYYY-MM-DD HH:mm:ss')
+      if (this.poll.end == '')    var end     = ''
+      else                        var end     = moment(this.poll.end, 'MMM D, YYYY h:mm a').format('YYYY-MM-DD HH:mm:ss')
+
+      if      (moment().isAfter(start)  && moment().isBefore(end))        return 'active'
+      else if (moment().isBefore(start) && moment(start).isBefore(end))   return 'pending'
+      else if (moment().isAfter(end)    && moment(end).isAfter(start))    return 'expired'
+      else                                                                return 'invalid date range'
+
+    }, // pollstatus
+
+    btnPostDisabled() {
+
+      return (
+        this.post.errors.title.status &&
+        this.post.errors.desc.status
+      ) ? false : true;
+
+    }, // btnPostDisabled
+
+    btnPollDisabled() {
+
+      return (
+        this.poll.errors.title.status &&
+        this.poll.errors.desc.status &&
+        this.poll.errors.start.status &&
+        this.poll.errors.end.status &&
+        this.poll.errors.type.status &&
+        this.poll.errors.answer.status
+      ) ? false : true;
+
+    }, // btnPollDisabled
+
+    btnSuggestionDisabled() {
+
+      return (
+        this.suggestion.errors.title.status &&
+        this.suggestion.errors.direct.status &&
+        this.suggestion.errors.message.status
+      ) ? false : true;
+
+    } // btnSuggestionDisabled
+
+  }, // computed
 
   methods: {
 
@@ -123,7 +467,7 @@ Vue.mixin({
         vm.poll.title    =  data.title    == undefined ? '' : data.title
         vm.poll.desc     =  data.desc     == undefined ? '' : data.desc
         vm.poll.type     =  data.type     == undefined ? '' : data.type
-        vm.poll.status   =  data.status   == undefined ? '' : data.status
+        // vm.poll.status   =  data.status   == undefined ? '' : data.status
         vm.poll.answer   =  data.answer   == undefined ? '' : data.answer
         vm.poll.answers  =  data.answers  == undefined ? [] : data.answers
 
@@ -203,6 +547,7 @@ Vue.mixin({
     }, // hideModal
 
     switchActivity(activity) {
+
       this.active = activity
 
       this.clearPost()
@@ -227,59 +572,103 @@ Vue.mixin({
 
     clearPost() {
 
-      this.post.id              = null
-      this.post.title           = ''
-      this.post.desc            = ''
+      this.post.id                            = null
+      this.post.title                         = ''
+      this.post.desc                          = ''
+      
+      this.post.errors.title.dirty            = false
+      this.post.errors.title.status           = false
+      this.post.errors.title.text             = ''
+
+      this.post.errors.desc.dirty             = false
+      this.post.errors.desc.status            = false
+      this.post.errors.desc.text              = ''
 
     }, // clearPost
 
     clearPosts() {
 
-      this.skip                 = 0
-      this.take                 = 5
-      this.full                 = false
-      this.posts                = []
+      this.skip                               = 0
+      this.take                               = 5
+      this.full                               = false
+      this.posts                              = []
 
     }, // clearPosts
 
     clearPoll() {
 
-      this.poll.id              = null
-      this.poll.title           = ''
-      this.poll.desc            = ''
-      this.poll.start           = ''
-      this.poll.end             = ''
-      this.poll.type            = ''
-      this.poll.status          = ''
-      this.poll.answer          = ''
-      this.poll.answers         = []
+      this.poll.id                            = null
+      this.poll.title                         = ''
+      this.poll.desc                          = ''
+      this.poll.start                         = ''
+      this.poll.end                           = ''
+      this.poll.type                          = ''
+      this.poll.status                        = ''
+      this.poll.answer                        = ''
+      this.poll.answers                       = []
+
+      this.poll.errors.title.dirty            = false
+      this.poll.errors.title.status           = false
+      this.poll.errors.title.text             = ''
+
+      this.poll.errors.desc.dirty             = false
+      this.poll.errors.desc.status            = false
+      this.poll.errors.desc.text              = ''
+
+      this.poll.errors.start.dirty            = false
+      this.poll.errors.start.status           = false
+      this.poll.errors.start.text             = ''
+
+      this.poll.errors.end.dirty              = false
+      this.poll.errors.end.status             = false
+      this.poll.errors.end.text               = ''
+
+      this.poll.errors.type.dirty             = false
+      this.poll.errors.type.status            = false
+      this.poll.errors.type.text              = ''
+
+      this.poll.errors.answer.dirty           = false
+      this.poll.errors.answer.status          = false
+      this.poll.errors.answer.text            = ''
 
     }, // clearPoll
 
     clearPolls() {
 
-      this.skip                 = 0
-      this.take                 = 5
-      this.full                 = false
-      this.polls                = []
+      this.skip                               = 0
+      this.take                               = 5
+      this.full                               = false
+      this.polls                              = []
 
     }, // clearPolls
 
     clearSuggestion() {
 
-      this.suggestion.id        = null
-      this.suggestion.title     = ''
-      this.suggestion.direct    = ''
-      this.suggestion.message   = ''
+      this.suggestion.id                      = null
+      this.suggestion.title                   = ''
+      this.suggestion.direct                  = ''
+      this.suggestion.message                 = ''
+
+      this.suggestion.errors.title.dirty      = false
+      this.suggestion.errors.title.status     = false
+      this.suggestion.errors.title.text       = ''
+
+      this.suggestion.errors.direct.dirty     = false
+      this.suggestion.errors.direct.status    = false
+      this.suggestion.errors.direct.text      = ''
+
+      this.suggestion.errors.message.dirty    = false
+      this.suggestion.errors.message.status   = false
+      this.suggestion.errors.message.text     = ''
 
     }, // clearSuggestion
 
     clearSuggestions() {
 
-      this.skip                 = 0
-      this.take                 = 5
-      this.full                 = false
-      this.suggestions          = []
+      this.skip                               = 0
+      this.take                               = 5
+      this.full                               = false
+      this.suggestions                        = []
 
     }, // clearSuggestions
 
@@ -346,6 +735,8 @@ Vue.mixin({
 
     edit(id) {
 
+      this.touch()
+
       this.$http
         .get(window.location.origin + '/api/' + this.active + '/' + id + '/edit')
 
@@ -391,6 +782,48 @@ Vue.mixin({
         })
 
     }, // edit
+
+    touch() {
+
+      if (this.active == 'post') {
+        this.post.errors.title.dirty            = true
+        this.post.errors.title.status           = true
+
+        this.post.errors.desc.dirty             = true
+        this.post.errors.desc.status            = true
+
+      } else if (this.active == 'poll') {
+        this.poll.errors.title.dirty            = true
+        this.poll.errors.title.status           = true
+
+        this.poll.errors.desc.dirty             = true
+        this.poll.errors.desc.status            = true
+
+        this.poll.errors.start.dirty            = true
+        this.poll.errors.start.status           = true
+
+        this.poll.errors.end.dirty              = true
+        this.poll.errors.end.status             = true
+
+        this.poll.errors.type.dirty             = true
+        this.poll.errors.type.status            = true
+
+        this.poll.errors.answer.dirty           = true
+        this.poll.errors.answer.status          = true
+
+      } else if (this.active == 'suggestion') {
+        this.suggestion.errors.title.dirty      = true
+        this.suggestion.errors.title.status     = true
+
+        this.suggestion.errors.direct.dirty     = true
+        this.suggestion.errors.direct.status    = true
+
+        this.suggestion.errors.message.dirty    = true
+        this.suggestion.errors.message.status   = true
+
+      }
+
+    }, // touch
 
     updateAct(id, data) {
 
@@ -488,7 +921,7 @@ Vue.mixin({
           desc:     this.poll.desc,
           start:    this.poll.start,
           end:      this.poll.end,
-          status:   this.poll.status,
+          // status:   this.poll.status,
           type:     this.poll.type,
           answers:  this.poll.answers
         }

@@ -6,7 +6,7 @@
       <a class="profile-img" :href="profile">
         <img :src="image" :alt="fullname">
       </a>
-      <h4><a :href="profile">{{fullname}}</a><br><small class="text-capitalize">{{date}}</small></h4>
+      <h4><a :href="profile">{{fullname}}</a><br><small>{{date}}</small></h4>
     </div> <!-- .panel-head -->
 
     <div class="panel-body">
