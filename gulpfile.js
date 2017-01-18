@@ -17,7 +17,6 @@ elixir((mix) => {
   mix.sass('app.scss')
     .webpack('bootstrap.js')
     .webpack('login.js')
-    .webpack('logout.js')
     .webpack('register.js')
     .webpack('home.js')
     .webpack('profile.js')
