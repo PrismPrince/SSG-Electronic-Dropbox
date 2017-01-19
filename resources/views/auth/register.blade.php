@@ -4,7 +4,7 @@
 
 <div class="container root-content">
   <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-8 col-md-offset-2" v-cloak>
 
       @if (
         $errors->has('first_name') ||

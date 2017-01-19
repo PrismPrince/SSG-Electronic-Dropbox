@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container root-content">
-  <div class="row">
+  <div class="row" v-cloak>
     <div class="col-md-8 col-md-offset-2">
 
       @if ($errors->has('email') || $errors->has('password'))
