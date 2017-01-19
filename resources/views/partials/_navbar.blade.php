@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
 
@@ -24,7 +24,7 @@
       </ul>
 
       <!-- Right Side Of Navbar -->
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" v-cloak>
         <!-- Authentication Links -->
         @if (Auth::guest())
           <li><a href="{{ url('/login') }}">Login</a></li>

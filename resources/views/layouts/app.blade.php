@@ -2,7 +2,7 @@
 <html lang="en">
 @include('partials._head')
 <body>
-  <div id="app" v-cloak>
+  <div id="app">
     @include('partials._navbar')
     @yield('content')
   </div>

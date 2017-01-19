@@ -123,9 +123,8 @@
 
       desc() {
 
-        var text = this.pollAct.desc
-
-        text = text.replace(/[(<>"'&]/g, function (char) {
+        var text  = this.pollAct.desc
+            text  = text.replace(/[(<>"'&]/g, function (char) {
 
           if      (char == "<")   return "&lt;"
           else if (char == ">")   return "&gt;"
@@ -135,13 +134,12 @@
 
         })
 
-        var hashed = text.match(/\s?#\w+\s?/g)
-        
-        hashed = _.map(hashed, function (word) {
+        var hashed  = text.match(/\s?#\w+\s?/g)
+            hashed  = _.map(hashed, function (word) {
 
-          return _.trim(word)
+              return _.trim(word)
 
-        })
+            })
 
         _.forEach(hashed, function (word) {
 
@@ -171,34 +169,9 @@
 
             for (var i = 0; i <= response.data.length - 1; i++) this.allVoters.push(response.data[i])
 
-            this.enableAnswers()
-
-          })
-
-          .catch((response) => {
-
-            console.error('error')
-
-          })
-
-      },
-
-      getAnswers() {
-
-        this.disableAnswers()
-
-        this.answers = null
-
-        this.$http
-          .get(window.location.origin + '/api/poll/' + this.pollAct.id + '/answers')
-
-          .then((response) => {
-
-            this.answers = response.data
-
             this.$nextTick(function () {
 
-              this.getAllVotes()
+              this.ansDisabled = false
 
             })
 
@@ -212,15 +185,28 @@
 
       },
 
-      disableAnswers() {
+      getAnswers() {
 
         this.ansDisabled = true
 
-      },
+        this.answers = null
 
-      enableAnswers() {
+        this.$http
+          .get(window.location.origin + '/api/poll/' + this.pollAct.id + '/answers')
 
-        this.ansDisabled = false
+          .then((response) => {
+
+            this.answers = response.data
+
+            this.getAllVotes()
+
+          })
+
+          .catch((response) => {
+
+            console.error('error')
+
+          })
 
       }
 

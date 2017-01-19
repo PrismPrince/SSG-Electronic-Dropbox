@@ -496,31 +496,61 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container root-content">
   <div class="row">
     <div class="col-sm-4">
 
-      <div class="row">
+      <div class="row" v-cloak>
         <div v-if="active == 'post'" class="col-xs-12">
-          <button type="button" class="btn btn-block btn-default" @click="showModal('#post-modal', 'Post')">Write a Post</button>
+          <button
+            type="button"
+            class="btn btn-block btn-default"
+            @click="showModal('#post-modal', 'Post')"
+          >Write a Post</button>
         </div>
 
         <div v-if="active == 'poll'" class="col-xs-12">
-          <button type="button" class="btn btn-block btn-default" @click="showModal('#poll-modal', 'Create')">Create a Poll</button>
+          <button
+            type="button"
+            class="btn btn-block btn-default"
+            @click="showModal('#poll-modal', 'Create')"
+          >Create a Poll</button>
         </div>
 
         <div v-if="active == 'suggestion'" class="col-xs-12">
-          <button type="button" class="btn btn-block btn-default" @click="showModal('#suggestion-modal', 'Send')">Send a Suggest</button>
+          <button
+            type="button"
+            class="btn btn-block btn-default"
+            @click="showModal('#suggestion-modal', 'Send')"
+          >Send a Suggest</button>
         </div>
       </div> {{-- .row --}}
 
-      <div class="panel panel-default">
+      <div class="panel panel-default" v-cloak>
         <div class="list-group">
-          <button v-if="active != 'post'" class="list-group-item" @click="switchActivity('post')">Posts</button>
+          <button
+            v-if="active != 'post'"
+            class="list-group-item"
+            :class="{disabled: loadmore}"
+            :disabled="loadmore"
+            @click="switchActivity('post')"
+          >Posts</button>
           <span class="list-group-item active" v-else>Posts</span>
-          <button v-if="active != 'poll'" class="list-group-item" @click="switchActivity('poll')">Polls</button>
+          <button
+            v-if="active != 'poll'"
+            class="list-group-item"
+            :class="{disabled: loadmore}"
+            :disabled="loadmore"
+            @click="switchActivity('poll')"
+          >Polls</button>
           <span class="list-group-item active" v-else>Polls</span>
-          <button v-if="active != 'suggestion'" class="list-group-item" @click="switchActivity('suggestion')">Suggestions</button>
+          <button
+            v-if="active != 'suggestion'"
+            class="list-group-item"
+            :class="{disabled: loadmore}"
+            :disabled="loadmore"
+            @click="switchActivity('suggestion')"
+          >Suggestions</button>
           <span class="list-group-item active" v-else>Suggestions</span>
         </div>
       </div> {{-- .panel --}}
@@ -528,7 +558,7 @@
       <pre>@{{$data}}</pre>
     </div> {{-- .col-sm-4 --}}
 
-    <div id="activity" class="col-sm-8">
+    <div id="activity" class="col-sm-8" v-cloak>
 
       <div v-if="active == 'post'">
         <transition-group name="list">

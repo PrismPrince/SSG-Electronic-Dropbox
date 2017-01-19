@@ -11,7 +11,11 @@
 @import "profile";
 
 [v-cloak] {
-  // display: none;
+  display: none;
+}
+
+.root-content {
+  margin-top: 73px;
 }
 
 .modal {
