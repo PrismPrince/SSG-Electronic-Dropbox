@@ -61,6 +61,10 @@ Vue.mixin({
         start:        '',
         end:          '',
         type:         '',
+<<<<<<< HEAD
+=======
+        // status:       '',
+>>>>>>> 2ff22217210e8682c50be5f80fc0b821d7ee5b91
         answer:       '',
         answers:      [],
         errors: {
@@ -105,6 +109,17 @@ Vue.mixin({
 
           },
 
+<<<<<<< HEAD
+=======
+          // status: {
+
+          //   dirty:    false,
+          //   status:   false,
+          //   text:     ''
+
+          // },
+
+>>>>>>> 2ff22217210e8682c50be5f80fc0b821d7ee5b91
           answer: {
 
             dirty:    false,
@@ -113,6 +128,17 @@ Vue.mixin({
 
           },
 
+<<<<<<< HEAD
+=======
+          // answers: {
+
+          //   dirty:    false,
+          //   status:   false,
+          //   text:     ''
+
+          // }
+
+>>>>>>> 2ff22217210e8682c50be5f80fc0b821d7ee5b91
         }
 
       },
