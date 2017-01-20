@@ -14,6 +14,24 @@
   display: none;
 }
 
+@media (min-width: 768px) {
+  .navbar-form {
+
+    .input-group {
+      width: 300px;
+
+      .input-group-btn {
+        width: 1%;
+      }
+
+    }
+
+    .dropdown-menu {
+      width: 100%;
+    }
+  }
+}
+
 .root-content {
   margin-top: 73px;
 }
@@ -60,11 +78,6 @@
       }
     }
 
-    .dropdown-menu {
-      margin-top: 0;
-      left: initial;
-      right: 0;
-    }
   }
 }
 

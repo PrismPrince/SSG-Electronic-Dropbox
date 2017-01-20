@@ -18,10 +18,28 @@
     </div>
 
     <div class="collapse navbar-collapse" id="app-navbar-collapse">
+
+      <!-- Search bar -->
+      <div class="navbar-form navbar-left" v-if="user" v-cloak>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+          </span>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </div>
+      </div>
+
       <!-- Left Side Of Navbar -->
-      <ul class="nav navbar-nav">
+      <!-- <ul class="nav navbar-nav navbar-left">
         &nbsp;
-      </ul>
+      </ul> -->
 
       <!-- Right Side Of Navbar -->
       <ul class="nav navbar-nav navbar-right" v-cloak>
@@ -30,6 +48,7 @@
           <li><a href="{{ url('/login') }}">Login</a></li>
           <li><a href="{{ url('/register') }}">Register</a></li>
         @else
+          <li><a href="{{ url('/home') }}">Home</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                 <input type="hidden" id="Authorization" value="{{ Auth::user()->api_token }}">
@@ -42,17 +61,19 @@
               <li class="divider"></li>
               <li><a href="/account">Setting</a></li>
               <li>
-                <a href="{{ url('/logout') }}"
-                  @click.prevent="logout()">
-                  Logout
-                </a>
+                <a
+                  href="{{ url('/logout') }}"
+                  @click.prevent="logout()"
+                >Logout</a>
 
                 <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                   {{ csrf_field() }}
                 </form>
               </li>
-            </ul>
-          </li>
+
+            </ul> {{-- .dropdown-menu --}}
+
+          </li> {{-- .dropdown --}}
         @endif
       </ul>
     </div>
