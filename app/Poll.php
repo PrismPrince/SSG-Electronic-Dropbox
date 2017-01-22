@@ -24,4 +24,9 @@ class Poll extends Model
   {
     return $this->hasMany(Answer::class);
   }
+
+  public function scopeSearch($query, $field, $key)
+  {
+    return $query->where($field, 'LIKE', '%' . $key . '%');
+  }
 }

@@ -19,4 +19,9 @@ class Post extends Model
   {
     return $this->belongsTo(User::class);
   }
+
+  public function scopeSearch($query, $field, $key)
+  {
+    return $query->where($field, 'LIKE', '%' . $key . '%');
+  }
 }
