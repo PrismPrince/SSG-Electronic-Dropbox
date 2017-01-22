@@ -24,4 +24,14 @@ class Poll extends Model
   {
     return $this->hasMany(Answer::class);
   }
+
+  public function scopeSearchTitle($query, $key)
+  {
+    return $query->where('title', 'LIKE', '%' . $key . '%');
+  }
+
+  public function scopeSearch($query, $key)
+  {
+    return $query->where('title', 'LIKE', '%' . $key . '%')->orWhere('desc', 'LIKE', '%' . $key . '%');
+  }
 }

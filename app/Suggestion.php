@@ -19,4 +19,14 @@ class Suggestion extends Model
   {
     return $this->belongsTo(User::class);
   }
+
+  public function scopeSearchTitle($query, $key)
+  {
+    return $query->where('title', 'LIKE', '%' . $key . '%');
+  }
+
+  public function scopeSearch($query, $key)
+  {
+    return $query->where('title', 'LIKE', '%' . $key . '%')->orWhere('message', 'LIKE', '%' . $key . '%');
+  }
 }

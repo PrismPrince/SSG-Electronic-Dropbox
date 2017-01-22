@@ -91,7 +91,7 @@
         _.forEach(hashed, function (word) {
 
           if (/^#\d+$/.test(word))  return
-          else                      text = text.replace(word, '<a href="' + window.location.origin + '/search/' + word + '">' + word + '</a>')
+          else                      text = text.replace(word, '<a href="' + window.location.origin + '/search?key=' + word + '">' + word + '</a>')
 
         })
 

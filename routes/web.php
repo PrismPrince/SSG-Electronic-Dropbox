@@ -38,3 +38,4 @@ Route::resource('user', 'UserController', [
  ]
 ]);
 Route::get('profile/{user}', 'UserController@show')->name('user.show');
+Route::get('/search', 'SearchController@showResults');

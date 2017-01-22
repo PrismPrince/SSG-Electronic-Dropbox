@@ -19,7 +19,6 @@ Vue.mixin({
       take:           5,
       full:           false,
       disabled:       true,
-      loadmore:       false,
 
       // view data handlers
       posts:          [],
@@ -61,10 +60,6 @@ Vue.mixin({
         start:        '',
         end:          '',
         type:         '',
-<<<<<<< HEAD
-=======
-        // status:       '',
->>>>>>> 2ff22217210e8682c50be5f80fc0b821d7ee5b91
         answer:       '',
         answers:      [],
         errors: {
@@ -109,17 +104,6 @@ Vue.mixin({
 
           },
 
-<<<<<<< HEAD
-=======
-          // status: {
-
-          //   dirty:    false,
-          //   status:   false,
-          //   text:     ''
-
-          // },
-
->>>>>>> 2ff22217210e8682c50be5f80fc0b821d7ee5b91
           answer: {
 
             dirty:    false,
@@ -128,17 +112,6 @@ Vue.mixin({
 
           },
 
-<<<<<<< HEAD
-=======
-          // answers: {
-
-          //   dirty:    false,
-          //   status:   false,
-          //   text:     ''
-
-          // }
-
->>>>>>> 2ff22217210e8682c50be5f80fc0b821d7ee5b91
         }
 
       },
@@ -700,13 +673,12 @@ Vue.mixin({
 
     getAct() {
 
-      this.loadmore = true
+      this.full = 'loading'
 
       this.$http
         .get(window.location.origin + '/api/' + this.active + '?skip=' + this.skip + '&take=' + this.take)
 
         .then((response) => {
-          if (response.data.length == 0 || response.data.length < 5) this.full = true
 
           this.skip += 5
 
@@ -714,14 +686,15 @@ Vue.mixin({
           else if (this.active == 'poll')         for (var i = 0; i <= response.data.length - 1; i++)     this.polls.push(response.data[i])
           else if (this.active == 'suggestion')   for (var i = 0; i <= response.data.length - 1; i++)     this.suggestions.push(response.data[i])
 
-          this.loadmore = false
+          if (response.data.length == 0 || response.data.length < 5)  this.full = true
+          else                                                        this.full = false
 
         })
 
         .catch((response) => {
           console.error(response.error)
 
-          this.loadmore = false
+          this.full = false
 
         })
 
@@ -994,4 +967,5 @@ Vue.mixin({
 
 })
 
+require('./quick-search')
 require('./logout')

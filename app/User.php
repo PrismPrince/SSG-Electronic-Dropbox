@@ -35,11 +35,6 @@ class User extends Authenticatable
 
   protected $dates = ['deleted_at'];
 
-  public function scopeWithRole($query, $role)
-  {
-    return $query->where('role', $role);
-  }
-
   public function posts()
   {
     return $this->hasMany(Post::class);
@@ -58,5 +53,17 @@ class User extends Authenticatable
   public function answers()
   {
     return $this->belongsToMany(Answer::class, 'votes');
+  }
+
+  public function scopeWithRole($query, $role)
+  {
+    return $query->where('role', $role);
+  }
+
+  public function scopeSearchName($query, $key)
+  {
+    return $query
+      ->where('fname', 'LIKE', '%' . $key . '%')
+      ->orWhere('lname', 'LIKE', '%' . $key . '%');
   }
 }
