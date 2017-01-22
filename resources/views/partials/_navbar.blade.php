@@ -20,48 +20,52 @@
     <div class="collapse navbar-collapse" id="app-navbar-collapse">
 
       <!-- Search bar -->
-      <div class="navbar-form navbar-left" v-if="user" v-cloak>
-        <div class="input-group" :class="{open: search.focus}">
-          <input type="text" class="form-control" placeholder="Search" v-model.trim="search.key" @blur="clearSearch()">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-          </span>
-          <ul v-if="search.key == ''" class="dropdown-menu">
-            <li class="dropdown-header">Search something...</li>
-          </ul>
-          <ul v-else-if="search.searching" class="dropdown-menu">
-            <li><div class="loading-circle"><span class="sr-only">loading</span></div></li>
-          </ul>
-          <ul v-else class="dropdown-menu">
-            <li v-if="search.results.users.length != 0" class="dropdown-header">Users</li>
-            <li v-if="search.results.users.length != 0" v-for="user in search.results.users">
-              <a :href="'{{ url('/profile') }}/' + user.id" v-html="highlight(user.fname + ' ' + user.lname)"></a>
-            </li>
-            <li v-if="search.results.users.length != 0" role="separator" class="divider"></li>
+      <div class="navbar-form navbar-left dropdown" :class="{open: search.focus}" v-if="user" v-cloak>
+        <input type="text" class="form-control" placeholder="Search" v-model.trim="search.key" @keypress.enter="searchKey" @blur="clearSearch()">
 
-            <li v-if="search.results.posts.length != 0" class="dropdown-header">Posts</li>
-            <li v-if="search.results.posts.length != 0" v-for="post in search.results.posts">
-              <a href="#" v-html="highlight(post.title)"></a>
-            </li>
-            <li v-if="search.results.posts.length != 0" role="separator" class="divider"></li>
+        <ul v-if="search.key == ''" class="dropdown-menu">
+          <li class="dropdown-header">Search something...</li>
+        </ul>
 
-            <li v-if="search.results.polls.length != 0" class="dropdown-header">Polls</li>
-            <li v-if="search.results.polls.length != 0" v-for="poll in search.results.polls">
-              <a href="#" v-html="highlight(poll.title)"></a>
-            </li>
-            <li v-if="search.results.polls.length != 0" role="separator" class="divider"></li>
+        <ul v-else-if="search.searching" class="dropdown-menu">
+          <li><div class="loading-circle"><span class="sr-only">loading</span></div></li>
+        </ul>
 
-            <li v-if="search.results.suggestions.length != 0" class="dropdown-header">Suggestions</li>
-            <li v-if="search.results.suggestions.length != 0" v-for="suggestion in search.results.suggestions">
-              <a href="#" v-html="highlight(suggestion.title)"></a>
-            </li>
-            <li v-if="search.results.suggestions.length != 0" role="separator" class="divider"></li>
-
-            <li v-if="search.results.users.length == 0 && search.results.posts.length == 0 && search.results.polls.length == 0 && search.results.suggestions.length == 0" class="text-center">
-              <a href="#">No results found!</a>
-            </li>
-          </ul>
-        </div>
+        <ul v-else class="dropdown-menu">
+    
+          {{-- Users --}}
+          <li v-if="search.results.users.length != 0" class="dropdown-header">Users</li>
+          <li v-if="search.results.users.length != 0" v-for="user in search.results.users">
+            <a :href="'{{ url('/profile') }}/' + user.id" v-html="highlight(user.fname + ' ' + user.lname)"></a>
+          </li>
+          <li v-if="search.results.users.length != 0" role="separator" class="divider"></li>
+    
+          {{-- Posts --}}
+          <li v-if="search.results.posts.length != 0" class="dropdown-header">Posts</li>
+          <li v-if="search.results.posts.length != 0" v-for="post in search.results.posts">
+            <a href="#" v-html="highlight(post.title)"></a>
+          </li>
+          <li v-if="search.results.posts.length != 0" role="separator" class="divider"></li>
+    
+          {{-- Polls --}}
+          <li v-if="search.results.polls.length != 0" class="dropdown-header">Polls</li>
+          <li v-if="search.results.polls.length != 0" v-for="poll in search.results.polls">
+            <a href="#" v-html="highlight(poll.title)"></a>
+          </li>
+          <li v-if="search.results.polls.length != 0" role="separator" class="divider"></li>
+    
+          {{-- Suggestions --}}
+          <li v-if="search.results.suggestions.length != 0" class="dropdown-header">Suggestions</li>
+          <li v-if="search.results.suggestions.length != 0" v-for="suggestion in search.results.suggestions">
+            <a href="#" v-html="highlight(suggestion.title)"></a>
+          </li>
+          <li v-if="search.results.suggestions.length != 0" role="separator" class="divider"></li>
+    
+          {{-- No Results --}}
+          <li v-if="search.results.users.length == 0 && search.results.posts.length == 0 && search.results.polls.length == 0 && search.results.suggestions.length == 0" class="text-center">
+            <a href="#">No results found!</a>
+          </li>
+        </ul>
       </div>
 
       <!-- Left Side Of Navbar -->

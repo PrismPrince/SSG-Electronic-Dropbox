@@ -16,20 +16,18 @@
 
 @media (min-width: 768px) {
   .navbar-form {
-
-    .input-group {
-      width: 300px;
-
-      .input-group-btn {
-        width: 1%;
-      }
-
-    }
+    width: 400px;
+    padding: 0;
 
   }
 }
 
 .navbar-form {
+
+  .form-control {
+    width: 100%;
+    border-radius: 20px;
+  }
 
   .dropdown-menu {
     width: 100%;
@@ -255,4 +253,25 @@
   border-top-color: $brand-primary;
   -webkit-animation: spin 1s infinite linear;
   animation: spin 1s infinite linear;
+}
+
+.search {
+
+  .panel:first-child {
+    margin-top: 20px;
+  }
+}
+
+.full {
+  display: inline-block;
+  border: 5px solid $laravel-border-color;
+  border-radius: 5px;
+}
+
+.nav.nav-tabs {
+  margin-bottom: 20px;
+}
+
+.search .list-group-item:last-child {
+  margin-bottom: 20px;
 }
