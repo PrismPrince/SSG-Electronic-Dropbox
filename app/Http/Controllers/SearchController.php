@@ -12,16 +12,16 @@ class SearchController extends Controller
 {
     public function __construct()
   {
-    $this->middleware('auth:api');
+    $this->middleware('auth:api', ['only' => ['getResult']]);
+    $this->middleware('auth', ['only' => ['showResult']]);
   }
 
-  public function getResult(Request $request)
+  public function getResults(Request $request)
   {
-    // get 3 posts
-    $users = User::searchName($request->key)->orderBy('fname')->limit(3)->get();
-    $posts = Post::search('title', $request->key)->orderBy('created_at', 'desc')->limit(3)->get();
-    $polls = Poll::search('title', $request->key)->orderBy('created_at', 'desc')->limit(3)->get();
-    $suggestions = Suggestion::search('title', $request->key)->orderBy('created_at', 'desc')->limit(3)->get();
+    $users = User::searchName($request->key)->orderBy('fname')->orderBy('lname')->limit(3)->get();
+    $posts = Post::searchTitle($request->key)->orderBy('created_at', 'desc')->limit(3)->get();
+    $polls = Poll::searchTitle($request->key)->orderBy('created_at', 'desc')->limit(3)->get();
+    $suggestions = Suggestion::searchTitle($request->key)->orderBy('created_at', 'desc')->limit(3)->get();
 
     return response()->json([
       'users' => $users,
@@ -29,8 +29,38 @@ class SearchController extends Controller
       'polls' => $polls,
       'suggestions' => $suggestions,
     ]);
+  }
 
-    // get 3 polls
-    // get 3 suggestions
+  public function showResults(Request $request)
+  {
+    return view('search');
+  }
+
+  public function getUsers(Request $request)
+  {
+    $users = User::searchName($request->key)->orderBy('fname')->orderBy('lname')->offset($request->skip)->limit($request->take)->get();
+
+    return response()->json($users);
+  }
+
+  public function getPosts(Request $request)
+  {
+    $posts = Post::search($request->key)->orderBy('created_at', 'desc')->offset($request->skip)->limit($request->take)->get();
+
+    return response()->json($posts);
+  }
+
+  public function getPolls(Request $request)
+  {
+    $polls = Poll::search($request->key)->orderBy('created_at', 'desc')->offset($request->skip)->limit($request->take)->get();
+
+    return response()->json($polls);
+  }
+
+  public function getSuggestions(Request $request)
+  {
+    $suggestions = Suggestion::search($request->key)->orderBy('created_at', 'desc')->offset($request->skip)->limit($request->take)->get();
+
+    return response()->json($suggestions);
   }
 }
