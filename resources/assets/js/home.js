@@ -968,4 +968,5 @@ Vue.mixin({
 
 })
 
+require('./search')
 require('./logout')

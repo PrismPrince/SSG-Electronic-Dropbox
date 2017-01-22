@@ -7760,9 +7760,16 @@ button.close {
   .navbar-form .input-group .input-group-btn {
     width: 1%;
   }
-  .navbar-form .dropdown-menu {
-    width: 100%;
-  }
+}
+
+.navbar-form .dropdown-menu {
+  width: 100%;
+  max-height: 300px;
+  overflow-y: overlay;
+}
+
+.navbar-form .dropdown-menu > .divider:last-child {
+  display: none;
 }
 
 .root-content {
