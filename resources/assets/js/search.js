@@ -1,87 +1,196 @@
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('Authorization', 'Bearer ' + document.getElementById('Authorization').value)
+
+    next()
+
+})
+
 Vue.mixin({
 
   data() {
 
     return {
-      search: {
-        key: '',
-        focus: false,
-        searching: false,
-        results: {
-          users: [],
-          posts: [],
-          polls: [],
-          suggestions: [],
-        }
-      }
+
+      // init
+      user:           null,
+      key:            '',
+      active:         'post',
+      skip:           0,
+      take:           3,
+      full:           false,
+
+      // view data handlers
+      users:          [],
+      posts:          [],
+      polls:          [],
+      suggestions:    [],
+
     }
 
   }, // data
 
+  created() {
+
+    this.$http
+      .get(window.location.origin + '/api/user')
+
+      .then((response) => {
+        this.user = response.data
+
+      })
+
+      .catch((response) => {
+        console.error(response.error)
+
+      })
+
+    this.key = this.getKey()
+
+  }, // created
+
+  mounted() {
+
+    this.getAct()
+
+  }, // mounted
+
   watch: {
-
-    'search.key': function () {
-      
-      this.search.searching   = true
-      this.search.focus       = true
-
-      if (this.search.key != '') this.searching()
-
-    }
 
   }, // watch
 
+  computed: {
+
+  }, // computed
+
   methods: {
 
-    searching: _.debounce(function () {
-    
+    getKey() {
+
+      var urlVar = {};
+
+      var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+
+        urlVar[key] = value;
+
+      });
+
+      if (urlVar.key == undefined)  return this.search.key
+      else                          return urlVar.key;
+
+    },
+
+    switchActivity(activity) {
+
+      this.active = activity
+
+      this.clearUsers()
+      this.clearPosts()
+      this.clearPolls()
+      this.clearSuggestions()
+
+      if (this.active == 'user') {
+        this.getAct()
+
+      } else if (this.active == 'post') {
+        this.getAct()
+
+      } else if (this.active == 'poll') {
+        this.getAct()
+
+      } else if (this.active == 'suggestion') {
+        this.getAct()
+
+      }
+
+    }, // switchActivity
+
+    clearUsers() {
+
+      this.skip                               = 0
+      this.take                               = 5
+      this.full                               = false
+      this.users                              = []
+
+    }, // clearUsers
+
+    clearPosts() {
+
+      this.skip                               = 0
+      this.take                               = 5
+      this.full                               = false
+      this.posts                              = []
+
+    }, // clearPosts
+
+    clearPolls() {
+
+      this.skip                               = 0
+      this.take                               = 5
+      this.full                               = false
+      this.polls                              = []
+
+    }, // clearPolls
+
+    clearSuggestions() {
+
+      this.skip                               = 0
+      this.take                               = 5
+      this.full                               = false
+      this.suggestions                        = []
+
+    }, // clearSuggestions
+
+    getAct() {
+
+      this.full = 'loading'
+
       this.$http
-        .post(window.location.origin + '/api/search',
+        .post(window.location.origin + '/api/search/' + this.active + '?skip=' + this.skip + '&take=' + this.take,
         {
-          key: this.search.key
+          key: this.key
         })
 
         .then((response) => {
 
-          this.search.results.users = response.data.users
-          this.search.results.posts = response.data.posts
-          this.search.results.polls = response.data.polls
-          this.search.results.suggestions = response.data.suggestions
+          this.skip += 3
 
-          this.$nextTick(function () {
+          if      (this.active == 'user')         for (var i = 0; i <= response.data.length - 1; i++)     this.users.push(response.data[i])
+          else if (this.active == 'post')         for (var i = 0; i <= response.data.length - 1; i++)     this.posts.push(response.data[i])
+          else if (this.active == 'poll')         for (var i = 0; i <= response.data.length - 1; i++)     this.polls.push(response.data[i])
+          else if (this.active == 'suggestion')   for (var i = 0; i <= response.data.length - 1; i++)     this.suggestions.push(response.data[i])
 
-            this.search.searching = false
-
-          })
+          // this.$nextTick(function () {
+          if (response.data.length == 0 || response.data.length < 5)  this.full = true
+          else                                                        this.full = false
+          // })
 
         })
 
         .catch((response) => {
           console.error(response.error)
+
+          this.full = false
+
         })
-    
-    }, 500), // searching
 
-    clearSearch: _.debounce(function () {
+    }, // getAct
 
-      this.search.focus = false
-      this.search.results.users = []
-      this.search.results.posts = []
-      this.search.results.polls = []
-      this.search.results.suggestions = []
+    hl(text) {
 
-    }, 500), // clearSearch
+      var match = text.match(new RegExp(this.key, 'i'))
 
-    highlight(text) {
+      if (!match) return text
+      else var index = match.index
 
-      var index = text.match(new RegExp(this.search.key, 'i')).index
-
-      if ( index >= 0 )text = text.substring(0, index) + "<span class='bg-primary'>" + text.substring(index, index + this.search.key.length) + "</span>" + text.substring(index + this.search.key.length)
+      if (index >= 0) text = text.substring(0, index) + "<span class='bg-primary'>" + text.substring(index, index + this.key.length) + "</span>" + text.substring(index + this.key.length)
 
       return text
 
     }
 
-  } // methods
+  } //methods
 
 })
+
+require('./quick-search')
+require('./logout')
