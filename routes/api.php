@@ -22,3 +22,4 @@ Route::get('/poll/{poll}/voters', 'PollController@getAllVoters');
 Route::get('/answer/{answer}/voters', 'AnswerController@getVoters');
 Route::post('/vote', 'PollController@vote');
 Route::resource('/suggestion', 'SuggestionController', ['except' => ['create', 'show']]);
+Route::post('/search', 'SearchController@getResult');
