@@ -531,24 +531,24 @@
           <button
             v-if="active != 'post'"
             class="list-group-item"
-            :class="{disabled: loadmore}"
-            :disabled="loadmore"
+            :class="{disabled: full == 'loading'}"
+            :disabled="full == 'loading'"
             @click="switchActivity('post')"
           >Posts</button>
           <span class="list-group-item active" v-else>Posts</span>
           <button
             v-if="active != 'poll'"
             class="list-group-item"
-            :class="{disabled: loadmore}"
-            :disabled="loadmore"
+            :class="{disabled: full == 'loading'}"
+            :disabled="full == 'loading'"
             @click="switchActivity('poll')"
           >Polls</button>
           <span class="list-group-item active" v-else>Polls</span>
           <button
             v-if="active != 'suggestion'"
             class="list-group-item"
-            :class="{disabled: loadmore}"
-            :disabled="loadmore"
+            :class="{disabled: full == 'loading'}"
+            :disabled="full == 'loading'"
             @click="switchActivity('suggestion')"
           >Suggestions</button>
           <span class="list-group-item active" v-else>Suggestions</span>
@@ -579,13 +579,9 @@
           </panel-post>
         </transition-group>
 
-        <div class="panel panel-default">
-          <div class="panel-body text-center">
-            <div class="loading-circle" v-show="loadmore"><span class="sr-only">loading...</span></div>
-            <a v-if="!full" v-show="!loadmore" href="#" @click.prevent="getAct">Load more...</a>
-            <span v-else v-show="!loadmore">No more post</span>
-          </div>
-        </div>
+        <div v-if="!full" class="text-center"><a href="#" @click.prevent="getAct">Load more...</a></div>
+        <div v-else-if="full == 'loading'" class="loading-circle"><span class="sr-only">loading...</span></div>
+        <div v-else-if="full" class="text-center"><span class="full"></span><span class="sr-only">No more post</span></div>
       </div>
 
       <div v-else-if="active == 'poll'">
@@ -596,11 +592,11 @@
             :key="poll.id"
             :poll-act="poll"
           >
-          <div slot="dropdown-menu" v-if="poll.user.id == user.id" class="dropdown pull-right">
+          <div v-if="poll.user.id == user.id" slot="dropdown-menu" class="dropdown pull-right">
             <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               <span></span>
             </a>
-            <ul slot="dropdown-menu" class="dropdown-menu">
+            <ul class="dropdown-menu">
               <li><a href="#" @click.prevent="edit(poll.id)">Edit</a></li>
               <li><a href="#" @click.prevent="showModal('#confirm-poll-modal', 'Delete', poll.id)">Delete</a></li>
             </ul>
@@ -608,13 +604,9 @@
           </panel-poll>
         </transition-group>
 
-        <div class="panel panel-default">
-          <div class="panel-body text-center">
-            <div class="loading-circle" v-show="loadmore"><span class="sr-only">loading...</span></div>
-            <a v-if="!full" v-show="!loadmore" href="#" @click.prevent="getAct">Load more...</a>
-            <span v-else v-show="!loadmore">No more poll</span>
-          </div>
-        </div>
+        <div v-if="!full" class="text-center"><a href="#" @click.prevent="getAct">Load more...</a></div>
+        <div v-else-if="full == 'loading'" class="loading-circle"><span class="sr-only">loading...</span></div>
+        <div v-else-if="full" class="text-center"><span class="full"></span><span class="sr-only">No more poll</span></div>
       </div>
 
       <div v-else-if="active == 'suggestion'">
@@ -624,11 +616,11 @@
             :key="suggestion.id"
             :suggestion-act="suggestion"
           >
-          <div v-if="suggestion.user.id == user.id" class="dropdown pull-right">
+          <div v-if="suggestion.user.id == user.id" slot="dropdown-menu" class="dropdown pull-right">
             <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               <span></span>
             </a>
-            <ul slot="dropdown-menu" class="dropdown-menu">
+            <ul class="dropdown-menu">
               <li><a href="#" @click.prevent="edit(suggestion.id)">Edit</a></li>
               <li><a href="#" @click.prevent="showModal('#confirm-suggestion-modal', 'Delete', suggestion.id)">Delete</a></li>
             </ul>
@@ -636,16 +628,12 @@
           </panel-suggestion>
         </transition-group>
 
-        <div class="panel panel-default">
-          <div class="panel-body text-center">
-            <div class="loading-circle" v-show="loadmore"><span class="sr-only">loading...</span></div>
-            <a v-if="!full" v-show="!loadmore" href="#" @click.prevent="getAct">Load more...</a>
-            <span v-else v-show="!loadmore">No more suggestion</span>
-          </div>
-        </div>
+        <div v-if="!full" class="text-center"><a href="#" @click.prevent="getAct">Load more...</a></div>
+        <div v-else-if="full == 'loading'" class="loading-circle"><span class="sr-only">loading...</span></div>
+        <div v-else-if="full" class="text-center"><span class="full"></span><span class="sr-only">No more suggestion</span></div>
       </div>
 
-      <div class="text-center" v-else>
+      <div v-else class="text-center">
         No Activities!
       </div>
 
