@@ -21,6 +21,9 @@ elixir((mix) => {
     .webpack('home.js')
     .webpack('search.js')
     .webpack('profile.js')
+    .webpack('post.js')
+    .webpack('poll.js')
+    .webpack('suggestion.js')
     .webpack('app.js')
     .copy('node_modules/bootstrap-sass/assets/fonts/', 'public/fonts/')
     .copy('resources/assets/img/', 'public/images/');
