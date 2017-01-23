@@ -1,140 +1,339 @@
-Vue.mixin({
-  data() {
-    return {
-      suggestion: {
-        id: null,
-        title: '',
-        direct: '',
-        message: '',
-        action: '',
-        disabled: true
-        // error: {}
-      },
-      suggestions: {
-        skip: 0,
-        take: 5,
-        full: false,
-        data: []
-      }
-    }
-  },
-  methods: {
-    showSuggestionModal(selector, action = '', id = null, title = '', direct = '', message = '') {
-      this.suggestion.action = action
-      this.suggestion.id = id
-      this.suggestion.title = title
-      this.suggestion.direct = direct
-      this.suggestion.message = message
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('Authorization', 'Bearer ' + document.getElementById('Authorization').value)
 
-      this.enableSuggestionInput()
+    next()
+
+})
+
+Vue.mixin({
+
+  data() {
+
+    return {
+
+      // init
+      user:           null,
+      action:         '',
+      disabled:       true,
+
+      // suggestion modification handler
+      suggestion: {
+        object:       null,
+        id:           null,
+        title:        '',
+        direct:       '',
+        message:      '',
+        errors: {
+
+          title: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          direct: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          message: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }, // data
+
+  created() {
+
+    this.$http
+      .get(window.location.origin + '/api/user')
+
+      .then((response) => {
+        this.user = response.data
+
+      })
+
+      .catch((response) => {
+        console.error(response.error)
+
+      })
+
+    this.$http
+      .get(window.location.origin + '/api' + window.location.pathname)
+
+      .then((response) => {
+
+        this.suggestion.object = response.data
+
+      })
+
+      .catch((response) => {
+
+        console.error(response.error)
+
+      })
+
+  }, // created
+
+  watch: {
+
+    'suggestion.title': function () {
+
+      this.suggestion.errors.title.dirty        = true
+
+      if (this.suggestion.title == '') {
+        this.suggestion.errors.title.status     = false
+        this.suggestion.errors.title.text       = 'Title cannot be empty.'
+
+      } else {
+        this.suggestion.errors.title.status     = true
+        this.suggestion.errors.title.text       = ''
+
+      }
+
+    }, // suggestion.title
+
+    'suggestion.direct': function () {
+
+      this.suggestion.errors.direct.dirty       = true
+
+      if (this.suggestion.direct == '') {
+        this.suggestion.errors.direct.status    = false
+        this.suggestion.errors.direct.text      = 'Direct cannot be empty.'
+
+      } else {
+        this.suggestion.errors.direct.status    = true
+        this.suggestion.errors.direct.text      = ''
+
+      }
+
+    }, // suggestion.direct
+
+    'suggestion.message': function () {
+
+      this.suggestion.errors.message.dirty      = true
+
+      if (this.suggestion.message == '') {
+        this.suggestion.errors.message.status   = false
+        this.suggestion.errors.message.text     = 'Message cannot be empty.'
+
+      } else {
+        this.suggestion.errors.message.status   = true
+        this.suggestion.errors.message.text     = ''
+
+      }
+
+    } // suggestion.message
+
+  }, // watch
+
+  computed: {
+
+    btnSuggestionDisabled() {
+
+      return (
+        this.suggestion.errors.title.status &&
+        this.suggestion.errors.direct.status &&
+        this.suggestion.errors.message.status
+      ) ? false : true;
+
+    } // btnSuggestionDisabled
+
+  }, // computed
+
+  methods: {
+
+    enableFieldset() {
+
+      this.disabled = false
+
+    }, // enableFieldset
+
+    disableFieldset() {
+
+      this.disabled = true
+
+    }, // disableFieldset
+
+    focus(target) {
+
+      $(target).focus()
+
+    }, // focus
+
+    showModal(selector, action = '', id = null, data = {}) {
+
+      var vm = this
+
+      vm.action = action
+      vm.enableFieldset()
+
+      if (selector == '#suggestion-modal') {
+        vm.suggestion.id       =  id
+        vm.suggestion.title    =  data.title    == undefined ? '' : data.title
+        vm.suggestion.direct   =  data.direct   == undefined ? '' : data.direct
+        vm.suggestion.message  =  data.message  == undefined ? '' : data.message
+
+      } else if (selector == '#confirm-suggestion-modal') {
+        vm.suggestion.id = id
+
+      }
 
       $(selector).modal('show')
-    },
-    hideSuggestionModal(selector, action = '', id = null, title = '', direct = '', message = '') {
+
+    }, // showModal
+
+    hideModal(selector) {
+
       var vm = this
 
       $(selector).modal('hide')
 
       $(selector).on('hidden.bs.modal', function () {
-        vm.suggestion.action = action
-        vm.suggestion.id = id
-        vm.suggestion.title = title
-        vm.suggestion.direct = direct
-        vm.suggestion.message = message
+        vm.clearSuggestion()
+        vm.disableFieldset()
+        vm.action = ''
+
       })
-    },
-    disableSuggestionInput() {
-      this.suggestion.disabled = true
-    },
-    enableSuggestionInput() {
-      this.suggestion.disabled = false
-    },
-    submitSuggestion() {
-      var vm = this
 
-      if (vm.suggestion.action != 'Update') {
-        // disable input fields and button
-        vm.disableSuggestionInput()
+    }, // hideModal
 
-        // post request with the input data
-        vm.$http.post(window.location.origin + '/api/suggestion', {
-          title: vm.suggestion.title,
-          direct: vm.suggestion.direct,
-          message: vm.suggestion.message
-        }).then((response) => {
+    clearSuggestion() {
 
-          vm.suggestions.skip++
+      this.suggestion.id                      = null
+      this.suggestion.title                   = ''
+      this.suggestion.direct                  = ''
+      this.suggestion.message                 = ''
 
-          vm.hideSuggestionModal('#suggestion-modal')
-          vm.enableSuggestionInput()
+      this.suggestion.errors.title.dirty      = false
+      this.suggestion.errors.title.status     = false
+      this.suggestion.errors.title.text       = ''
 
-          vm.suggestions.data.splice(0, 0, response.data)
+      this.suggestion.errors.direct.dirty     = false
+      this.suggestion.errors.direct.status    = false
+      this.suggestion.errors.direct.text      = ''
 
-        }).catch((response) => {
-          console.error(response.error)
+      this.suggestion.errors.message.dirty    = false
+      this.suggestion.errors.message.status   = false
+      this.suggestion.errors.message.text     = ''
+
+    }, // clearSuggestion
+
+    edit(id) {
+
+      this.touch()
+
+      this.$http
+        .get(window.location.origin + '/api/suggestion/' + id + '/edit')
+
+        .then((response) => {
+          
+          this.showModal('#suggestion-modal', 'Update', response.data.id,
+            {
+              title:    response.data.title,
+              direct:   response.data.direct,
+              message:  response.data.message
+            }
+          )
+
         })
-      } else {
-        // disable input fields and button
-        vm.disableSuggestionInput()
 
-        // put request with the updated data
-        vm.$http.put(window.location.origin + '/api/suggestion/' + vm.suggestion.id, {
-          title: vm.suggestion.title,
-          direct: vm.suggestion.direct,
-          message: vm.suggestion.message
-        }).then((response) => {
+        .catch((response) => {
 
-          vm.hideSuggestionModal('#suggestion-modal')
-          vm.enableSuggestionInput()
-
-          var i = _.indexOf(vm.suggestions.data, _.find(vm.suggestions.data, {id: response.data.id}))
-          vm.suggestions.data.splice(i, 1, response.data)
-
-        }).catch((response) => {
           console.error(response.error)
+
         })
+
+    }, // edit
+
+    touch() {
+
+      this.suggestion.errors.title.dirty      = true
+      this.suggestion.errors.title.status     = true
+
+      this.suggestion.errors.direct.dirty     = true
+      this.suggestion.errors.direct.status    = true
+
+      this.suggestion.errors.message.dirty    = true
+      this.suggestion.errors.message.status   = true
+
+    }, // touch
+
+    updateAct(id, data) {
+
+      this.$http
+        .put(window.location.origin + '/api/suggestion/' + id, data)
+
+        .then((response) => {
+
+            this.hideModal('#suggestion-modal')
+
+            this.suggestion.object = response.data
+
+        })
+
+        .catch((response) => {
+
+          console.error(response.error)
+
+        })
+
+    }, // updateAct
+
+    destroy() {
+
+      var id = this.suggestion.id
+
+      this.$http
+        .delete(window.location.origin + '/api/suggestion/' + id)
+
+        .then((response) => {
+
+            window.location = window.location.origin + '/home'
+
+        })
+
+        .catch((response) => {
+
+          console.error(response.error)
+
+        })
+
+    }, // destroy
+
+    submitAct() {
+
+      this.disableFieldset()
+
+      var id = this.suggestion.id
+
+      var data    = {
+        title:    this.suggestion.title,
+        direct:   this.suggestion.direct,
+        message:  this.suggestion.message
       }
-    },
-    getSuggestions() {
-      this.$http.get(window.location.origin + '/api/suggestion?skip=' + this.suggestions.skip + '&take=' + this.suggestions.take)
-        .then((response) => {
-          if (response.data.length == 0 || response.data.length < 5) {
-            this.suggestions.full = true
-          }
 
-          this.suggestions.skip += 5
+      this.updateAct(id, data)
 
-          for (var i = 0; i <= response.data.length - 1; i++) {
-            this.suggestions.data.push(response.data[i])
-          }
+    } // submitAct
 
-        }).catch((response) => {
-          console.error(response.error)
-        })
-    },
-    editSuggestion(id) {
-      this.$http.get(window.location.origin + '/api/suggestion/' + id + '/edit')
-        .then((response) => {
-          this.showSuggestionModal('#suggestion-modal', 'Update', response.data.id, response.data.title, response.data.direct, response.data.message)
-        }).catch((response) => {
-          console.error(response.error)
-        })
-    },
-    confirmDeleteSuggestion(id) {
-      this.showSuggestionModal('#confirm-suggestion-modal', 'Delete', id)
-    },
-    deleteSuggestion() {
-      this.$http.delete(window.location.origin + '/api/suggestion/' + this.suggestion.id)
-        .then((response) => {
-          this.suggestions.skip--
+  } //methods
 
-          var i = _.indexOf(this.suggestions.data, _.find(this.suggestions.data, {id: response.data.id}))
-          this.suggestions.data.splice(i, 1)
-
-          this.hideSuggestionModal('#confirm-suggestion-modal')
-        }).catch((response) => {
-          console.error(response.error)
-        })
-    }
-  }
 })
+
+require('./quick-search')
+require('./logout')

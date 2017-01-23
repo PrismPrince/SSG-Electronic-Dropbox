@@ -10,7 +10,8 @@ class SuggestionController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('auth:api');
+    $this->middleware('auth:api', ['except' => ['show']]);
+    $this->middleware('auth', ['only' => ['show']]);
   }
 
   public function index(Request $request)
@@ -35,9 +36,15 @@ class SuggestionController extends Controller
     return response()->json(Suggestion::with('user')->find($suggestion->id));
   }
 
-  public function show($id)
+  public function show(Request $request, $suggestion)
   {
-    //
+    Suggestion::with('user')->findOrFail($suggestion);
+    return view('suggestions.show');
+  }
+
+  public function getSuggestion($suggestion)
+  {
+    return response()->json(Suggestion::with('user')->find($suggestion));
   }
 
   public function edit($suggestion)
