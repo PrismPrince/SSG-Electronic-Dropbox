@@ -12,7 +12,8 @@ class PollController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('auth:api');
+    $this->middleware('auth:api', ['except' => ['show']]);
+    $this->middleware('auth', ['only' => ['show']]);
   }
 
   public function index(Request $request)
@@ -57,9 +58,15 @@ class PollController extends Controller
     return response()->json(Poll::with('user')->find($poll->id));
   }
 
-  public function show($poll)
+  public function show(Request $request, $poll)
   {
-    // return response()->json(Poll::with('user')->find($poll));
+    Poll::with('user')->findOrFail($poll);
+    return view('polls.show');
+  }
+
+  public function getPoll($poll)
+  {
+    return response()->json(Poll::with('user')->find($poll));
   }
 
   public function edit($poll)
