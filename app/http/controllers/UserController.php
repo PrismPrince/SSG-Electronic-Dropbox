@@ -8,38 +8,28 @@ use App\User;
 
 class UserController extends Controller
 {
-  public function index()
-  {
-    //
-  }
-
-  public function create()
-  {
-    //
-  }
-
-  public function store(Request $request)
-  {
-    //
-  }
-
   public function show(User $user)
   {
-    return view('users.profile')->withUser(encrypt($user->id));
+    return view('users.profile');
   }
 
-  public function edit(User $user)
+  public function getUser($user)
   {
-    //
+    return response()->json(User::find($user));
   }
 
-  public function update(Request $request, User $user)
+  public function getUserPosts(Request $request, $user)
   {
-    //
+    return User::find($user)->posts()->with('user')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get();
   }
 
-  public function destroy(User $user)
+  public function getUserPolls(Request $request, $user)
   {
-    //
+    return User::find($user)->polls()->with('user')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get();
+  }
+
+  public function getUserSuggestions(Request $request, $user)
+  {
+    return User::find($user)->suggestions()->with('user')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get();
   }
 }

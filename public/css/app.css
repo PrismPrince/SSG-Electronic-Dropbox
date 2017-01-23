@@ -7959,6 +7959,10 @@ button.close {
   margin-top: -25px;
 }
 
+.full-option {
+  margin-bottom: 20px;
+}
+
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);
