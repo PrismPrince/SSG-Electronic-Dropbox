@@ -10,7 +10,8 @@ class PostController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('auth:api');
+    $this->middleware('auth:api', ['except' => ['show']]);
+    $this->middleware('auth', ['only' => 'show']);
   }
 
   public function index(Request $request)
@@ -34,9 +35,15 @@ class PostController extends Controller
     return response()->json(Post::with('user')->find($post->id));
   }
 
-  public function show($id)
+  public function show(Request $request, $post)
   {
-    //
+    Post::with('user')->findOrFail($post);
+    return view('posts.show');
+  }
+
+  public function getPost($post)
+  {
+    return response()->json(Post::with('user')->find($post));
   }
 
   public function edit($post)

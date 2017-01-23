@@ -1,135 +1,301 @@
-Vue.mixin({
-  data() {
-    return {
-      post: {
-        id: null,
-        title: '',
-        desc: '',
-        action: '',
-        disabled: true
-        // error: {}
-      },
-      posts: {
-        skip: 0,
-        take: 5,
-        full: false,
-        data: []
-      }
-    }
-  },
-  methods: {
-    showPostModal(selector, action = '', id = null, title = '', desc = '') {
-      this.post.action = action
-      this.post.id = id
-      this.post.title = title
-      this.post.desc = desc
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('Authorization', 'Bearer ' + document.getElementById('Authorization').value)
 
-      this.enablePostInput()
+    next()
+
+})
+
+Vue.mixin({
+
+  data() {
+
+    return {
+
+      // init
+      user:           null,
+      action:         '',
+      disabled:       true,
+
+      // post modification handler
+      post: {
+        object:       null,
+        id:           null,
+        title:        '',
+        desc:         '',
+        errors: {
+
+          title: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          desc: {
+
+            dirty:    false,
+            status:   false,
+            text:     ''
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }, // data
+
+  created() {
+
+    this.$http
+      .get(window.location.origin + '/api/user')
+
+      .then((response) => {
+
+        this.user = response.data
+
+      })
+
+      .catch((response) => {
+
+        console.error(response.error)
+
+      })
+
+    this.$http
+      .get(window.location.origin + '/api' + window.location.pathname)
+
+      .then((response) => {
+
+        this.post.object = response.data
+
+      })
+
+      .catch((response) => {
+
+        console.error(response.error)
+
+      })
+
+
+  }, // created
+
+  watch: {
+
+    'post.title': function () {
+
+      this.post.errors.title.dirty              = true
+
+      if (this.post.title == '') {
+        this.post.errors.title.status           = false
+        this.post.errors.title.text             = 'Title cannot be empty.'
+      } else {
+        this.post.errors.title.status           = true
+        this.post.errors.title.text             = ''
+      }
+
+    }, // post.title
+
+    'post.desc': function () {
+
+      this.post.errors.desc.dirty               = true
+
+      if (this.post.desc == '') {
+        this.post.errors.desc.status            = false
+        this.post.errors.desc.text              = 'Description cannot be empty.'
+      } else {
+        this.post.errors.desc.status            = true
+        this.post.errors.desc.text              = ''
+      }
+
+    } // post.desc
+
+  }, // watch
+
+  computed: {
+
+    btnPostDisabled() {
+
+      return (
+        this.post.errors.title.status &&
+        this.post.errors.desc.status
+      ) ? false : true;
+
+    } // btnPostDisabled
+
+  }, // computed
+
+  methods: {
+
+    enableFieldset() {
+
+      this.disabled = false
+
+    }, // enableFieldset
+
+    disableFieldset() {
+
+      this.disabled = true
+
+    }, // disableFieldset
+
+    focus(target) {
+
+      $(target).focus()
+
+    }, // focus
+
+    showModal(selector, action = '', id = null, data = {}) {
+
+      var vm = this
+
+      vm.action = action
+      vm.enableFieldset()
+
+      if (selector == '#post-modal') {
+        vm.post.id       =  id
+        vm.post.title    =  data.title    == undefined ? '' : data.title
+        vm.post.desc     =  data.desc     == undefined ? '' : data.desc
+
+      } else if (selector == '#confirm-post-modal') {
+        vm.post.id = id
+
+      }
 
       $(selector).modal('show')
-    },
-    hidePostModal(selector, action = '', id = null, title = '', desc = '') {
+
+    }, // showModal
+
+    hideModal(selector) {
+
       var vm = this
 
       $(selector).modal('hide')
 
       $(selector).on('hidden.bs.modal', function () {
-        vm.post.action = action
-        vm.post.id = id
-        vm.post.title = title
-        vm.post.desc = desc
+
+        vm.clearPost()
+        vm.disableFieldset()
+        vm.action = ''
+
       })
-    },
-    disablePostInput() {
-      this.post.disabled = true
-    },
-    enablePostInput() {
-      this.post.disabled = false
-    },
-    submitPost() {
-      var vm = this
 
-      if (vm.post.action != 'Update') {
-        // disable input fields and button
-        vm.disablePostInput()
+    }, // hideModal
 
-        // post request with the input data
-        vm.$http.post(window.location.origin + '/api/post', {
-          title: vm.post.title,
-          desc: vm.post.desc
-        }).then((response) => {
+    clearPost() {
 
-          vm.posts.skip++
+      this.post.id                            = null
+      this.post.title                         = ''
+      this.post.desc                          = ''
+      
+      this.post.errors.title.dirty            = false
+      this.post.errors.title.status           = false
+      this.post.errors.title.text             = ''
 
-          vm.hidePostModal('#post-modal')
-          vm.enablePostInput()
+      this.post.errors.desc.dirty             = false
+      this.post.errors.desc.status            = false
+      this.post.errors.desc.text              = ''
 
-          vm.posts.data.splice(0, 0, response.data)
+    }, // clearPost
 
-        }).catch((response) => {
-          console.error(response.error)
+    edit(id) {
+
+      this.touch()
+
+      this.$http
+        .get(window.location.origin + '/api/post/' + id + '/edit')
+
+        .then((response) => {
+
+          this.showModal('#post-modal', 'Update', response.data.id,
+            {
+              title:    response.data.title,
+              desc:     response.data.desc
+            }
+          )
+
         })
-      } else {
-        // disable input fields and button
-        vm.disablePostInput()
 
-        // put request with the updated data
-        vm.$http.put(window.location.origin + '/api/post/' + vm.post.id, {
-          title: vm.post.title,
-          desc: vm.post.desc
-        }).then((response) => {
-
-          vm.hidePostModal('#post-modal')
-          vm.enablePostInput()
-
-          var i = _.indexOf(vm.posts.data, _.find(vm.posts.data, {id: response.data.id}))
-          vm.posts.data.splice(i, 1, response.data)
-
-        }).catch((response) => {
+        .catch((response) => {
           console.error(response.error)
+
         })
+
+    }, // edit
+
+    touch() {
+
+        this.post.errors.title.dirty            = true
+        this.post.errors.title.status           = true
+
+        this.post.errors.desc.dirty             = true
+        this.post.errors.desc.status            = true
+
+    }, // touch
+
+    updateAct(id, data) {
+
+      this.$http
+        .put(window.location.origin + '/api/post/' + id, data)
+
+        .then((response) => {
+
+            this.hideModal('#post-modal')
+
+            this.post.object = response.data
+
+        })
+
+        .catch((response) => {
+
+          console.error(response.error)
+
+        })
+
+    }, // updateAct
+
+    destroy() {
+
+      var id = this.post.id
+
+      this.$http
+        .delete(window.location.origin + '/api/post/' + id)
+
+        .then((response) => {
+
+            window.location = window.location.origin + '/home'
+
+        })
+
+        .catch((response) => {
+
+          console.error(response.error)
+
+        })
+
+    }, // destroy
+
+    submitAct() {
+
+      this.disableFieldset()
+
+      var id = this.post.id
+
+      var data    = {
+        title:    this.post.title,
+        desc:     this.post.desc
       }
-    },
-    getPosts() {
-      this.$http.get(window.location.origin + '/api/post?skip=' + this.posts.skip + '&take=' + this.posts.take)
-        .then((response) => {
-          if (response.data.length == 0 || response.data.length < 5) {
-            this.posts.full = true
-          }
 
-          this.posts.skip += 5
+      this.updateAct(id, data)
 
-          for (var i = 0; i <= response.data.length - 1; i++) {
-            this.posts.data.push(response.data[i])
-          }
-
-        }).catch((response) => {
-          console.error(response.error)
-        })
-    },
-    editPost(id) {
-      this.$http.get(window.location.origin + '/api/post/' + id + '/edit')
-        .then((response) => {
-          this.showPostModal('#post-modal', 'Update', response.data.id, response.data.title, response.data.desc)
-        }).catch((response) => {
-          console.error(response.error)
-        })
-    },
-    confirmDeletePost(id) {
-      this.showPostModal('#confirm-post-modal', 'Delete', id)
-    },
-    deletePost() {
-      this.$http.delete(window.location.origin + '/api/post/' + this.post.id)
-        .then((response) => {
-          this.posts.skip--
-
-          var i = _.indexOf(this.posts.data, _.find(this.posts.data, {id: response.data.id}))
-          this.posts.data.splice(i, 1)
-
-          this.hidePostModal('#confirm-post-modal')
-        }).catch((response) => {
-          console.error(response.error)
-        })
     }
-  }
+
+  } //methods
+
 })
+
+require('./quick-search')
+require('./logout')
