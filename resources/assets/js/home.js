@@ -171,8 +171,6 @@ Vue.mixin({
 
       })
 
-    $('[data-toggle="tooltip"]').tooltip()
-
   }, // created
 
   mounted() {
@@ -466,7 +464,6 @@ Vue.mixin({
         vm.poll.title    =  data.title    == undefined ? '' : data.title
         vm.poll.desc     =  data.desc     == undefined ? '' : data.desc
         vm.poll.type     =  data.type     == undefined ? '' : data.type
-        // vm.poll.status   =  data.status   == undefined ? '' : data.status
         vm.poll.answer   =  data.answer   == undefined ? '' : data.answer
         vm.poll.answers  =  data.answers  == undefined ? [] : data.answers
 
@@ -920,7 +917,6 @@ Vue.mixin({
           desc:     this.poll.desc,
           start:    this.poll.start,
           end:      this.poll.end,
-          // status:   this.poll.status,
           type:     this.poll.type,
           answers:  this.poll.answers
         }
@@ -939,7 +935,7 @@ Vue.mixin({
       if (this.action == 'Update')  this.updateAct(id, data)
       else                          this.storeAct(data)
 
-    },
+    }, // submitAct
 
     addAnswer(answer) {
 
