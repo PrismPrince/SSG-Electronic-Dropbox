@@ -39,3 +39,7 @@ Route::resource('user', 'UserController', [
 ]);
 Route::get('profile/{user}', 'UserController@show')->name('user.show');
 Route::get('/search', 'SearchController@showResults');
+
+Route::get('/post/{post}', 'PostController@show');
+Route::get('/poll/{poll}', 'PollController@show');
+Route::get('/suggestion/{suggestion}', 'SuggestionController@show');

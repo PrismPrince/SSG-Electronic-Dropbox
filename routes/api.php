@@ -27,3 +27,13 @@ Route::post('/search/user', 'SearchController@getUsers');
 Route::post('/search/post', 'SearchController@getPosts');
 Route::post('/search/poll', 'SearchController@getPolls');
 Route::post('/search/suggestion', 'SearchController@getSuggestions');
+
+Route::get('/post/{post}', 'PostController@getPost');
+Route::get('/poll/{poll}', 'PollController@getPoll');
+Route::get('/suggestion/{suggestion}', 'SuggestionController@getSuggestion');
+
+Route::get('/profile/{user}', 'UserController@getUser');
+
+Route::get('/user/{user}/post', 'UserController@getUserPosts');
+Route::get('/user/{user}/poll', 'UserController@getUserPolls');
+Route::get('/user/{user}/suggestion', 'UserController@getUserSuggestions');
