@@ -43,27 +43,27 @@
           {{-- Posts --}}
           <li v-if="search.results.posts.length != 0" class="dropdown-header">Posts</li>
           <li v-if="search.results.posts.length != 0" v-for="post in search.results.posts">
-            <a href="#" v-html="highlight(post.title)"></a>
+            <a :href="'{{ url('/post') }}/' + post.id" v-html="highlight(post.title)"></a>
           </li>
           <li v-if="search.results.posts.length != 0" role="separator" class="divider"></li>
     
           {{-- Polls --}}
           <li v-if="search.results.polls.length != 0" class="dropdown-header">Polls</li>
           <li v-if="search.results.polls.length != 0" v-for="poll in search.results.polls">
-            <a href="#" v-html="highlight(poll.title)"></a>
+            <a :href="'{{ url('/poll') }}/' + poll.id" v-html="highlight(poll.title)"></a>
           </li>
           <li v-if="search.results.polls.length != 0" role="separator" class="divider"></li>
     
           {{-- Suggestions --}}
           <li v-if="search.results.suggestions.length != 0" class="dropdown-header">Suggestions</li>
           <li v-if="search.results.suggestions.length != 0" v-for="suggestion in search.results.suggestions">
-            <a href="#" v-html="highlight(suggestion.title)"></a>
+            <a :href="'{{ url('/suggestion') }}/' + suggestion.id" v-html="highlight(suggestion.title)"></a>
           </li>
           <li v-if="search.results.suggestions.length != 0" role="separator" class="divider"></li>
     
           {{-- No Results --}}
-          <li v-if="search.results.users.length == 0 && search.results.posts.length == 0 && search.results.polls.length == 0 && search.results.suggestions.length == 0" class="text-center">
-            <a href="#">No results found!</a>
+          <li v-if="search.results.users.length == 0 && search.results.posts.length == 0 && search.results.polls.length == 0 && search.results.suggestions.length == 0" class="dropdown-header text-center">
+            No results found!
           </li>
         </ul>
       </div>

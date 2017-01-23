@@ -74,12 +74,12 @@ Vue.mixin({
 
     highlight(text) {
 
-      var match = text.match(new RegExp(this.key, 'i'))
+      var match = text.match(new RegExp(this.search.key, 'i'))
 
       if (!match) return text
       else var index = match.index
 
-      if ( index >= 0 )text = text.substring(0, index) + "<span class='bg-primary'>" + text.substring(index, index + this.search.key.length) + "</span>" + text.substring(index + this.search.key.length)
+      if (index >= 0) text = text.substring(0, index) + "<span class='bg-primary'>" + text.substring(index, index + this.search.key.length) + "</span>" + text.substring(index + this.search.key.length)
 
       return text
 

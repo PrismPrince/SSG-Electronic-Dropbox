@@ -12,8 +12,8 @@ class SearchController extends Controller
 {
     public function __construct()
   {
-    $this->middleware('auth:api', ['only' => ['getResult']]);
-    $this->middleware('auth', ['only' => ['showResult']]);
+    $this->middleware('auth:api', ['only' => ['getResults']]);
+    $this->middleware('auth', ['only' => ['showResults']]);
   }
 
   public function getResults(Request $request)
