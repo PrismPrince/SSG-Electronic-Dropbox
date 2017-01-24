@@ -13,9 +13,14 @@
 
       <h3>
         <span>{{pollAct.title}}</span>
-        <span v-if="pollAct.status == 'active'" class="label label-success">Active</span>
-        <span v-else-if="pollAct.status == 'pending'" class="label label-default">Pending</span>
-        <span v-else-if="pollAct.status == 'expired'" class="label label-danger">Expired</span>
+        <span
+          class="label"
+          :class="{
+            'label-default': status == 'Pending' ? true : false,
+            'label-success': status == 'Active' ? true : false,
+            'label-danger': status == 'Expired' ? true : false
+          }"
+        >{{status}}</span>
         <br>
         <small><b>Start:</b> {{pollAct.start | formatDateTimeNormal}}</small>
         <br>
@@ -121,6 +126,18 @@
 
       },
 
+      status() {
+
+        var start = this.pollAct.start
+        var end   = this.pollAct.end
+
+        if      (moment().isAfter(start)  && moment().isBefore(end))        return 'Active'
+        else if (moment().isBefore(start) && moment(start).isBefore(end))   return 'Pending'
+        else if (moment().isAfter(end)    && moment(end).isAfter(start))    return 'Expired'
+        // else                                                                return 'Invalid date range'
+
+      },
+
       desc() {
 
         var text  = this.pollAct.desc
@@ -171,7 +188,8 @@
 
             this.$nextTick(function () {
 
-              this.ansDisabled = false
+              if (this.status == 'Active')  this.ansDisabled = false
+              else                          this.ansDisabled = true
 
             })
 

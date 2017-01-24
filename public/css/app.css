@@ -7755,7 +7755,7 @@ button.close {
 
 @media (min-width: 768px) {
   .navbar-form {
-    width: 400px;
+    width: 385px;
     padding: 0;
   }
 }
@@ -7773,6 +7773,15 @@ button.close {
 
 .navbar-form .dropdown-menu > .divider:last-child {
   display: none;
+}
+
+.navbar-brand {
+  padding: 0 15px;
+}
+
+.navbar-brand > img {
+  height: 50px;
+  width: auto;
 }
 
 .root-content {
