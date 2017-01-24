@@ -12,8 +12,8 @@
 
       <!-- Branding Image -->
       <a class="navbar-brand" href="{{ url('/') }}">
-        {{-- <img src="/images/republic_seal.png" alt="Republic of the Philippines"> --}}
-        {{ config('app.name', 'Laravel') }}
+        <img src="{{ url('/images/tomorrows_council_v1.png') }}" alt="Republic of the Philippines">
+        {{-- {{ config('app.name', 'Laravel') }} --}}
       </a>
     </div>
 
