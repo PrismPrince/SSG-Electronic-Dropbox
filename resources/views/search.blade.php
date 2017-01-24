@@ -14,7 +14,7 @@
         <li role="presentation" :class="{active: active == 'suggestion' ? true : false}"><a href="#" @click.prevent="switchActivity('suggestion')">Suggestions</a></li>
       </ul>
 
-      <div v-if="active == 'user'" class="list-group">
+      <div v-if="active == 'user'" class="list-group" v-cloak>
         <transition-group name="list">
           <panel-search
             v-for="user in users"
@@ -30,7 +30,7 @@
         <div v-else-if="full" class="text-center"><span class="full"></span><span class="sr-only">No more users</span></div>
       </div>
 
-      <div v-else-if="active == 'post'" class="list-group">
+      <div v-else-if="active == 'post'" class="list-group" v-cloak>
         <transition-group name="list">
           <panel-search
             v-for="post in posts"
@@ -46,7 +46,7 @@
         <div v-else-if="full" class="text-center"><span class="full"></span><span class="sr-only">No more post</span></div>
       </div>
 
-      <div v-else-if="active == 'poll'" class="list-group">
+      <div v-else-if="active == 'poll'" class="list-group" v-cloak>
         <transition-group name="list">
           <panel-search
             v-for="poll in polls"
@@ -63,7 +63,7 @@
         <div v-else-if="full" class="text-center"><span class="full"></span><span class="sr-only">No more poll</span></div>
       </div>
 
-      <div v-else-if="active == 'suggestion'" class="list-group">
+      <div v-else-if="active == 'suggestion'" class="list-group" v-cloak>
         <transition-group name="list">
           <panel-search
             v-for="suggestion in suggestions"
@@ -79,7 +79,7 @@
         <div v-else-if="full" class="text-center"><span class="full"></span><span class="sr-only">No more suggestion</span></div>
       </div>
 
-      <div v-else class="text-center">
+      <div v-else class="text-center" v-cloak>
         No Activities!
       </div>
 
