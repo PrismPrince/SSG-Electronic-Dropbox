@@ -146,14 +146,16 @@
         v-else
         :suggestion-act="suggestion.object"
       >
-        <div v-if="suggestion.object.user.id == user.id" slot="dropdown-menu" class="dropdown pull-right">
-          <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <span></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href="#" @click.prevent="edit(suggestion.object.id)">Edit</a></li>
-            <li><a href="#" @click.prevent="showModal('#confirm-suggestion-modal', 'Delete', suggestion.object.id)">Delete</a></li>
-          </ul>
+        <div v-if="suggestion.object.user.id == user.id" slot="dropdown-menu" class="media-right">
+          <div class="dropdown pull-right">
+            <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <span></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#" @click.prevent="edit(suggestion.object.id)">Edit</a></li>
+              <li><a href="#" @click.prevent="showModal('#confirm-suggestion-modal', 'Delete', suggestion.object.id)">Delete</a></li>
+            </ul>
+          </div>
         </div>
       </panel-suggestion>
 
