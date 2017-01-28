@@ -1,6 +1,7 @@
 Vue.mixin({
   data() {
     return {
+      user: null,
       first_name: '',
       middle_name: '',
       last_name: '',
@@ -38,8 +39,7 @@ Vue.mixin({
           status: false,
           text: ''
         }
-      },
-      btnDisabled: true
+      }
     }
   },
   watch: {

@@ -1,6 +1,7 @@
 Vue.mixin({
   data() {
     return {
+      user: null,
       email: '',
       password: '',
       errors: {
@@ -14,8 +15,7 @@ Vue.mixin({
           status: false,
           text: ''
         }
-      },
-      btnDisabled: true
+      }
     }
   },
   watch: {
