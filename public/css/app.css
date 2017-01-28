@@ -7832,43 +7832,18 @@ button.close {
   border-left: 5px solid transparent;
 }
 
-.panel-head {
-  padding: 15px 15px 0 15px;
-}
-
-.panel-head h4 {
-  margin: 0;
-  display: inline-block;
-  word-break: break-word;
-}
-
-.panel-body h3 {
-  margin: 0;
-  font-size: 30px;
-  word-break: break-word;
-}
-
-.panel-body hr {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.panel-body p {
-  margin: 0;
-  word-break: break-word;
-}
-
-.panel-body .enlarge {
-  font-size: 24px;
-}
-
-.profile-img {
-  display: inline-block;
-}
-
-.profile-img img {
+.media .media-left img {
   height: 64px;
   width: 64px;
+}
+
+.media h3, .media p {
+  margin: 0;
+  margin-top: 10px;
+}
+
+.media .enlarge {
+  font-size: 18px;
 }
 
 .answer {
@@ -7877,6 +7852,10 @@ button.close {
 
 .answer:last-child {
   margin-bottom: 0;
+}
+
+.answer p {
+  margin: 0;
 }
 
 .bar-wrapper {
@@ -7941,12 +7920,25 @@ button.close {
   position: relative;
 }
 
-.bar-label .glyphicon {
+.bar-label .answer-label {
+  width: calc(100% - 100px);
+}
+
+.bar-label .result {
+  width: 90px;
+  float: right;
+}
+
+.bar-label .poll-type {
   position: absolute;
   left: 0;
   top: 0;
   margin-top: 10px;
   margin-left: 10px;
+}
+
+.bar-label .poll-type input[type="radio"], .bar-label .poll-type input[type="checkbox"] {
+  margin: 0;
 }
 
 #poll-modal .list-group {
@@ -7969,7 +7961,7 @@ button.close {
 }
 
 .full-option {
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 
 @-webkit-keyframes spin {

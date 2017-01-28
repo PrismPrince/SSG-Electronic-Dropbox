@@ -552,23 +552,25 @@
 
     <div id="activity" class="col-sm-8" v-cloak>
 
-      <div v-if="active == 'post'">
+      <div class="panel-group" id="accordion-post" role="tablist" aria-multiselectable="true" v-if="active == 'post'">
         <transition-group name="list">
-          <panel-post
+          <accordion-post
             v-for="post in posts"
             :key="post.id"
             :post-act="post"
           >
-            <div v-if="post.user.id == user.id" slot="dropdown-menu" class="dropdown pull-right">
-              <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <span></span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="#" @click.prevent="edit(post.id)">Edit</a></li>
-                <li><a href="#" @click.prevent="showModal('#confirm-post-modal', 'Delete', post.id)">Delete</a></li>
-              </ul>
+            <div v-if="post.user.id == user.id" slot="dropdown-menu" class="media-right">
+              <div class="dropdown pull-right">
+                <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <span></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" @click.prevent="edit(post.id)">Edit</a></li>
+                  <li><a href="#" @click.prevent="showModal('#confirm-post-modal', 'Delete', post.id)">Delete</a></li>
+                </ul>
+              </div>
             </div>
-          </panel-post>
+          </accordion-post>
         </transition-group>
 
         <div v-if="!full" class="full-option text-center"><a href="#" @click.prevent="getAct">Load more...</a></div>
@@ -576,24 +578,26 @@
         <div v-else-if="full" class="full-option text-center"><span class="full"></span><span class="sr-only">No more post</span></div>
       </div>
 
-      <div v-else-if="active == 'poll'">
+      <div class="panel-group" id="accordion-poll" role="tablist" aria-multiselectable="true" v-else-if="active == 'poll'">
         <transition-group name="list">
-          <panel-poll
+          <accordion-poll
             v-for="poll in polls"
             :auth-user="user"
             :key="poll.id"
             :poll-act="poll"
           >
-            <div v-if="poll.user.id == user.id" slot="dropdown-menu" class="dropdown pull-right">
-              <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <span></span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="#" @click.prevent="edit(poll.id)">Edit</a></li>
-                <li><a href="#" @click.prevent="showModal('#confirm-poll-modal', 'Delete', poll.id)">Delete</a></li>
-              </ul>
+            <div v-if="poll.user.id == user.id" slot="dropdown-menu" class="media-right">
+              <div class="dropdown pull-right">
+                <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <span></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" @click.prevent="edit(poll.id)">Edit</a></li>
+                  <li><a href="#" @click.prevent="showModal('#confirm-poll-modal', 'Delete', poll.id)">Delete</a></li>
+                </ul>
+              </div>
             </div>
-          </panel-poll>
+          </accordion-poll>
         </transition-group>
 
         <div v-if="!full" class="full-option text-center"><a href="#" @click.prevent="getAct">Load more...</a></div>
@@ -601,23 +605,25 @@
         <div v-else-if="full" class="full-option text-center"><span class="full"></span><span class="sr-only">No more poll</span></div>
       </div>
 
-      <div v-else-if="active == 'suggestion'">
+      <div class="panel-group" id="accordion-suggestion" role="tablist" aria-multiselectable="true" v-else-if="active == 'suggestion'">
         <transition-group name="list">
-          <panel-suggestion
+          <accordion-suggestion
             v-for="suggestion in suggestions"
             :key="suggestion.id"
             :suggestion-act="suggestion"
           >
-            <div v-if="suggestion.user.id == user.id" slot="dropdown-menu" class="dropdown pull-right">
-              <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <span></span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="#" @click.prevent="edit(suggestion.id)">Edit</a></li>
-                <li><a href="#" @click.prevent="showModal('#confirm-suggestion-modal', 'Delete', suggestion.id)">Delete</a></li>
-              </ul>
+            <div v-if="suggestion.user.id == user.id" slot="dropdown-menu" class="media-right">
+              <div class="dropdown pull-right">
+                <a class="option dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <span></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" @click.prevent="edit(suggestion.id)">Edit</a></li>
+                  <li><a href="#" @click.prevent="showModal('#confirm-suggestion-modal', 'Delete', suggestion.id)">Delete</a></li>
+                </ul>
+              </div>
             </div>
-          </panel-suggestion>
+          </accordion-suggestion>
         </transition-group>
 
         <div v-if="!full" class="full-option text-center"><a href="#" @click.prevent="getAct">Load more...</a></div>

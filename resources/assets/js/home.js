@@ -16,7 +16,7 @@ Vue.mixin({
       active:         'post',
       action:         '',
       skip:           0,
-      take:           5,
+      take:           10,
       full:           false,
       disabled:       true,
 
@@ -585,7 +585,7 @@ Vue.mixin({
     clearPosts() {
 
       this.skip                               = 0
-      this.take                               = 5
+      this.take                               = 10
       this.full                               = false
       this.posts                              = []
 
@@ -632,7 +632,7 @@ Vue.mixin({
     clearPolls() {
 
       this.skip                               = 0
-      this.take                               = 5
+      this.take                               = 10
       this.full                               = false
       this.polls                              = []
 
@@ -662,7 +662,7 @@ Vue.mixin({
     clearSuggestions() {
 
       this.skip                               = 0
-      this.take                               = 5
+      this.take                               = 10
       this.full                               = false
       this.suggestions                        = []
 
@@ -677,13 +677,13 @@ Vue.mixin({
 
         .then((response) => {
 
-          this.skip += 5
+          this.skip += 10
 
           if      (this.active == 'post')         for (var i = 0; i <= response.data.length - 1; i++)     this.posts.push(response.data[i])
           else if (this.active == 'poll')         for (var i = 0; i <= response.data.length - 1; i++)     this.polls.push(response.data[i])
           else if (this.active == 'suggestion')   for (var i = 0; i <= response.data.length - 1; i++)     this.suggestions.push(response.data[i])
 
-          if (response.data.length == 0 || response.data.length < 5)  this.full = true
+          if (response.data.length == 0 || response.data.length < 10)  this.full = true
           else                                                        this.full = false
 
         })
