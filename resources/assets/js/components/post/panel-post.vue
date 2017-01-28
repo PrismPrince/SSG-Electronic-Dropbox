@@ -1,17 +1,27 @@
 <template>
   <div class="panel list-item panel-default">
-    <div class="panel-head">
-      <slot name="dropdown-menu"></slot>
-      <a class="profile-img" :href="userUrl">
-        <img :src="image" :alt="fullname">
-      </a>
-      <h4><a :href="userUrl">{{fullname}}</a> suggest to <b>{{suggestionAct.direct}}</b><br><small>{{date}}</small></h4>
-    </div>
     <div class="panel-body">
-      <h3>{{suggestionAct.title}}</h3><hr>
-      <p :class="enlarge ? 'enlarge' : ''" v-html="message"></p>
-    </div>
-  </div>
+      <div class="media">
+
+        <div class="media-left">
+          <a :href="userUrl">
+            <img class="media-object" :src="image" :alt="fullname">
+          </a>
+        </div>
+
+        <div class="media-body">
+          <h4 class="media-heading"><a :href="userUrl">{{fullname}}</a></h4>
+          {{date}}
+        </div>
+
+        <slot name="dropdown-menu"></slot>
+
+        <h3>{{postAct.title}}</h3>
+        <p :class="enlarge ? 'enlarge' : ''" v-html="desc"></p>
+
+      </div> <!-- .media -->
+    </div> <!-- .panel-body -->
+  </div> <!-- .panel -->
 </template>
 
 <script>
@@ -19,9 +29,9 @@
 
     props: {
 
-      suggestionAct: {
-        type:       Object,
-        required:   true
+      postAct: {
+        type:      Object,
+        required:  true
       }
 
     },
@@ -30,8 +40,8 @@
 
       enlarge() {
 
-        if (this.suggestionAct.message.length <= 85)  return true
-        else                                          return false
+        if (this.postAct.desc.length <= 85)   return true
+        else                                  return false
 
       },
 
@@ -43,19 +53,19 @@
 
       userUrl() {
 
-        return window.location.origin + '/profile/' + this.suggestionAct.user.id
+        return window.location.origin + '/profile/' + this.postAct.user.id
 
       },
 
       fullname() {
 
-        return this.suggestionAct.user.fname + ' ' + this.suggestionAct.user.lname
+        return this.postAct.user.fname + ' ' + this.postAct.user.lname
 
       },
 
       date() {
 
-        var date = this.suggestionAct.created_at
+        var date = this.postAct.created_at
 
         if      (moment().diff(moment(date), 'second') <= 5)  return 'just now'
         else if (moment().diff(moment(date), 'day') == 0)     return moment(date).fromNow()
@@ -66,9 +76,9 @@
 
       },
 
-      message() {
+      desc() {
 
-        var text = this.suggestionAct.message
+        var text = this.postAct.desc
 
         text = text.replace(/[(<>"'&]/g, function (char) {
 

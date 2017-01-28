@@ -1,55 +1,54 @@
 <template>
   <div class="panel list-item panel-default">
-
-    <div class="panel-head">
-      <slot name="dropdown-menu"></slot>
-      <a class="profile-img" :href="userUrl">
-        <img :src="image" :alt="fullname">
-      </a>
-      <h4><a :href="userUrl">{{fullname}}</a><br><small>{{date}}</small></h4>
-    </div> <!-- .panel-head -->
-
     <div class="panel-body">
+      <div class="media">
 
-      <h3>
-        <span>{{pollAct.title}}</span>
-        <span
-          class="label"
-          :class="{
-            'label-default': status == 'Pending' ? true : false,
-            'label-success': status == 'Active' ? true : false,
-            'label-danger': status == 'Expired' ? true : false
-          }"
-        >{{status}}</span>
-        <br>
-        <small><b>Start:</b> {{pollAct.start | formatDateTimeNormal}}</small>
-        <br>
-        <small><b>End:</b> {{pollAct.end | formatDateTimeNormal}}</small>
-      </h3><hr>
+        <div class="media-left">
+          <a :href="userUrl">
+            <img class="media-object" :src="image" :alt="fullname">
+          </a>
+        </div>
 
-      <p :class="enlarge ? 'enlarge' : ''" v-html="desc"></p>
-      <hr>
+        <div class="media-body">
+          <h4 class="media-heading"><a :href="userUrl">{{fullname}}</a></h4>
+          {{date}}
+          {{pollAct.start | formatDateTimeNormal}}
+          {{pollAct.end | formatDateTimeNormal}}
+          <span
+            class="label"
+            :class="{
+              'label-default': status == 'Pending' ? true : false,
+              'label-success': status == 'Active' ? true : false,
+              'label-danger': status == 'Expired' ? true : false
+            }"
+          >{{status}}</span>
+        </div>
 
-      <h4>Answers</h4>
+        <slot name="dropdown-menu"></slot>
 
-      <fieldset :disabled="ansDisabled">
-        <div class="loading-circle" v-if="!answers"><span class="sr-only">Loading...</span></div>
-        <bar-answer
-          v-else
-          v-for="answer in answers"
-          :auth-user="authUser"
-          :answer="answer"
-          :all-voters="allVoters"
-          :poll-type="pollAct.type"
-          :btn-disabled="ansDisabled"
-          @updateanswers="getAnswers"
-        >
-        </bar-answer>
-      </fieldset>
+        <h3>{{pollAct.title}}</h3>
+        <p :class="enlarge ? 'enlarge' : ''" v-html="desc"></p>
 
+        <h4>Answers</h4>
+
+        <fieldset :disabled="ansDisabled">
+          <div class="loading-circle" v-if="!answers"><span class="sr-only">Loading...</span></div>
+          <bar-answer
+            v-else
+            v-for="answer in answers"
+            :auth-user="authUser"
+            :answer="answer"
+            :all-voters="allVoters"
+            :poll-type="pollAct.type"
+            :btn-disabled="ansDisabled"
+            @updateanswers="getAnswers"
+          >
+          </bar-answer>
+        </fieldset>
+
+      </div> <!-- .media -->
     </div> <!-- .panel-body -->
-
-  </div>
+  </div> <!-- .panel -->
 </template>
 
 <script>
