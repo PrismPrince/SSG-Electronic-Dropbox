@@ -18,11 +18,15 @@
 
       <div class="bar" :style="'width: ' + bar + '%;'"></div>
       <div class="bar-label">
-        <span class="glyphicon" :class="selected ? 'glyphicon-ok-sign' : 'glyphicon-ok-circle'"></span>
-        <span>{{answer.answer}}</span>
+        <div v-if="pollType == 'once'" class="radio poll-type" :class="{disabled: btnDisabled}">
+          <input type="radio" name="answer" :value="answer.id" :checked="selected">
+        </div>
+        <div v-else-if="pollType == 'multi'" class="checkbox poll-type" :class="{disabled: btnDisabled}">
+          <input type="checkbox" name="answer" :value="answer.id" :checked="selected">
+        </div>
+        <p class="result text-muted text-right"><b>{{voters.length}} <span class="glyphicon glyphicon-thumbs-up"></span></b></p>
+        <p class="answer-label">{{answer.answer}}</p>
       </div>
-      <input v-if="pollType == 'once'" v-show="false" type="radio" name="answer" :value="answer.id" v-model="selected">
-      <input v-else-if="pollType == 'multi'" v-show="false" type="checkbox" name="answer" :value="answer.id" v-model="selected">
 
     </button>
 
