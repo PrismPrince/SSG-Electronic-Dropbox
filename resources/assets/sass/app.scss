@@ -8,8 +8,6 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-@import "profile";
-
 [v-cloak] {
   display: none;
 }
@@ -54,6 +52,7 @@
 }
 
 .modal {
+
   textarea {
     resize: none;
     height: 105px;
@@ -102,7 +101,7 @@
 
   .media-left {
 
-    img {
+    .media-object {
       height: 64px;
       width: 64px;
     }
@@ -282,4 +281,19 @@
 
 .search .list-group-item:last-child {
   margin-bottom: 20px;
+}
+
+.profile-top {
+
+  .media-image {
+    height: 100px;
+    width: 100px;
+  }
+
+  .media-body {
+
+    .text-muted {
+      font-size: 150%;
+    }
+  }
 }
