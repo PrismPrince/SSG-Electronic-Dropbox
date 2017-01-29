@@ -511,21 +511,25 @@
 
             <div class="media-body">
               <h1 class="media-heading">@{{profile.fname + ' ' + profile.lname}}</h1>
-              <span class="text-capitalize txet-muted">@{{profile.role}}</span>
+              <span class="text-capitalize text-muted">@{{profile.role}}</span>
             </div>
 
-            <div class="media-right">
-              <div class="dropdown pull-right">
-                <button class="btn btn-block btn-default dropdown-toggle" type="button" id="change-role" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Change Role <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="change-role">
-                  <li><a href="#">Student</a></li>
-                  <li><a href="#">Moderator</a></li>
-                  <li><a href="#">Admin</a></li>
-                </ul>
+            @if (Auth::user()->role == 'admin')
+
+              <div class="media-right">
+                <div class="dropdown pull-right">
+                  <button class="btn btn-block btn-default dropdown-toggle" type="button" id="change-role" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Change Role <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="change-role">
+                    <li><a href="#">Student</a></li>
+                    <li><a href="#">Moderator</a></li>
+                    <li><a href="#">Admin</a></li>
+                  </ul>
+                </div>
               </div>
-            </div>
+
+            @endif
 
           </div> {{-- .media --}}
         </div> {{-- .panel-body --}}
