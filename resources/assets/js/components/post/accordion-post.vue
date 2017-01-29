@@ -23,9 +23,7 @@
             {{date}}
           </div>
 
-          <div class="media-right">
-            <slot name="dropdown-menu"></slot>
-          </div>
+          <slot name="dropdown-menu"></slot>
 
           <p :class="enlarge ? 'enlarge' : ''" v-html="desc"></p>
 
