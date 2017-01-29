@@ -13,10 +13,10 @@ Vue.mixin({
 
       // init
       user:           null,
-      active:         'post',
+      active:         '',
       action:         '',
       skip:           0,
-      take:           5,
+      take:           10,
       full:           false,
       disabled:       true,
 
@@ -185,6 +185,9 @@ Vue.mixin({
       .then((response) => {
 
         this.profile = response.data
+
+        if (this.profile.role == 'student')   this.active = 'suggestion'
+        else                                  this.active = 'post'
 
         this.getAct()
 
@@ -604,7 +607,7 @@ Vue.mixin({
     clearPosts() {
 
       this.skip                               = 0
-      this.take                               = 5
+      this.take                               = 10
       this.full                               = false
       this.posts                              = []
 
@@ -651,7 +654,7 @@ Vue.mixin({
     clearPolls() {
 
       this.skip                               = 0
-      this.take                               = 5
+      this.take                               = 10
       this.full                               = false
       this.polls                              = []
 
@@ -681,7 +684,7 @@ Vue.mixin({
     clearSuggestions() {
 
       this.skip                               = 0
-      this.take                               = 5
+      this.take                               = 10
       this.full                               = false
       this.suggestions                        = []
 
@@ -694,11 +697,11 @@ Vue.mixin({
       this.$nextTick(function () {
 
       this.$http
-        .get(window.location.origin + '/api/user/' + /*window.location.pathname.split('/')[2]*/ this.profile.id + '/' + this.active + '?skip=' + this.skip + '&take=' + this.take)
+        .get(window.location.origin + '/api/user/' + this.profile.id + '/' + this.active + '?skip=' + this.skip + '&take=' + this.take)
 
         .then((response) => {
 
-          this.skip += 5
+          this.skip += 10
 
           if      (this.active == 'post')         for (var i = 0; i <= response.data.length - 1; i++)     this.posts.push(response.data[i])
           else if (this.active == 'poll')         for (var i = 0; i <= response.data.length - 1; i++)     this.polls.push(response.data[i])

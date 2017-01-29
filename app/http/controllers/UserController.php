@@ -8,9 +8,9 @@ use App\User;
 
 class UserController extends Controller
 {
-  public function show(User $user)
+  public function show($user)
   {
-    return view('users.profile');
+    return view('users.profile')->withProfile(User::findOrFail($user));
   }
 
   public function getUser($user)
