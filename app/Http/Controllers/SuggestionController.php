@@ -16,7 +16,21 @@ class SuggestionController extends Controller
 
   public function index(Request $request)
   {
-    return response()->json(Suggestion::with('user')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get());
+    if (Auth::guard('api')->user()->role == 'student') 
+      $suggestions = Suggestion::with('user')
+                                ->where('user_id', Auth::guard('api')->id())
+                                ->offset($request->skip)
+                                ->limit($request->take)
+                                ->orderBy('created_at', 'desc')
+                                ->get();
+
+    else $suggestions = Suggestion::with('user')
+                                  ->offset($request->skip)
+                                  ->limit($request->take)
+                                  ->orderBy('created_at', 'desc')
+                                  ->get();
+
+    return response()->json($suggestions);
   }
 
   public function create()
