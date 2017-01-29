@@ -497,72 +497,6 @@
 
 <div class="container root-content">
   <div class="row">
-    <div class="col-sm-4">
-
-      <div class="row" v-cloak>
-
-        @if (Auth::user()->role != 'student')
-
-          <div v-if="active == 'post'" class="col-xs-12">
-            <button
-              type="button"
-              class="btn btn-block btn-default"
-              @click="showModal('#post-modal', 'Post')"
-            >Write a Post</button>
-          </div>
-
-          <div v-if="active == 'poll'" class="col-xs-12">
-            <button
-              type="button"
-              class="btn btn-block btn-default"
-              @click="showModal('#poll-modal', 'Create')"
-            >Create a Poll</button>
-          </div>
-
-        @else
-
-          <div v-if="active == 'suggestion'" class="col-xs-12">
-            <button
-              type="button"
-              class="btn btn-block btn-default"
-              @click="showModal('#suggestion-modal', 'Send')"
-            >Send a Suggest</button>
-          </div>
-
-        @endif
-
-      </div> {{-- .row --}}
-
-      <div class="panel panel-default" v-cloak>
-        <div class="list-group">
-          <button
-            v-if="active != 'post'"
-            class="list-group-item"
-            :class="{disabled: full == 'loading'}"
-            :disabled="full == 'loading'"
-            @click="switchActivity('post')"
-          >Posts</button>
-          <span class="list-group-item active" v-else>Posts</span>
-          <button
-            v-if="active != 'poll'"
-            class="list-group-item"
-            :class="{disabled: full == 'loading'}"
-            :disabled="full == 'loading'"
-            @click="switchActivity('poll')"
-          >Polls</button>
-          <span class="list-group-item active" v-else>Polls</span>
-          <button
-            v-if="active != 'suggestion'"
-            class="list-group-item"
-            :class="{disabled: full == 'loading'}"
-            :disabled="full == 'loading'"
-            @click="switchActivity('suggestion')"
-          >Suggestions</button>
-          <span class="list-group-item active" v-else>Suggestions</span>
-        </div>
-      </div> {{-- .panel --}}
-
-    </div> {{-- .col-sm-4 --}}
 
     <div id="activity" class="col-sm-8" v-cloak>
 
@@ -649,7 +583,79 @@
         No Activities!
       </div>
 
-    </div> {{-- #activity --}} 
+    </div> {{-- .col-sm-8 --}} 
+
+    <div class="col-sm-4 hidden-xs" v-cloak>
+
+      <div class="affix" data-offset-top="0" data-spy="affix">
+
+        <ul class="nav-aside">
+
+            <li :class="{active: active == 'post'}">
+              <button
+                class="btn-link"
+                v-if="active != 'post'"
+                :class="{disabled: full == 'loading'}"
+                :disabled="full == 'loading'"
+                @click="switchActivity('post')"
+              >Posts</button>
+              <button class="btn-link" v-else disabled>Posts</button>
+            </li>
+
+            <li :class="{active: active == 'poll'}">
+              <button
+                class="btn-link"
+                v-if="active != 'poll'"
+                :class="{disabled: full == 'loading'}"
+                :disabled="full == 'loading'"
+                @click="switchActivity('poll')"
+              >Polls</button>
+              <button class="btn-link" v-else disabled>Polls</button>
+            </li>
+
+            <li :class="{active: active == 'suggestion'}">
+              <button
+                class="btn-link"
+                v-if="active != 'suggestion'"
+                :class="{disabled: full == 'loading'}"
+                :disabled="full == 'loading'"
+                @click="switchActivity('suggestion')"
+              >Suggestions</button>
+              <button class="btn-link" v-else disabled>Suggestions</button>
+            </li>
+
+        </ul> {{-- .nav-aside --}}
+
+        @if (Auth::user()->role != 'student')
+
+            <button
+              v-if="active == 'post'"
+              type="button"
+              class="btn btn-primary"
+              @click="showModal('#post-modal', 'Post')"
+            >Write a Post</button>
+
+            <button
+              v-if="active == 'poll'"
+              type="button"
+              class="btn btn-primary"
+              @click="showModal('#poll-modal', 'Create')"
+            >Create a Poll</button>
+
+        @else
+
+            <button
+              v-if="active == 'suggestion'"
+              type="button"
+              class="btn btn-primary"
+              @click="showModal('#suggestion-modal', 'Send')"
+            >Send a Suggest</button>
+
+        @endif
+
+      </div> {{-- .affix --}}
+
+    </div> {{-- .col-sm-4 --}}
 
   </div> {{-- .row --}}
 </div> {{-- .container --}}

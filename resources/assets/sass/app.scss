@@ -60,18 +60,43 @@
 }
 
 .list-item {
-  transition: all 1s;
-}
-.list-enter {
-  opacity: 0;
-  background: #d9edf7;
+  transition: all .5s;
 }
 .list-enter, .list-leave-active {
-  transform: translateX(30px);
+  opacity: 0;
+  top: 0;
+  transform: translateX(-30px);
 }
 .list-leave-active {
-  opacity: 0;
   position: absolute;
+}
+
+.profile.affix {
+  top: 73px;
+}
+
+.nav-aside {
+  margin-bottom: 10px;
+  list-style-type: none;
+  padding: 0;
+
+  li {
+    padding: 3px 0;
+
+    &.active{
+      border-left: 2px solid $brand-primary;
+      padding-left: 10px;
+
+      .btn-link {
+        color: $text-color;
+      }
+    }
+
+    .btn-link {
+      padding: 0;
+      border: 0;
+    }
+  }
 }
 
 .panel {

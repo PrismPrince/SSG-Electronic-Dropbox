@@ -7732,23 +7732,47 @@ button.close {
 }
 
 .list-item {
-  -webkit-transition: all 1s;
-  transition: all 1s;
-}
-
-.list-enter {
-  opacity: 0;
-  background: #d9edf7;
+  -webkit-transition: all .5s;
+  transition: all .5s;
 }
 
 .list-enter, .list-leave-active {
-  -webkit-transform: translateX(30px);
-  transform: translateX(30px);
+  opacity: 0;
+  top: 0;
+  -webkit-transform: translateX(-30px);
+  transform: translateX(-30px);
 }
 
 .list-leave-active {
-  opacity: 0;
   position: absolute;
+}
+
+.profile.affix {
+  top: 73px;
+}
+
+.nav-aside {
+  margin-bottom: 10px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.nav-aside li {
+  padding: 3px 0;
+}
+
+.nav-aside li.active {
+  border-left: 2px solid #3097D1;
+  padding-left: 10px;
+}
+
+.nav-aside li.active .btn-link {
+  color: #636b6f;
+}
+
+.nav-aside li .btn-link {
+  padding: 0;
+  border: 0;
 }
 
 .panel .dropdown {

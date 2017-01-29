@@ -539,48 +539,6 @@
   </div> {{-- .row --}}
 
   <div class="row">
-    <div class="col-sm-4">
-
-      <div class="panel panel-default" v-cloak>
-        <div class="list-group">
-
-          @if ($profile->role != 'student')
-
-            <button
-              v-if="active != 'post'"
-              class="list-group-item"
-              :class="{disabled: full == 'loading'}"
-              :disabled="full == 'loading'"
-              @click="switchActivity('post')"
-            >Posts</button>
-            <span class="list-group-item active" v-else>Posts</span>
-
-            <button
-              v-if="active != 'poll'"
-              class="list-group-item"
-              :class="{disabled: full == 'loading'}"
-              :disabled="full == 'loading'"
-              @click="switchActivity('poll')"
-            >Polls</button>
-            <span class="list-group-item active" v-else>Polls</span>
-
-          @else
-
-            <button
-              v-if="active != 'suggestion'"
-              class="list-group-item"
-              :class="{disabled: full == 'loading'}"
-              :disabled="full == 'loading'"
-              @click="switchActivity('suggestion')"
-            >Suggestions</button>
-            <span class="list-group-item active" v-else>Suggestions</span>
-
-          @endif
-
-        </div> {{-- .list-group --}}
-      </div> {{-- .panel --}}
-
-    </div> {{-- .col-sm-4 --}}
 
     <div id="activity" class="col-sm-8" v-cloak>
 
@@ -675,7 +633,97 @@
 
       @endif
 
-    </div> {{-- #activity --}} 
+    </div> {{-- .col-sm-8 --}} 
+
+    <div class="col-sm-4" v-cloak>
+
+      <div class="affix profile" data-offset-top="202" data-spy="affix">
+
+        <ul class="nav-aside">
+
+          @if ($profile->role != 'student')
+
+            <li :class="{active: active == 'post'}">
+              <button
+                class="btn-link"
+                v-if="active != 'post'"
+                :class="{disabled: full == 'loading'}"
+                :disabled="full == 'loading'"
+                @click="switchActivity('post')"
+              >Posts</button>
+              <button class="btn-link" v-else disabled>Posts</button>
+            </li>
+
+            <li :class="{active: active == 'poll'}">
+              <button
+                class="btn-link"
+                v-if="active != 'poll'"
+                :class="{disabled: full == 'loading'}"
+                :disabled="full == 'loading'"
+                @click="switchActivity('poll')"
+              >Polls</button>
+              <button class="btn-link" v-else disabled>Polls</button>
+            </li>
+
+          @else
+
+            <li :class="{active: active == 'suggestion'}">
+              <button
+                class="btn-link"
+                v-if="active != 'suggestion'"
+                :class="{disabled: full == 'loading'}"
+                :disabled="full == 'loading'"
+                @click="switchActivity('suggestion')"
+              >Suggestions</button>
+              <button class="btn-link" v-else disabled>Suggestions</button>
+            </li>
+
+          @endif
+
+        </ul> {{-- .nav-aside --}}
+
+      </div> {{-- .affix --}}
+
+      <!-- <div class="panel panel-default" v-cloak>
+        <div class="list-group">
+      
+          @if ($profile->role != 'student')
+      
+            <button
+              v-if="active != 'post'"
+              class="list-group-item"
+              :class="{disabled: full == 'loading'}"
+              :disabled="full == 'loading'"
+              @click="switchActivity('post')"
+            >Posts</button>
+            <span class="list-group-item active" v-else>Posts</span>
+      
+            <button
+              v-if="active != 'poll'"
+              class="list-group-item"
+              :class="{disabled: full == 'loading'}"
+              :disabled="full == 'loading'"
+              @click="switchActivity('poll')"
+            >Polls</button>
+            <span class="list-group-item active" v-else>Polls</span>
+      
+          @else
+      
+            <button
+              v-if="active != 'suggestion'"
+              class="list-group-item"
+              :class="{disabled: full == 'loading'}"
+              :disabled="full == 'loading'"
+              @click="switchActivity('suggestion')"
+            >Suggestions</button>
+            <span class="list-group-item active" v-else>Suggestions</span>
+      
+          @endif
+      
+        </div> {{-- .list-group --}}
+      </div> {{-- .panel --}} -->
+
+    </div> {{-- .col-sm-4 --}}
 
   </div> {{-- .row --}}
 </div>
