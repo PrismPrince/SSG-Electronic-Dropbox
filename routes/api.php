@@ -46,3 +46,4 @@ Route::get('/profile/{user}', 'UserController@getUser');
 Route::get('/user/{user}/post', 'UserController@getUserPosts');
 Route::get('/user/{user}/poll', 'UserController@getUserPolls');
 Route::get('/user/{user}/suggestion', 'UserController@getUserSuggestions');
+Route::post('/user/{user}/role', 'UserController@changeRole');

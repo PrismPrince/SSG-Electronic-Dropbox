@@ -951,7 +951,29 @@ Vue.mixin({
 
       this.poll.answers.splice(key, 1)
 
-    } // removeAnswer
+    }, // removeAnswer
+
+    changeUserRole(id, role) {
+
+      this.$http
+        .post(window.location.origin + '/api/user/' + id + '/role',
+        {
+          role: role
+        })
+
+        .then((response) => {
+
+          window.location = window.location.origin + '/profile/' + id
+
+        })
+
+        .catch((response) => {
+
+          console.error(response.error)
+
+        })
+
+    } // changeUserRole
 
   } //methods
 

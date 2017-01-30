@@ -522,9 +522,9 @@
                     Change Role <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="change-role">
-                    <li><a href="#">Student</a></li>
-                    <li><a href="#">Moderator</a></li>
-                    <li><a href="#">Admin</a></li>
+                    <li v-if="profile.role != 'admin'"><a href="#" @click.prevent="changeUserRole(profile.id, 'admin')">Admin</a></li>
+                    <li v-if="profile.role != 'moderator'"><a href="#" @click.prevent="changeUserRole(profile.id, 'moderator')">Moderator</a></li>
+                    <li v-if="profile.role != 'student'"><a href="#" @click.prevent="changeUserRole(profile.id, 'student')">Student</a></li>
                   </ul>
                 </div>
               </div>
@@ -684,49 +684,10 @@
 
       </div> {{-- .affix --}}
 
-      <!-- <div class="panel panel-default" v-cloak>
-        <div class="list-group">
-      
-          @if ($profile->role != 'student')
-      
-            <button
-              v-if="active != 'post'"
-              class="list-group-item"
-              :class="{disabled: full == 'loading'}"
-              :disabled="full == 'loading'"
-              @click="switchActivity('post')"
-            >Posts</button>
-            <span class="list-group-item active" v-else>Posts</span>
-      
-            <button
-              v-if="active != 'poll'"
-              class="list-group-item"
-              :class="{disabled: full == 'loading'}"
-              :disabled="full == 'loading'"
-              @click="switchActivity('poll')"
-            >Polls</button>
-            <span class="list-group-item active" v-else>Polls</span>
-      
-          @else
-      
-            <button
-              v-if="active != 'suggestion'"
-              class="list-group-item"
-              :class="{disabled: full == 'loading'}"
-              :disabled="full == 'loading'"
-              @click="switchActivity('suggestion')"
-            >Suggestions</button>
-            <span class="list-group-item active" v-else>Suggestions</span>
-      
-          @endif
-      
-        </div> {{-- .list-group --}}
-      </div> {{-- .panel --}} -->
-
     </div> {{-- .col-sm-4 --}}
 
   </div> {{-- .row --}}
-</div>
+</div> {{-- .container --}}
 
 @stop
 
