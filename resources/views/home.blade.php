@@ -579,10 +579,6 @@
         <div v-else-if="full" class="full-option text-center"><span class="full"></span><span class="sr-only">No more suggestion</span></div>
       </div>
 
-      <div v-else class="text-center">
-        No Activities!
-      </div>
-
     </div> {{-- .col-sm-8 --}} 
 
     <div class="col-sm-4 hidden-xs" v-cloak>

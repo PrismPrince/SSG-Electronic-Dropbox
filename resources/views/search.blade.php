@@ -6,7 +6,7 @@
 
   <div class="row">
 
-    <div class="col-md-8 col-md-offset-2 search">
+    <div class="col-md-8 col-md-offset-1 col-sm-8 search">
       <ul class="nav nav-tabs">
         <li role="presentation" :class="{active: active == 'user' ? true : false}"><a href="#" @click.prevent="switchActivity('user')">Users</a></li>
         <li role="presentation" :class="{active: active == 'post' ? true : false}"><a href="#" @click.prevent="switchActivity('post')">Posts</a></li>
@@ -79,11 +79,34 @@
         <div v-else-if="full" class="text-center"><span class="full"></span><span class="sr-only">No more suggestion</span></div>
       </div>
 
-      <div v-else class="text-center" v-cloak>
-        No Activities!
-      </div>
-
     </div> {{-- .col-md-8 --}}
+
+    <div v-if="active != 'user'" class="col-md-2 col-sm-4">
+      <div class="affix" data-offset-top="0" data-spy="affix">
+        <ul class="nav-aside">
+          <li class="header">Filter By Date</li>
+
+          <li v-for="date in dates">
+
+            <a href="#"
+              @click.prevent="getActFromDate(date.year)"
+            >@{{date.year}}</a>
+            <button class="search-collapse btn-link" data-toggle="collapse" :data-target="'#' + date.year"></button>
+
+            <ul :id="date.year" class="nav-aside nav-aside-inner collapse">
+              <li v-for="month in date.months">
+                <a href="#"
+                  @click.prevent="getActFromDate(date.year, month)"
+                >@{{intToDate(date.year, month)}}</a>
+              </li>
+            </ul>
+
+          </li>
+
+        </ul> {{-- .nav-aside --}}
+      </div> {{-- .affix --}}
+    </div> {{-- .col-sm-4 --}}
+
   </div> {{-- .row --}}
 </div> {{-- .contaiiner --}}
 
