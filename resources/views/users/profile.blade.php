@@ -495,7 +495,7 @@
 <div class="container root-content">
 
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
       <div class="panel panel-default profile-top" v-cloak>
 
         <div v-if="!profile" class="panel-body">
@@ -540,7 +540,7 @@
 
   <div class="row">
 
-    <div id="activity" class="col-sm-8" v-cloak>
+    <div id="activity" class="col-sm-8 col-md-7 col-md-offset-1" v-cloak>
 
       @if ($profile->role != 'student')
 
@@ -635,7 +635,7 @@
 
     </div> {{-- .col-sm-8 --}} 
 
-    <div class="col-sm-4" v-cloak>
+    <div class="col-sm-4 col-md-3 hidden-xs" v-cloak>
 
       <div class="affix profile" data-offset-top="202" data-spy="affix">
 

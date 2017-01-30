@@ -84,7 +84,7 @@
 
     </div> {{-- .col-md-8 --}}
 
-    <div v-if="active != 'user'" class="col-md-2 col-sm-4" v-cloak>
+    <div v-if="active != 'user'" class="col-md-2 col-sm-4 hidden-xs" v-cloak>
       <div class="affix search" data-offset-top="0" data-spy="affix">
         <ul class="nav-aside">
           <li class="header">Filter By Date</li>

@@ -498,7 +498,7 @@
 <div class="container root-content">
   <div class="row">
 
-    <div id="activity" class="col-sm-8" v-cloak>
+    <div id="activity" class="col-sm-8 col-md-7 col-md-offset-1" v-cloak>
 
       <div class="panel-group" id="accordion-post" role="tablist" aria-multiselectable="true" v-if="active == 'post'">
         <transition-group name="list">
@@ -581,7 +581,7 @@
 
     </div> {{-- .col-sm-8 --}} 
 
-    <div class="col-sm-4 hidden-xs" v-cloak>
+    <div class="col-sm-4 col-md-3 hidden-xs" v-cloak>
 
       <div class="affix" data-offset-top="0" data-spy="affix">
 
