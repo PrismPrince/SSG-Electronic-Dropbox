@@ -24,6 +24,7 @@
     "test": "tests"
   },
   "dependencies": {
+    "cropper": "^3.0.0-alpha.1",
     "gulp": "^3.9.1"
   },
   "author": "Dave Dane Pacilan",
