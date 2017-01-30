@@ -7747,6 +7747,15 @@ button.close {
   position: absolute;
 }
 
+.search.affix, .search.affix-top {
+  max-height: calc(100% - 73px);
+  overflow-y: auto;
+}
+
+.affix {
+  min-width: 220px;
+}
+
 .profile.affix {
   top: 73px;
 }
@@ -7976,8 +7985,8 @@ button.close {
   animation: spin 1s infinite linear;
 }
 
-.search .panel:first-child {
-  margin-top: 20px;
+.search .list-group-item-heading:first-child {
+  margin-bottom: 0;
 }
 
 .full {
@@ -7990,7 +7999,7 @@ button.close {
   margin-bottom: 20px;
 }
 
-.search .list-group-item:last-child {
+.search-act .list-group-item:last-child {
   margin-bottom: 20px;
 }
 

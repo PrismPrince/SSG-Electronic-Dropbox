@@ -6,7 +6,7 @@
 
   <div class="row">
 
-    <div class="col-md-8 col-md-offset-1 col-sm-8 search">
+    <div class="col-md-8 col-md-offset-1 col-sm-8 search-act">
       <ul class="nav nav-tabs" v-cloak>
         <li role="presentation" :class="{active: active == 'user' ? true : false}"><a href="#" @click.prevent="switchActivity('user')">Users</a></li>
         <li role="presentation" :class="{active: active == 'post' ? true : false}"><a href="#" @click.prevent="switchActivity('post')">Posts</a></li>
@@ -37,6 +37,7 @@
             :key="post.id"
             :url="'post/' + post.id"
             :head="hl(post.title)"
+            :act-date="post.created_at"
             :body="hl(post.desc)"
           ></panel-search>
         </transition-group>
@@ -54,6 +55,7 @@
             :key="poll.id"
             :url="'poll/' + poll.id"
             :head="hl(poll.title)"
+            :act-date="poll.created_at"
             :body="hl(poll.desc)"
           ></panel-search>
         </transition-group>
@@ -70,6 +72,7 @@
             :key="suggestion.id"
             :url="'suggestion/' + suggestion.id"
             :head="hl(suggestion.title)"
+            :act-date="suggestion.created_at"
             :body="hl(suggestion.message)"
           ></panel-search>
         </transition-group>
@@ -82,7 +85,7 @@
     </div> {{-- .col-md-8 --}}
 
     <div v-if="active != 'user'" class="col-md-2 col-sm-4" v-cloak>
-      <div class="affix" data-offset-top="0" data-spy="affix">
+      <div class="affix search" data-offset-top="0" data-spy="affix">
         <ul class="nav-aside">
           <li class="header">Filter By Date</li>
 
