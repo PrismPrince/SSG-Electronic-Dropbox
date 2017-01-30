@@ -16,16 +16,25 @@ use Illuminate\Http\Request;
 Route::get('/user', 'HomeController@getUser');
 
 Route::resource('/post', 'PostController', ['except' => ['create', 'show']]);
+
 Route::resource('/poll', 'PollController', ['except' => ['create', 'show']]);
 Route::get('/poll/{poll}/answers', 'PollController@getAnswers');
 Route::get('/poll/{poll}/voters', 'PollController@getAllVoters');
 Route::get('/answer/{answer}/voters', 'AnswerController@getVoters');
+
 Route::post('/vote', 'PollController@vote');
+
 Route::resource('/suggestion', 'SuggestionController', ['except' => ['create', 'show']]);
+
+Route::get('/search/{search}/dates', 'SearchController@getSearchDates');
+
 Route::post('/search', 'SearchController@getResults');
 Route::post('/search/user', 'SearchController@getUsers');
+
 Route::post('/search/post', 'SearchController@getPosts');
+
 Route::post('/search/poll', 'SearchController@getPolls');
+
 Route::post('/search/suggestion', 'SearchController@getSuggestions');
 
 Route::get('/post/{post}', 'PostController@getPost');
