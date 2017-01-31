@@ -47,7 +47,7 @@
 
       image() {
 
-        return window.location.origin + '/images/user.jpg'
+        return window.location.origin + '/image/user/' + this.postAct.user.id + '?wh=64'
 
       },
 

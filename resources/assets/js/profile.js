@@ -20,6 +20,17 @@ Vue.mixin({
       full:           false,
       disabled:       true,
 
+      imageUp: {
+        data:         '',
+        error:        null,
+        uploading:    false,
+        loaded:       null,
+        xpos:         0,
+        ypos:         0,
+        width:        0,
+        height:       0,
+      },
+
       // view data handlers
       profile:        null,
       posts:          [],
@@ -169,7 +180,8 @@ Vue.mixin({
       })
 
       .catch((response) => {
-        console.error(response.error)
+
+        console.error(response.status, response.statusText)
 
       })
 
@@ -195,7 +207,7 @@ Vue.mixin({
 
       .catch((response) => {
 
-        console.error(response.error)
+        console.error(response.status, response.statusText)
 
       })
 
@@ -445,7 +457,13 @@ Vue.mixin({
         this.suggestion.errors.message.status
       ) ? false : true;
 
-    } // btnSuggestionDisabled
+    }, // btnSuggestionDisabled
+
+    btnImageUpDisabled() {
+
+      return this.imageUp.data == '';
+
+    } // btnImageUpDisabled
 
   }, // computed
 
@@ -541,6 +559,9 @@ Vue.mixin({
       } else if (selector == '#confirm-suggestion-modal') {
         vm.suggestion.id = id
 
+      } else if (selector == '#upload-profile-modal') {
+        //
+
       }
 
       $(selector).modal('show')
@@ -557,6 +578,7 @@ Vue.mixin({
         vm.clearPost()
         vm.clearPoll()
         vm.clearSuggestion()
+        vm.clearImageUp()
         vm.disableFieldset()
         vm.action = ''
 
@@ -690,6 +712,21 @@ Vue.mixin({
 
     }, // clearSuggestions
 
+    clearImageUp() {
+
+      $('.image-up').cropper('destroy')
+
+      this.imageUp.data       = ''
+      this.imageUp.error      = null
+      this.imageUp.uploading  = false
+      this.imageUp.loaded     = null
+      this.imageUp.xpos       = 0
+      this.imageUp.ypos       = 0
+      this.imageUp.width      = 0
+      this.imageUp.height     = 0
+
+    }, // clearImageUp
+
     getAct() {
 
       this.full = 'loading'
@@ -714,7 +751,7 @@ Vue.mixin({
 
         .catch((response) => {
 
-          console.error(response.error)
+          console.error(response.status, response.statusText)
 
           this.full = false
 
@@ -768,7 +805,8 @@ Vue.mixin({
         })
 
         .catch((response) => {
-          console.error(response.error)
+
+          console.error(response.status, response.statusText)
 
         })
 
@@ -848,7 +886,9 @@ Vue.mixin({
         })
 
         .catch((response) => {
-          console.error(response.error)
+
+          console.error(response.status, response.statusText)
+
         })
 
     }, // updateAct
@@ -886,7 +926,8 @@ Vue.mixin({
 
         })
         .catch((response) => {
-          console.error(response.error)
+
+          console.error(response.status, response.statusText)
 
         })
 
@@ -969,11 +1010,112 @@ Vue.mixin({
 
         .catch((response) => {
 
-          console.error(response.error)
+          console.error(response.status, response.statusText)
 
         })
 
-    } // changeUserRole
+    }, // changeUserRole
+
+    uploadProfile() {
+
+      vm = this
+
+      vm.disableFieldset()
+      $('.image-up').cropper('destroy')
+      vm.imageUp.uploading = true
+
+      vm.$http
+        .post(window.location.origin + '/api/image/user/upload',
+        {
+
+          image:    vm.imageUp.data,
+          xpos:     vm.imageUp.xpos,
+          ypos:     vm.imageUp.ypos,
+          width:    vm.imageUp.width,
+          height:   vm.imageUp.height
+
+        },
+        {
+
+          progress(e) {
+
+            if (e.lengthComputable)
+              vm.imageUp.loaded = (e.loaded / e.total) * 100
+
+          }
+
+        })
+
+        .then((response) => {
+
+          vm.hideModal('#upload-profile-modal')
+          window.location = window.location.origin + '/profile/' + vm.profile.id
+
+        })
+
+        .catch((response) => {
+
+          console.error(response.status, response.statusText)
+
+          vm.clearImageUp()
+          vm.imageUp.error = response.statusText
+          vm.enableFieldset()
+
+        })
+
+    }, //uploadProfile
+
+    onFileChange(e) {
+
+      var files = e.target.files || e.dataTransfer.files
+
+      if (!files.length)
+        this.imageUp.error = 'No image selected'
+      else if (['image/gif', 'image/jpeg', 'image/png'].indexOf(files[0]['type']) == -1)
+        this.imageUp.error = 'File is not an image'
+      else
+        this.createImage(files[0])
+
+    }, // onFileChange
+
+    createImage(file) {
+
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = (e) => {
+
+        vm.imageUp.data = e.target.result;
+
+        vm.$nextTick(function () {
+
+          $('.image-up').cropper({
+
+            autoCropArea:         1,
+            aspectRatio:          1,
+            cropBoxMovable:       true,
+            cropBoxResizable:     true,
+            dragMode:             'move',
+            guides:               false,
+            restore:              false,
+            viewMode:             2,
+
+            crop(e) {
+              vm.imageUp.xpos     = e.x
+              vm.imageUp.ypos     = e.y
+              vm.imageUp.width    = e.width
+              vm.imageUp.height   = e.height
+            }
+
+          })
+
+        })
+
+      }
+
+      reader.readAsDataURL(file);
+
+    } // createImage
 
   } //methods
 

@@ -157,8 +157,9 @@
   .media-left {
 
     .media-object {
-      height: 64px;
-      width: 64px;
+      height: 66px;
+      width: 66px;
+      border: 1px solid $laravel-border-color;
     }
   }
 
@@ -338,11 +339,79 @@
   margin-bottom: 20px;
 }
 
+.image-up-btn-container {
+  display: table;
+  width: 100%;
+  min-height: 100px;
+  overflow: hidden;
+
+  > p {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+
+    > span {
+      margin-top: 10px;
+      display: block;
+    }
+  }
+}
+
+.image-up-btn {
+  border-color: $brand-primary;
+  border-radius: 20px;
+  color: $brand-primary;
+
+  &:hover {
+    color: $brand-primary;
+  }
+}
+
+.image-up-container {
+  width: 100%;
+
+  .image-up {
+    max-width: 100%;
+  }
+
+  .image-up-clear {
+    position: relative;
+    z-index: 1;
+    float: right;
+    background: transparent;
+    color: white;
+    border-color: white;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    margin-top: 3px;
+    margin-right: 3px;
+  }
+}
+
 .profile-top {
 
-  .media-image {
-    height: 150px;
+  .upload {
+    position: absolute;
     width: 150px;
+    height: 40px;
+    font-size: 150%;
+    text-align: center;
+    padding: 4.25px 0;
+    background-color: rgba(255,255,255,.5);
+    color: #777;
+    bottom: 38px;
+    opacity: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .media-image {
+    height: 152px;
+    width: 152px;
+    border: 1px solid $laravel-border-color;
   }
 
   .media-body {

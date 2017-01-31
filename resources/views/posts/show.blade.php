@@ -89,7 +89,7 @@
         </div>
 
         <div class="modal-body">
-          <div class="row" slot="modal-body">
+          <div class="row">
             <div class="col-xs-12">
               Are you sure you want to delete this?
             </div>

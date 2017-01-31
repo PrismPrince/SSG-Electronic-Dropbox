@@ -91,7 +91,7 @@
           </div>
 
           <div class="modal-body">
-            <div class="row" slot="modal-body">
+            <div class="row">
               <div class="col-xs-12">
                 Are you sure you want to delete this?
               </div>
@@ -339,7 +339,7 @@
           </div>
 
           <div class="modal-body">
-            <div class="row" slot="modal-body">
+            <div class="row">
               <div class="col-xs-12">
                 Are you sure you want to delete this?
               </div>
@@ -473,7 +473,7 @@
           </div>
 
           <div class="modal-body">
-            <div class="row" slot="modal-body">
+            <div class="row">
               <div class="col-xs-12">
                 Are you sure you want to delete this?
               </div>
@@ -483,6 +483,58 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default" @click="hideModal('#confirm-suggestion-modal')">Cancel</button>
             <button type="button" class="btn btn-primary" @click.prevent="destroy">@{{action}}</button>
+          </div>
+
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+@endif
+
+@if (Auth::id() == $profile->id)
+
+  <div class="modal fade" id="upload-profile-modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <fieldset :disabled="disabled">
+
+          <div class="modal-header">
+            <button type="button" class="close" aria-label="Close" @click="hideModal('#upload-profile-modal')"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Upload a Photo</h4>
+          </div>
+
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="image-up-btn-container" v-if="!imageUp.data">
+                  <p>
+                    <label class="btn image-up-btn">
+                      Upload a Photo
+                      <input class="sr-only" accept="image/*" type="file" @change="onFileChange">
+                    </label>
+                    <span v-if="imageUp.error">@{{imageUp.error}}</span>
+                  </p>
+                </div>
+                <div class="image-up-container" v-else>
+
+                  <div v-if="imageUp.uploading" class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" :aria-valuenow="imageUp.loaded" aria-valuemin="0" aria-valuemax="100" :style="'width: ' +  imageUp.loaded + '%'">
+                      @{{imageUp.loaded}}%
+                      <span class="sr-only">@{{imageUp.loaded}}% Complete</span>
+                    </div>
+                  </div>
+
+                  <img v-else class="image-up" :src="imageUp.data">
+
+                </div>
+              </div>
+            </div> {{-- .row --}}
+          </div> {{-- .modal-body --}}
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" @click="hideModal('#upload-profile-modal')">Cancel</button>
+            <button type="button" class="btn btn-primary" :disabled="btnImageUpDisabled" @click.prevent="uploadProfile(user.id)">@{{action}}</button>
           </div>
 
         </fieldset>
@@ -506,7 +558,13 @@
           <div class="media">
 
             <div class="media-left">
-              <img class="media-image" src="/images/user.jpg" alt="">
+              @if (Auth::id() == $profile->id)
+                <a class="upload" href="#" @click.prevent="showModal('#upload-profile-modal', 'Upload')">
+                  <span class="glyphicon glyphicon-camera"></span>
+                </a>
+              @endif
+
+              <img class="media-image" :src="'{{ url('/image/user') }}/' + profile.id + '?wh=150'" :alt="profile.fname + ' ' + profile.lname">
             </div>
 
             <div class="media-body">
@@ -692,12 +750,14 @@
 @stop
 
 @push('scripts')
-  @if ($profile->role != 'student')
-    <script src="/js/bootstrap-datetimepicker.min.js"></script>
+  @if (Auth::id() == $profile->id)
+    <script src="/js/cropper.min.js"></script>
   @endif
   <script src="/js/profile.js"></script>
 @endpush
 
 @push('styles')
-  <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+  @if (Auth::id() == $profile->id)
+    <link href="/css/cropper.min.css" rel="stylesheet">
+  @endif
 @endpush

@@ -91,7 +91,7 @@
           </div>
 
           <div class="modal-body">
-            <div class="row" slot="modal-body">
+            <div class="row">
               <div class="col-xs-12">
                 Are you sure you want to delete this?
               </div>
@@ -339,7 +339,7 @@
           </div>
 
           <div class="modal-body">
-            <div class="row" slot="modal-body">
+            <div class="row">
               <div class="col-xs-12">
                 Are you sure you want to delete this?
               </div>
@@ -476,7 +476,7 @@
           </div>
 
           <div class="modal-body">
-            <div class="row" slot="modal-body">
+            <div class="row">
               <div class="col-xs-12">
                 Are you sure you want to delete this?
               </div>
@@ -659,10 +659,5 @@
 @endsection
 
 @push('scripts')
-  <script src="/js/bootstrap-datetimepicker.min.js"></script>
   <script src="/js/home.js"></script>
-@endpush
-
-@push('styles')
-  <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 @endpush

@@ -96,7 +96,7 @@
 
       image() {
 
-        return window.location.origin + '/images/user.jpg'
+        return window.location.origin + '/image/user/' + this.pollAct.user.id + '?wh=64'
 
       },
 
