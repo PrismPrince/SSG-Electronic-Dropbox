@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+// use Faker\Factory;
 
 class SuggestionsTableSeeder extends Seeder
 {
@@ -30,5 +31,22 @@ class SuggestionsTableSeeder extends Seeder
       'created_at' => date('Y-m-d H:i:s', time()),
       'updated_at' => date('Y-m-d H:i:s', time()),
     ]);
+
+    // Generate fake data
+
+    // $faker = Factory::create();
+    // $limit = 50;
+
+    // for ($i=0; $i < $limit; $i++) {
+    //   DB::table('suggestions')->insert([
+    //     'user_id' => mt_rand(1000000002, 1000000028),
+    //     'title' => $faker->sentence,
+    //     'direct' => $faker->words(3, true),
+    //     'message' => $faker->paragraph,
+    //     'created_at' => date('Y-m-d H:i:s', time()),
+    //     'updated_at' => date('Y-m-d H:i:s', time()),
+    //   ]);
+    // }
+
   }
 }

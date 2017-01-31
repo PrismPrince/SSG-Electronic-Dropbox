@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+// use Faker\Factory;
 
 class PostsTableSeeder extends Seeder
 {
@@ -29,5 +30,21 @@ class PostsTableSeeder extends Seeder
       'created_at' => date('Y-m-d H:i:s', time()),
       'updated_at' => date('Y-m-d H:i:s', time()),
     ]);
+
+    // Generate fake data
+
+    // $faker = Factory::create();
+    // $limit = 50;
+
+    // for ($i=0; $i < $limit; $i++) {
+    //   DB::table('posts')->insert([
+    //     'user_id' => mt_rand(1000000029, 1000000053),
+    //     'title' => $faker->sentence,
+    //     'desc' => $faker->paragraph,
+    //     'created_at' => date('Y-m-d H:i:s', time()),
+    //     'updated_at' => date('Y-m-d H:i:s', time()),
+    //   ]);
+    // }
+
   }
 }
