@@ -24,6 +24,7 @@
     "test": "tests"
   },
   "dependencies": {
+    "bootstrap-datetimepicker-sass": "^3.0.3",
     "cropper": "^3.0.0-alpha.1",
     "gulp": "^3.9.1"
   },

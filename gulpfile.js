@@ -28,5 +28,5 @@ elixir((mix) => {
     .copy('node_modules/bootstrap-sass/assets/fonts/', 'public/fonts/')
     .copy('node_modules/cropper/dist/cropper.min.js', 'public/js/cropper.min.js')
     .copy('node_modules/cropper/dist/cropper.min.css', 'public/css/cropper.min.css')
-    .copy('resources/assets/img/', 'public/images/');
+    .copy('resources/assets/img/', 'public/images/')
 });
