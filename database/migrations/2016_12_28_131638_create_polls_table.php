@@ -20,7 +20,6 @@ class CreatePollsTable extends Migration
             $table->text('desc');
             $table->timestamp('start')->default('2014-10-12 00:00:00');
             $table->timestamp('end')->default('2014-10-12 10:00:00');
-            $table->string('status')->default('active');
             $table->string('type')->default('once');
             $table->timestamps();
             $table->softDeletes();

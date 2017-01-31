@@ -36,14 +36,6 @@ class PollController extends Controller
     $poll->end = Carbon::parse($request->end)->toDateTimeString();
     $poll->type = $request->type;
 
-    if (Carbon::now() > Carbon::parse($request->end)) {
-      $poll->status = 'expired';
-    } else if (Carbon::now() < Carbon::parse($request->start)) {
-      $poll->status = 'pending';
-    } else if (Carbon::now() >= Carbon::parse($request->start) && Carbon::now() <= Carbon::parse($request->end)) {
-      $poll->status = 'active';
-    }
-    
     $poll->save();
 
     $answers = [];
@@ -84,14 +76,6 @@ class PollController extends Controller
     $poll->start = Carbon::parse($request->start)->toDateTimeString();
     $poll->end = Carbon::parse($request->end)->toDateTimeString();
     $poll->type = $request->type;
-
-    if (Carbon::now() > Carbon::parse($request->end)) {
-      $poll->status = 'expired';
-    } else if (Carbon::now() < Carbon::parse($request->start)) {
-      $poll->status = 'pending';
-    } else if (Carbon::now() >= Carbon::parse($request->start) && Carbon::now() <= Carbon::parse($request->end)) {
-      $poll->status = 'active';
-    }
 
     // get answers from db
     $oldAnswers = array_pluck($poll->answers()->get()->toArray(), 'id'); // [1, 2, 3]

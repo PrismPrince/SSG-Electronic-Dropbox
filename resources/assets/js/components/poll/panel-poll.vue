@@ -137,7 +137,6 @@
         if      (moment().isAfter(start)  && moment().isBefore(end))        return 'Active'
         else if (moment().isBefore(start) && moment(start).isBefore(end))   return 'Pending'
         else if (moment().isAfter(end)    && moment(end).isAfter(start))    return 'Expired'
-        // else                                                                return 'Invalid date range'
 
       },
 
