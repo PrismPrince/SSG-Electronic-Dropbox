@@ -12,6 +12,7 @@ class SuggestionController extends Controller
   {
     $this->middleware('auth:api', ['except' => ['show']]);
     $this->middleware('auth', ['only' => ['show']]);
+    $this->middleware('student.suggestion', ['only' => ['show']]);
   }
 
   public function index(Request $request)
