@@ -12,24 +12,28 @@
         <div class="media-body">
           <h4 class="media-heading"><a :href="userUrl">{{fullname}}</a></h4>
           {{date}}
-          {{pollAct.start | formatDateTimeNormal}}
-          {{pollAct.end | formatDateTimeNormal}}
-          <span
-            class="label"
-            :class="{
-              'label-default': status == 'Pending' ? true : false,
-              'label-success': status == 'Active' ? true : false,
-              'label-danger': status == 'Expired' ? true : false
-            }"
-          >{{status}}</span>
+          <p class="first">
+            <b>Status</b> <span
+              class="label"
+              :class="{
+                'label-default': status == 'Pending' ? true : false,
+                'label-success': status == 'Active' ? true : false,
+                'label-danger': status == 'Expired' ? true : false
+              }"
+            >{{status}}</span>
+          </p>
+          <p><b>Start</b> {{pollAct.start | formatDateTimeNormal}}</p>
+          <p><b>End</b> {{pollAct.end | formatDateTimeNormal}}</p>
         </div>
 
         <slot name="dropdown-menu"></slot>
 
-        <h3>{{pollAct.title}}</h3>
+        <h3>
+          {{pollAct.title}}
+        </h3>
         <p :class="enlarge ? 'enlarge' : ''" v-html="desc"></p>
 
-        <h4>Answers</h4>
+        <!-- <h4>Answers</h4> -->
 
         <fieldset :disabled="ansDisabled">
           <div class="loading-circle" v-if="!answers"><span class="sr-only">Loading...</span></div>

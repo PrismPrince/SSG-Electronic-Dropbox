@@ -2,6 +2,14 @@
   <div class="panel list-item panel-default">
     <div class="panel-heading" role="tab" :id="'poll-heading-' + pollAct.id">
       <h4 class="panel-title">
+        <span
+          class="label pull-right"
+          :class="{
+            'label-default': status == 'Pending' ? true : false,
+            'label-success': status == 'Active' ? true : false,
+            'label-danger': status == 'Expired' ? true : false
+          }"
+        >{{status}}</span>
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-poll" :data-target="'#poll-collapse-' + pollAct.id" @click.prevent="" :href="pollUrl" aria-expanded="true" :aria-controls="'poll-collapse-' + pollAct.id">
           {{pollAct.title}}
         </a>
@@ -21,23 +29,15 @@
           <div class="media-body">
             <h4 class="media-heading"><a :href="userUrl">{{fullname}}</a></h4>
             {{date}}
-            {{pollAct.start | formatDateTimeNormal}}
-            {{pollAct.end | formatDateTimeNormal}}
-            <span
-              class="label"
-              :class="{
-                'label-default': status == 'Pending' ? true : false,
-                'label-success': status == 'Active' ? true : false,
-                'label-danger': status == 'Expired' ? true : false
-              }"
-            >{{status}}</span>
+            <p class="first"><b>Start</b> {{pollAct.start | formatDateTimeNormal}}</p>
+            <p><b>End</b> {{pollAct.end | formatDateTimeNormal}}</p>
           </div>
 
           <slot name="dropdown-menu"></slot>
 
           <p :class="enlarge ? 'enlarge' : ''" v-html="desc"></p>
 
-          <h4>Answers</h4>
+          <!-- <h4>Answers</h4> -->
 
           <fieldset :disabled="ansDisabled">
             <div class="loading-circle" v-if="!answers"><span class="sr-only">Loading...</span></div>
