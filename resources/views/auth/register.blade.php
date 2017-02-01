@@ -80,7 +80,6 @@
                   type="text"
                   class="form-control"
                   name="middle_name"
-                  value="{{ old('middle_name') }}"
                   v-model.trim="middle_name"
                   @keyup.enter.prevent="focusLastName"
                 >
@@ -112,7 +111,7 @@
                   <strong>@{{errors.last_name.text}}</strong>
                 </span>
               </div>
-            </div>                        
+            </div>
 
             <div
               class="form-group"

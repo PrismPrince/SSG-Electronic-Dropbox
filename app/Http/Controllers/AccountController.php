@@ -30,6 +30,11 @@ class AccountController extends Controller
     return view('account.email');
   }
 
+  public function showChangeName()
+  {
+    return view('account.name');
+  }
+
   public function getEmail()
   {
     return Auth::guard('api')->user()->email;
@@ -44,5 +49,22 @@ class AccountController extends Controller
     ])->save();
 
     return redirect('account')->withStatus('Your e-mail was successfully changed.');
+  }
+
+  public function setName(Request $request)
+  {
+    $this->validate($request, [
+      'fname' => 'required|regex:/^\b[a-z\s-]+\b$/i|max:255',
+      'mname' => 'regex:/^\b[a-z\s-]+\b$/i|max:255',
+      'lname' => 'required|regex:/^\b[a-z\s-]+\b$/i|max:255',
+    ]);
+
+    $request->user()->fill([
+      'fname' => $request->fname,
+      'mname' => $request->mname,
+      'lname' => $request->lname,
+    ])->save();
+
+    return redirect('account')->withStatus('Your name was successfully updated.');
   }
 }

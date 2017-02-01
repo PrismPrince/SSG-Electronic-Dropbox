@@ -25,7 +25,7 @@
             {{ method_field('patch') }}
 
             <div class="form-group">
-              <label class="col-md-4 control-label">E-mail</label>
+              <label class="col-md-4 control-label">Current E-mail</label>
               <div class="col-sm-6">
                 <p class="form-control-static">@{{email}}</p>
               </div>

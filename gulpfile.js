@@ -21,6 +21,7 @@ elixir((mix) => {
     .webpack('account/account.js')
     .webpack('account/account-password.js')
     .webpack('account/account-email.js')
+    .webpack('account/account-name.js')
     .webpack('home.js')
     .webpack('search.js')
     .webpack('profile.js')
