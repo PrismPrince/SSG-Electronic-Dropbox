@@ -28,6 +28,8 @@ Route::post('register', 'Auth\RegisterController@register');
 Route::get('account', 'AccountController@showAccountSetting');
 Route::get('account/password', 'AccountController@showChangePassword');
 Route::post('account/password', 'Auth\ResetPasswordController@changePassword');
+Route::get('account/email', 'AccountController@showChangeEmail');
+Route::patch('account/email', 'AccountController@setEmail');
 
 // Password resets
 // Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
