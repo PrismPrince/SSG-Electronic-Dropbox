@@ -91,7 +91,8 @@
 
               <li><a href="{{ url('/profile/' . Auth::id()) }}">Profile</a></li>
               <li class="divider"></li>
-              {{-- <li><a href="/account">Setting</a></li> --}}
+              <li class="dropdown-header">Settings</li>
+              <li><a href="/account">Account</a></li>
               <li>
                 <a
                   href="{{ url('/logout') }}"

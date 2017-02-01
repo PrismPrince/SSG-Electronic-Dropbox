@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
@@ -34,6 +36,31 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest', ['except' => ['changePassword']]);
+        $this->middleware('auth', ['only' => ['changePassword']]);
+    }
+
+    public function changePassword(Request $request)
+    {
+
+        if (Hash::check($request->oldPassword, $request->user()->password)) {
+            $this->validate($request, $this->rules(), $this->validationErrorMessages());
+
+            $request->user()->fill([
+                'password' => Hash::make($request->newPassword)
+            ])->save();
+
+            return redirect('account')->withStatus('Your password was successfully changed.');
+        } else
+            return redirect()->back()->withErrors(['oldPassword' => ['Your password is incorrect']]);
+
+    }
+
+    protected function rules()
+    {
+        return [
+            'oldPassword' => 'required',
+            'newPassword' => 'required|confirmed|min:6',
+        ];
     }
 }

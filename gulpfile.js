@@ -18,6 +18,8 @@ elixir((mix) => {
     .webpack('bootstrap.js')
     .webpack('login.js')
     .webpack('register.js')
+    .webpack('account/account.js')
+    .webpack('account/account-password.js')
     .webpack('home.js')
     .webpack('search.js')
     .webpack('profile.js')

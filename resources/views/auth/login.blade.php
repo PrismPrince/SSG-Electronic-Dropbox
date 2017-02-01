@@ -11,9 +11,7 @@
           <strong>Error!</strong>
           <ul>
             @if ($errors->has('email'))
-              <li>
-                {{ $errors->first('email') }}
-              </li>
+              <li>{{ $errors->first('email') }}</li>
             @endif
             @if ($errors->has('password'))
               <li>{{ $errors->first('password') }}</li>

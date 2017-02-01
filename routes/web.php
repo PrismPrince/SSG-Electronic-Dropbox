@@ -24,6 +24,11 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
+// User Account
+Route::get('account', 'AccountController@showAccountSetting');
+Route::get('account/password', 'AccountController@showChangePassword');
+Route::post('account/password', 'Auth\ResetPasswordController@changePassword');
+
 // Password resets
 // Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 // Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');

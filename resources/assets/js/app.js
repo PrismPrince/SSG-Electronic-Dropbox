@@ -15,6 +15,7 @@
 
 // alert box components
 Vue.component('alert-danger', require('./components/alert-danger.vue'));
+Vue.component('alert-success', require('./components/alert-success.vue'));
 
 // post components
 Vue.component('accordion-post', require('./components/post/accordion-post.vue'));
