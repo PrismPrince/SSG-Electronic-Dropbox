@@ -55,6 +55,12 @@
 
             <div class="form-group">
               <div class="col-md-6 col-md-offset-4">
+                <p class="form-control-static text-muted"><b>Please note:</b> Make sure to use an active e-mail for resetting your password in case you forgot it.</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-6 col-md-offset-4">
                 <button type="submit" class="btn btn-primary" :disabled="btnDisabled">
                   Change E-mail
                 </button>

@@ -95,6 +95,12 @@
 
             <div class="form-group">
               <div class="col-md-6 col-md-offset-4">
+                <p class="form-control-static text-muted"><b>Please note:</b> Make sure to choose a secure password. Strong password contains alphanumeric characters.</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-6 col-md-offset-4">
                 <button type="submit" class="btn btn-primary" :disabled="btnDisabled">
                   Change Password
                 </button>

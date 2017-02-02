@@ -99,6 +99,12 @@
 
             <div class="form-group">
               <div class="col-md-6 col-md-offset-4">
+                <p class="form-control-static text-muted"><b>Please note:</b> Use your real name so that people will know you. Make sure not to add any unusual capitalization, punctuation, characters or random words.</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-6 col-md-offset-4">
                 <button type="submit" class="btn btn-primary" :disabled="btnDisabled">
                   Update
                 </button>
