@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
       'lname' => 'Pacilan',
       'email' => 'dave@gmail.com',
       'password' => bcrypt('123456'),
-      'role' => 'admin',
+      'role' => 'administrator',
       'api_token' => str_random(60),
       'created_at' => '2017-1-1',
       'updated_at' => '2017-1-1',

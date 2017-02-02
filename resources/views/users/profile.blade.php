@@ -572,7 +572,7 @@
               <span class="text-capitalize text-muted">@{{profile.role}}</span>
             </div>
 
-            @if (Auth::user()->role == 'admin')
+            @if (Auth::user()->role == 'administrator')
 
               <div class="media-right">
                 <div class="dropdown pull-right">
@@ -580,7 +580,7 @@
                     Change Role <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="change-role">
-                    <li v-if="profile.role != 'admin'"><a href="#" @click.prevent="changeUserRole(profile.id, 'admin')">Admin</a></li>
+                    <li v-if="profile.role != 'administrator'"><a href="#" @click.prevent="changeUserRole(profile.id, 'administrator')">Administrator</a></li>
                     <li v-if="profile.role != 'moderator'"><a href="#" @click.prevent="changeUserRole(profile.id, 'moderator')">Moderator</a></li>
                     <li v-if="profile.role != 'student'"><a href="#" @click.prevent="changeUserRole(profile.id, 'student')">Student</a></li>
                   </ul>
