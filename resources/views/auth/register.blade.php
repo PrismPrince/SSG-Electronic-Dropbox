@@ -7,6 +7,8 @@
     <div class="col-md-8 col-md-offset-2" v-cloak>
 
       @if (
+        $errors->has('id') ||
+        $errors->has('code') ||
         $errors->has('first_name') ||
         $errors->has('middle_name') ||
         $errors->has('last_name') ||
@@ -16,6 +18,12 @@
         <alert-danger>
           <strong>Error!</strong>
           <ul>
+            @if ($errors->has('id'))
+              <li>{{ $errors->first('id') }}</li>
+            @endif
+            @if ($errors->has('code'))
+              <li>{{ $errors->first('code') }}</li>
+            @endif
             @if ($errors->has('first_name'))
               <li>{{ $errors->first('first_name') }}</li>
             @endif
@@ -38,12 +46,60 @@
       <div class="panel panel-default">
         <div class="panel-heading">Register</div>
         <div class="panel-body">
+          <input type="hidden" id="errStudentId" value="{{ old('id') }}">
+          <input type="hidden" id="errCode" value="{{ old('code') }}">
           <input type="hidden" id="errFname" value="{{ old('first_name') }}">
           <input type="hidden" id="errMname" value="{{ old('middle_name') }}">
           <input type="hidden" id="errLname" value="{{ old('last_name') }}">
           <input type="hidden" id="errEmail" value="{{ old('email') }}">
           <form id="registration-form" class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
             {{ csrf_field() }}
+
+            <div
+              class="form-group"
+              :class="errors.student_id.status != errors.student_id.dirty ? 'has-error' : ''"
+            >
+              <label for="student-id" class="col-md-4 control-label">Student ID</label>
+
+              <div class="col-md-6">
+                <input
+                  id="student-id"
+                  type="text"
+                  class="form-control"
+                  name="id"
+                  required
+                  v-model.trim="student_id"
+                  @keyup.enter.prevent="focusNext('code')"
+                >
+
+                <span class="help-block" v-if="errors.student_id.status != errors.student_id.dirty">
+                  <strong>@{{errors.student_id.text}}</strong>
+                </span>
+              </div>
+            </div>
+
+            <div
+              class="form-group"
+              :class="errors.code.status != errors.code.dirty ? 'has-error' : ''"
+            >
+              <label for="code" class="col-md-4 control-label">Code</label>
+
+              <div class="col-md-6">
+                <input
+                  id="code"
+                  type="text"
+                  class="form-control"
+                  name="code"
+                  required
+                  v-model.trim="code"
+                  @keyup.enter.prevent="focusNext('first-name')"
+                >
+
+                <span class="help-block" v-if="errors.code.status != errors.code.dirty">
+                  <strong>@{{errors.code.text}}</strong>
+                </span>
+              </div>
+            </div>
 
             <div
               class="form-group"
@@ -59,7 +115,7 @@
                   name="first_name"
                   required
                   v-model.trim="first_name"
-                  @keyup.enter.prevent="focusMiddleName"
+                  @keyup.enter.prevent="focusNext('middle-name')"
                 >
 
                 <span class="help-block" v-if="errors.first_name.status != errors.first_name.dirty">
@@ -81,7 +137,7 @@
                   class="form-control"
                   name="middle_name"
                   v-model.trim="middle_name"
-                  @keyup.enter.prevent="focusLastName"
+                  @keyup.enter.prevent="focusNext('last-name')"
                 >
 
                 <span class="help-block" v-if="errors.middle_name.status != errors.middle_name.dirty">
@@ -104,7 +160,7 @@
                   name="last_name"
                   required
                   v-model.trim="last_name"
-                  @keyup.enter.prevent="focusEmail"
+                  @keyup.enter.prevent="focusNext('email')"
                 >
 
                 <span class="help-block" v-if="errors.last_name.status != errors.last_name.dirty">
@@ -127,7 +183,7 @@
                   name="email"
                   required
                   v-model="email"
-                  @keyup.enter.prevent="focusPassword"
+                  @keyup.enter.prevent="focusNext('password')"
                 >
 
                 <span class="help-block" v-if="errors.email.status != errors.email.dirty">
@@ -150,7 +206,7 @@
                   name="password"
                   required
                   v-model="password"
-                  @keyup.enter.prevent="focusPasswordConfirm"
+                  @keyup.enter.prevent="focusNext('password-confirm')"
                 >
 
                 <span class="help-block" v-if="errors.password.status != errors.password.dirty">

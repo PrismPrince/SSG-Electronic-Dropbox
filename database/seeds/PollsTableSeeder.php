@@ -9,7 +9,7 @@ class PollsTableSeeder extends Seeder
   {
     DB::table('polls')->insert([
       'id' => 1000000000, // init
-      'user_id' => 1000000000,
+      'user_id' => 1000000,
       'title' => 'Ban PTA???',
       'desc' => 'Complete no fees for students.',
       'start' => '2017-01-01 00:00:00',
@@ -20,7 +20,7 @@ class PollsTableSeeder extends Seeder
     ]);
 
     DB::table('polls')->insert([
-      'user_id' => 1000000001,
+      'user_id' => 1000000,
       'title' => 'Your Favorite College',
       'desc' => 'Give a stand for your favorite College Department.',
       'start' => '2017-01-01 00:00:00',
@@ -31,7 +31,7 @@ class PollsTableSeeder extends Seeder
     ]);
 
     DB::table('polls')->insert([
-      'user_id' => 1000000000,
+      'user_id' => 1000000,
       'title' => 'This Poll is Pending',
       'desc' => 'Sorry, you have to wait for a long time.
 
@@ -45,7 +45,7 @@ class PollsTableSeeder extends Seeder
     ]);
 
     DB::table('polls')->insert([
-      'user_id' => 1000000001,
+      'user_id' => 1000000,
       'title' => 'This Poll is Expired',
       'desc' => 'This sample poll is expired and you can\'t vote anymore.',
       'start' => '2014-01-01 00:00:00',

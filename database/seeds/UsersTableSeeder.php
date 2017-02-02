@@ -8,7 +8,7 @@ class UsersTableSeeder extends Seeder
   public function run()
   {
     DB::table('users')->insert([
-      'id' => 1000000000, // init
+      'id' => 1000000, // init
       'fname' => 'Dave Dane',
       'lname' => 'Pacilan',
       'email' => 'dave@gmail.com',
@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
     ]);
 
     DB::table('users')->insert([
+      'id' => 1000001,
       'fname' => 'Chiarra',
       'lname' => 'Sebial',
       'email' => 'chiarra@gmail.com',
@@ -31,6 +32,7 @@ class UsersTableSeeder extends Seeder
     ]);
 
     DB::table('users')->insert([
+      'id' => 1000002,
       'fname' => 'Maria Divina',
       'mname' => 'Alterejos',
       'lname' => 'Alegre',
@@ -42,6 +44,7 @@ class UsersTableSeeder extends Seeder
     ]);
 
     DB::table('users')->insert([
+      'id' => 1000003,
       'fname' => 'Rachel Anne',
       'mname' => 'Agravante',
       'lname' => 'Quiamco',

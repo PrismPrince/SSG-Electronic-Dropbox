@@ -14,7 +14,7 @@ class SuggestionsTableSeeder extends Seeder
   {
     DB::table('suggestions')->insert([
       'id' => 1000000000,
-      'user_id' => 1000000002,
+      'user_id' => 1000002,
       'title' => 'Vandal Walls',
       'direct' => 'Admin',
       'message' => 'Please paint the walls on the ground rooms. It is not nice to see.',
@@ -23,7 +23,7 @@ class SuggestionsTableSeeder extends Seeder
     ]);
 
     DB::table('suggestions')->insert([
-      'user_id' => 1000000003,
+      'user_id' => 1000003,
       'title' => 'Trashbins Everywhere',
       'direct' => 'SSG Officers',
       'message' => 'Please add more trashbins in the campus to minimize littering.

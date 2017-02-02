@@ -2,6 +2,8 @@ Vue.mixin({
   data() {
     return {
       user: null,
+      student_id: '',
+      code: '',
       first_name: '',
       middle_name: '',
       last_name: '',
@@ -9,6 +11,16 @@ Vue.mixin({
       password: '',
       password_confirm: '',
       errors: {
+        student_id: {
+          dirty: false,
+          status: false,
+          text: ''
+        },
+        code: {
+          dirty: false,
+          status: false,
+          text: ''
+        },
         first_name: {
           dirty: false,
           status: false,
@@ -43,6 +55,38 @@ Vue.mixin({
     }
   },
   watch: {
+    student_id() {
+      this.errors.student_id.dirty = true
+
+      var id = this.student_id
+
+      if (id == '') {
+        this.errors.student_id.status = false
+        this.errors.student_id.text = 'Student ID cannot be empty.'
+      } else if (!/^[0-9]{7,7}$/i.test(id)) {
+        this.errors.student_id.status = false
+        this.errors.student_id.text = 'Enter a valid Student ID.'
+      } else {
+        this.errors.student_id.status = true
+        this.errors.student_id.text = ''
+      }
+    },
+    code() {
+      this.errors.code.dirty = true
+
+      var code = this.code
+
+      if (code == '') {
+        this.errors.code.status = false
+        this.errors.code.text = 'Code cannot be empty.'
+      } else if (!/^[0-9A-Z]{5,5}-[0-9A-Z]{5,5}$/.test(code)) {
+        this.errors.code.status = false
+        this.errors.code.text = 'Enter a valid code.'
+      } else {
+        this.errors.code.status = true
+        this.errors.code.text = ''
+      }
+    },
     first_name() {
       this.errors.first_name.dirty = true
 
@@ -145,6 +189,8 @@ Vue.mixin({
   computed: {
     btnDisabled() {
       return (
+        this.errors.student_id.status &&
+        this.errors.code.status &&
         this.errors.first_name.status &&
         this.errors.middle_name.status &&
         this.errors.last_name.status &&
@@ -156,6 +202,16 @@ Vue.mixin({
   },
   methods: {
     touch() {
+      if (document.getElementById('errStudentId').value != '') {
+        this.errors.student_id.dirty = true
+        this.errors.student_id.status = true
+        this.student_id = document.getElementById('errStudentId').value
+      }
+      if (document.getElementById('errCode').value != '') {
+        this.errors.code.dirty = true
+        this.errors.code.status = true
+        this.code = document.getElementById('errCode').value
+      }
       if (document.getElementById('errFname').value != '') {
         this.errors.first_name.dirty = true
         this.errors.first_name.status = true
@@ -175,24 +231,8 @@ Vue.mixin({
         this.email = document.getElementById('errEmail').value
       }
     },
-    focusMiddleName() {
-      document.getElementById('middle-name').focus()
-    },
-
-    focusLastName() {
-      document.getElementById('last-name').focus()
-    },
-
-    focusEmail() {
-      document.getElementById('email').focus()
-    },
-
-    focusPassword() {
-      document.getElementById('password').focus()
-    },
-
-    focusPasswordConfirm() {
-      document.getElementById('password-confirm').focus()
+    focusNext(selector) {
+      document.getElementById(selector).focus()
     }
   },
   mounted() {

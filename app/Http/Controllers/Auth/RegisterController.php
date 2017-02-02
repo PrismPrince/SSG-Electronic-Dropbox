@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -50,6 +51,16 @@ class RegisterController extends Controller
         $data = $this->filterArray($data);
 
         return Validator::make($data, [
+            'id' => 'required|integer|max:9999999|min:1000000|unique:users|exists:user_registration_requests,student_id',
+            'code' => [
+                'required',
+                'max:11',
+                'min:11',
+                'regex:/^[A-Z0-9]{5,5}-[A-Z0-9]{5,5}$/',
+                Rule::exists('user_registration_requests')
+                    ->where('student_id', $data['id'])
+                    ->where('code', $data['code']),
+            ],
             'first_name' => 'required|regex:/^\b[a-z\s-]+\b$/i|max:255',
             'middle_name' => 'regex:/^\b[a-z\s-]+\b$/i|max:255',
             'last_name' => 'required|regex:/^\b[a-z\s-]+\b$/i|max:255',
@@ -63,6 +74,7 @@ class RegisterController extends Controller
         $data['first_name'] = $this->formatData($data['first_name']);
         $data['middle_name'] = $this->formatData($data['middle_name']);
         $data['last_name'] = $this->formatData($data['last_name']);
+        $data['code'] = strtoupper(trim($data['code']));
 
         return $data;
     }
@@ -89,6 +101,7 @@ class RegisterController extends Controller
         $data = $this->filterArray($data);
 
         return User::create([
+            'id' => $data['id'],
             'fname' => $data['first_name'],
             'mname' => $data['middle_name'],
             'lname' => $data['last_name'],
