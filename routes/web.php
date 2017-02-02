@@ -39,14 +39,8 @@ Route::patch('account/name', 'AccountController@setName');
 // Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 // Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 
-Route::resource('user', 'UserController', [
- 'except' => [
-   'index',
-   'create',
-   'store'
- ]
-]);
-Route::get('profile/{user}', 'UserController@show')->name('user.show');
+Route::get('profile/{user}', 'ProfileController@showProfile');
+
 Route::get('/search', 'SearchController@showResults');
 
 Route::get('/post/{post}', 'PostController@show');

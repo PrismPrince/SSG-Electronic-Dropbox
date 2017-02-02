@@ -41,12 +41,12 @@ Route::get('/post/{post}', 'PostController@getPost');
 Route::get('/poll/{poll}', 'PollController@getPoll');
 Route::get('/suggestion/{suggestion}', 'SuggestionController@getSuggestion');
 
-Route::get('/profile/{user}', 'UserController@getUser');
+Route::get('/profile/{user}', 'ProfileController@getUser');
 
-Route::get('/user/{user}/post', 'UserController@getUserPosts');
-Route::get('/user/{user}/poll', 'UserController@getUserPolls');
-Route::get('/user/{user}/suggestion', 'UserController@getUserSuggestions');
-Route::post('/user/{user}/role', 'UserController@changeRole');
+Route::get('/user/{user}/post', 'ProfileController@getUserPosts');
+Route::get('/user/{user}/poll', 'ProfileController@getUserPolls');
+Route::get('/user/{user}/suggestion', 'ProfileController@getUserSuggestions');
+Route::post('/user/{user}/role', 'ProfileController@changeRole');
 
 Route::post('/image/user/upload', 'ImageController@uploadUserProfile');
 

@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\User;
 
-class UserController extends Controller
+class ProfileController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('auth:api', ['except' => ['show']]);
-    $this->middleware('auth', ['only' => ['show']]);
+    $this->middleware('auth:api', ['except' => ['showProfile']]);
+    $this->middleware('auth', ['only' => ['showProfile']]);
   }
 
-  public function show($user)
+  public function showProfile($user)
   {
     return view('users.profile')->withProfile(User::findOrFail($user));
   }
