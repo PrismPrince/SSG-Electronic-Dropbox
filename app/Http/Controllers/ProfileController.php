@@ -16,7 +16,7 @@ class ProfileController extends Controller
 
   public function showProfile($user)
   {
-    return view('users.profile')->withProfile(User::findOrFail($user));
+    return view('profile')->withProfile(User::findOrFail($user));
   }
 
   public function getUser($user)
