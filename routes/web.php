@@ -33,6 +33,9 @@ Route::patch('account/email', 'AccountController@setEmail');
 Route::get('account/name', 'AccountController@showChangeName');
 Route::patch('account/name', 'AccountController@setName');
 
+// Administrator
+Route::get('admin/user', 'AdminController@showUsers');
+
 // Password resets
 // Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 // Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');

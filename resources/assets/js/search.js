@@ -58,22 +58,6 @@ Vue.mixin({
 
   }, // mounted
 
-  watch: {
-
-  }, // watch
-
-  computed: {
-
-    // formattedDates() {
-
-    //   for (var i = 0; this.dates.length - 1 >= i ; i++) {
-    //     this.dates[i].split('-')
-    //   }
-
-    // }
-
-  }, // computed
-
   methods: {
 
     getKey() {

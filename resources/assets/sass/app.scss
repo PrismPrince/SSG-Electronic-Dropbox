@@ -437,3 +437,8 @@
     }
   }
 }
+
+.label-status:hover {
+  cursor: pointer;
+  background: $brand-primary;
+}

@@ -13,7 +13,6 @@
       <!-- Branding Image -->
       <a class="navbar-brand" href="{{ url('/') }}">
         <img src="{{ url('/images/tomorrows_council_v1.png') }}" alt="Republic of the Philippines">
-        {{-- {{ config('app.name', 'Laravel') }} --}}
       </a>
     </div>
 
@@ -90,9 +89,17 @@
             <ul class="dropdown-menu" role="menu">
 
               <li><a href="{{ url('/profile/' . Auth::id()) }}">Profile</a></li>
+
+              @if (Auth::user()->role == 'administrator')
+                <li class="divider"></li>
+                <li class="dropdown-header">Administrator</li>
+                <li><a href="{{ url('/admin/user/code') }}">Registration Codes</a></li>
+                <li><a href="{{ url('/admin/user') }}">Users</a></li>
+              @endif
+
               <li class="divider"></li>
               <li class="dropdown-header">Settings</li>
-              <li><a href="/account">Account</a></li>
+              <li><a href="{{ url('/account') }}">Account</a></li>
               <li>
                 <a
                   href="{{ url('/logout') }}"
