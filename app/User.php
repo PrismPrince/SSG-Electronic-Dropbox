@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 
 class User extends Authenticatable
 {
@@ -67,6 +68,8 @@ class User extends Authenticatable
   {
     return $query
       ->where('fname', 'LIKE', '%' . $key . '%')
-      ->orWhere('lname', 'LIKE', '%' . $key . '%');
+      ->orWhere('lname', 'LIKE', '%' . $key . '%')
+      ->orWhere(DB::raw('\'' . $key . '\''), 'LIKE', DB::raw('CONCAT("%", fname, "%")'))
+      ->orWhere(DB::raw('\'' . $key . '\''), 'LIKE', DB::raw('CONCAT("%", lname, "%")'));
   }
 }
