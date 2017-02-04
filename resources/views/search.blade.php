@@ -106,6 +106,8 @@
 
           </li>
 
+          <li v-for="n in 20">@{{n}}</li>
+
         </ul> {{-- .nav-aside --}}
       </div> {{-- .affix --}}
     </div> {{-- .col-sm-4 --}}

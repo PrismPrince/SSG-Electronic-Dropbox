@@ -72,13 +72,8 @@
   position: absolute;
 }
 
-.search.affix, .search.affix-top {
-  max-height: calc(100% - 73px);
-  overflow-y: auto;
-}
-
-.affix {
-  min-width: 220px;
+.affix, .affix-top {
+  width: 220px;
 }
 
 .profile.affix {
@@ -336,9 +331,39 @@
 
 .search {
 
+  .nav-aside {
+    margin-bottom: 0;
+  }
+
+  &.affix, &.affix-top {
+    max-height: calc(100% - 73px);
+    overflow-y: scroll;
+  }
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
   .list-group-item-heading:first-child {
     margin-bottom: 0;
   }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px $laravel-border-color;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $brand-primary;
+  -webkit-box-shadow: inset 0 0 6px $laravel-border-color;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: $brand-primary;
 }
 
 .full {
