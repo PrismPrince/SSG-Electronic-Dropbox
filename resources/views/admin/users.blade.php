@@ -7,17 +7,97 @@
   <div class="row">
     <div class="col-sm-12" v-cloak>
       <div class="panel panel-default">
-        <div class="panel-heading">Users</div>
+        <div class="panel-heading">
+          Users <span class="badge">{{ $user_count }}</span>
+          <button class="btn btn-xs btn-default pull-right" @click="resetUsers">Reset</button>
+        </div>
 
         <table class="table table-striped table-hover table-condensed">
           <thead class="text-nowrap">
             <tr>
-              <th>ID Number</th>
-              <th>Name</th>
-              <th>E-mail</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Joined At</th>
+              <th>
+                ID Number
+                <button
+                  v-if="student_id"
+                  class="close"
+                  aria-label="Close"
+                  @click="student_id = null"
+                ><span aria-hidden="true">&times;</span></button>
+              </th>
+              <th>
+                Name
+                <button
+                  v-if="name"
+                  class="close"
+                  aria-label="Close"
+                  @click="name = null"
+                ><span aria-hidden="true">&times;</span></button>
+              </th>
+              <th>
+                E-mail
+                <button
+                  v-if="email"
+                  class="close"
+                  aria-label="Close"
+                  @click="email = null"
+                ><span aria-hidden="true">&times;</span></button>
+              </th>
+              <th>
+                Role
+                <button
+                  v-if="role"
+                  class="close"
+                  aria-label="Close"
+                  @click="role = null"
+                ><span aria-hidden="true">&times;</span></button>
+              </th>
+              <th>
+                Status
+                <button
+                  v-if="status"
+                  class="close"
+                  aria-label="Close"
+                  @click="status = null"
+                ><span aria-hidden="true">&times;</span></button>
+              </th>
+              <th>
+                Joined At
+              </th>
+            </tr>
+            <tr>
+              <th style="max-width: 110px;">
+                <label class="sr-only" for="student_id">Search student ID</label>
+                <input type="text" name="student_id" id="student_id" class="form-control input-sm" placeholder="Search ID number" v-model="student_id">
+              </th>
+              <th>
+                <label class="sr-only" for="name">Search name</label>
+                <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Search name" v-model="name">
+              </th>
+              <th>
+                <label class="sr-only" for="email">Search e-mail</label>
+                <input type="text" name="email" id="email" class="form-control input-sm" placeholder="Search e-mail" v-model="email">
+              </th>
+              <th>
+                <label class="sr-only" for="role">Filter role</label>
+                <select class="form-control input-sm" name="role" id="role" v-model="role">
+                  <option value="null" hidden>Filter role</option>
+                  <option value="administrator">Administrator</option>
+                  <option value="moderator">Moderator</option>
+                  <option value="student">Student</option>
+                </select>
+              </th>
+              <th>
+                <label class="sr-only" for="status">Filter status</label>
+                <select class="form-control input-sm" name="status" id="status" v-model="status">
+                  <option value="null" hidden>Filter status</option>
+                  <option value="active">Active</option>
+                  <option value="deactive">Deactive</option>
+                </select>
+              </th>
+              <th>
+                <button v-if="student_id || name || email || role || status" class="btn btn-sm btn-default" style="width: calc(50% - 5px)" @click="searchUsers">Search</button>
+                <button v-if="student_id || name || email || role || status" class="btn btn-sm btn-default" style="width: 50%" @click="clearUserSearch">Clear All</button>
+              </th>
             </tr>
           </thead>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use DB;
 
 class AdminController extends Controller
 {
@@ -21,14 +22,35 @@ class AdminController extends Controller
 
   public function showUsers()
   {
-    return view('admin.users');
+    return view('admin.users')->withUser_count(User::withTrashed()->get()->count());
   }
 
   public function getUsers(Request $request)
   {
-    $users = [];
-    foreach (User::withTrashed()->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get() as $user) {
-      $users[] = [
+    $users = User::where(DB::raw(1), 1);
+
+    if ($request->student_id) {
+      $users->where('id', 'LIKE', '%' . $request->student_id . '%');
+    }
+    if ($request->name) {
+      $users->searchName($request->name);
+    }
+    if ($request->email) {
+      $users->where('email', 'LIKE', '%' . $request->email . '%');
+    }
+    if ($request->role) {
+      $users->where('role', $request->role);
+    }
+    if ($request->status) {
+      if ($request->status == 'deactive') {
+        $users->onlyTrashed();
+      }
+    } else $users->withTrashed();
+
+    $u = [];
+
+    foreach ($users->get() as $user) {
+      $u[] = [
         'id' => $user->id,
         'fname' => $user->fname,
         'lname' => $user->lname,
@@ -39,7 +61,19 @@ class AdminController extends Controller
       ];
     }
 
-    return response()->json($users);
+    // foreach (User::withTrashed()->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get() as $user) {
+    //   $u[] = [
+    //     'id' => $user->id,
+    //     'fname' => $user->fname,
+    //     'lname' => $user->lname,
+    //     'email' => $user->email,
+    //     'role' => $user->role,
+    //     'created_at' => $user->created_at,
+    //     'deleted_at' => $user->deleted_at,
+    //   ];
+    // }
+
+    return response()->json($u);
   }
 
   public function setUserStatus(Request $request)

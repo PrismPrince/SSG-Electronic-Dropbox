@@ -18,6 +18,13 @@ Vue.mixin({
       take: 10,
       full: false,
 
+      // search
+      student_id: null,
+      name: null,
+      email: null,
+      role: null,
+      status: null
+
     }
 
   }, // data
@@ -54,7 +61,13 @@ Vue.mixin({
       this.full = 'loading'
 
       this.$http
-        .get(window.location.origin + '/api/admin/user' + '?skip=' + this.skip + '&take=' + this.take)
+        .post(window.location.origin + '/api/admin/user' + '?skip=' + this.skip + '&take=' + this.take, {
+          student_id: this.student_id,
+          name: this.name,
+          email: this.email,
+          role: this.role,
+          status: this.status
+        })
 
         .then(response => {
 
@@ -70,6 +83,39 @@ Vue.mixin({
           console.error(response)
           this.full = false
         })
+
+    },
+
+    resetUsers() {
+
+      this.clearUserSearch()
+      this.users = []
+      this.skip = 0
+      this.take = 10
+      this.full = false
+
+      this.getUsers()
+
+    },
+
+    clearUserSearch() {
+
+      this.student_id = null
+      this.name = null
+      this.email = null
+      this.role = null
+      this.status = null
+
+    },
+
+    searchUsers() {
+
+      this.users = []
+      this.skip = 0
+      this.take = 10
+      this.full = false
+
+      this.getUsers()
 
     },
 

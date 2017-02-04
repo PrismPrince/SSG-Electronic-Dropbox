@@ -59,11 +59,6 @@ class User extends Authenticatable
     return $this->belongsToMany(Answer::class, 'votes');
   }
 
-  public function scopeWithRole($query, $role)
-  {
-    return $query->where('role', $role);
-  }
-
   public function scopeSearchName($query, $key)
   {
     return $query

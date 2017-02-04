@@ -52,5 +52,5 @@ Route::post('/image/user/upload', 'ImageController@uploadUserProfile');
 
 Route::get('/account/email', 'AccountController@getEmail');
 
-Route::get('/admin/user', 'AdminController@getUsers');
+Route::post('/admin/user', 'AdminController@getUsers');
 Route::post('/admin/user/status', 'AdminController@setUserStatus');
