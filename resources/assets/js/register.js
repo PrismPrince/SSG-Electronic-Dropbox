@@ -79,7 +79,7 @@ Vue.mixin({
       if (code == '') {
         this.errors.code.status = false
         this.errors.code.text = 'Code cannot be empty.'
-      } else if (!/^[0-9A-Z]{5,5}-[0-9A-Z]{5,5}$/.test(code)) {
+      } else if (!/^[0-9A-Z]{5,5}-[0-9A-Z]{5,5}-[0-9A-Z]{5,5}$/.test(code)) {
         this.errors.code.status = false
         this.errors.code.text = 'Enter a valid code.'
       } else {

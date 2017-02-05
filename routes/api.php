@@ -54,3 +54,5 @@ Route::get('/account/email', 'AccountController@getEmail');
 
 Route::post('/admin/user', 'AdminController@getUsers');
 Route::post('/admin/user/status', 'AdminController@setUserStatus');
+Route::get('/admin/user/code', 'UserRegistrationRequestController@index');
+Route::post('/admin/user/code', 'UserRegistrationRequestController@store');

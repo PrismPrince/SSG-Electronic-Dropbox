@@ -60,9 +60,7 @@
                   @click="status = null"
                 ><span aria-hidden="true">&times;</span></button>
               </th>
-              <th>
-                Joined At
-              </th>
+              <th>Joined At</th>
             </tr>
             <tr>
               <th style="max-width: 110px;">
@@ -127,7 +125,7 @@
 
         <div v-if="!full" class="full-option text-center"><a href="#" @click.prevent="getAct">Load more...</a></div>
         <div v-else-if="full == 'loading'" class="full-option"><div class="loading-circle"></div><span class="sr-only">loading...</span></div>
-        <div v-else-if="full" class="full-option text-center"><span class="full"></span><span class="sr-only">No more suggestion</span></div>
+        <div v-else-if="full" class="full-option text-center"><span class="full"></span><span class="sr-only">No more users</span></div>
 
       </div> {{-- .panel --}}
     </div> {{-- .col-sm-12 --}}

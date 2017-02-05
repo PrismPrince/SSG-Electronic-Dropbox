@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\UserRegistrationRequest;
 use DB;
 
 class AdminController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('auth', ['only' => ['showUsers', 'getCode']]);
+    $this->middleware('auth', ['only' => ['showUsers', 'showUsersCode']]);
     $this->middleware('auth:api', ['only' => ['getUsers', 'setUserStatus']]);
     $this->middleware('admin');
   }
 
-  public function getCode()
+  public function showUsersCode()
   {
-    return view('admin.code');
+    return view('admin.code')->withUser_request_count(UserRegistrationRequest::all()->count());
   }
 
   public function showUsers()
@@ -60,18 +61,6 @@ class AdminController extends Controller
         'deleted_at' => $user->deleted_at,
       ];
     }
-
-    // foreach (User::withTrashed()->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get() as $user) {
-    //   $u[] = [
-    //     'id' => $user->id,
-    //     'fname' => $user->fname,
-    //     'lname' => $user->lname,
-    //     'email' => $user->email,
-    //     'role' => $user->role,
-    //     'created_at' => $user->created_at,
-    //     'deleted_at' => $user->deleted_at,
-    //   ];
-    // }
 
     return response()->json($u);
   }

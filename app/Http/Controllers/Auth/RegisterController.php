@@ -51,14 +51,14 @@ class RegisterController extends Controller
         $data = $this->filterArray($data);
 
         return Validator::make($data, [
-            'id' => 'required|integer|max:9999999|min:1000000|unique:users|exists:user_registration_requests,student_id',
+            'id' => 'required|integer|max:9999999|min:1000000|unique:users|exists:user_registration_requests,id',
             'code' => [
                 'required',
-                'max:11',
-                'min:11',
-                'regex:/^[A-Z0-9]{5,5}-[A-Z0-9]{5,5}$/',
+                'max:17',
+                'min:17',
+                'regex:/^[A-Z0-9]{5,5}-[A-Z0-9]{5,5}-[A-Z0-9]{5,5}$/',
                 Rule::exists('user_registration_requests')
-                    ->where('student_id', $data['id'])
+                    ->where('id', $data['id'])
                     ->where('code', $data['code']),
             ],
             'first_name' => 'required|regex:/^\b[a-z\s-]+\b$/i|max:255',
