@@ -3,7 +3,7 @@ Vue.mixin({
   created() {
 
     this.$http
-      .get(window.location.origin + '/api/user')
+      .get(window.location.origin + '/api/auth/user')
 
       .then(response => {
 

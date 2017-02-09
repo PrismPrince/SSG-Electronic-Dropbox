@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', 'HomeController@getUser');
+Route::get('/auth/user', 'Auth\LoginController@getAuthUser');
 
 Route::resource('/post', 'PostController', ['except' => ['create', 'show']]);
 

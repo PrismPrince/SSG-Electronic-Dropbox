@@ -28,9 +28,4 @@ class HomeController extends Controller
   {
     return view('home');
   }
-
-  public function getUser(Request $request)
-  {
-    return response()->json(Auth::guard('api')->user());
-  }
 }
