@@ -3,17 +3,22 @@ Vue.mixin({
   data() {
 
     return {
+
       search: {
         key: '',
         focus: false,
         searching: false,
+
         results: {
           users: [],
           posts: [],
           polls: [],
           suggestions: [],
+
         }
+
       }
+
     }
 
   }, // data
@@ -25,9 +30,10 @@ Vue.mixin({
       this.search.searching   = true
       this.search.focus       = true
 
-      if (this.search.key != '') this.searching()
+      if (this.search.key != '')
+        this.searching()
 
-    }
+    } // search.key
 
   }, // watch
 
@@ -36,17 +42,16 @@ Vue.mixin({
     searching: _.debounce(function () {
     
       this.$http
-        .post(window.location.origin + '/api/search',
-        {
+        .post(window.location.origin + '/api/search', {
           key: this.search.key
         })
 
         .then((response) => {
 
-          this.search.results.users = response.data.users
-          this.search.results.posts = response.data.posts
-          this.search.results.polls = response.data.polls
-          this.search.results.suggestions = response.data.suggestions
+          this.search.results.users         = response.data.users
+          this.search.results.posts         = response.data.posts
+          this.search.results.polls         = response.data.polls
+          this.search.results.suggestions   = response.data.suggestions
 
           this.$nextTick(function () {
 
@@ -57,18 +62,20 @@ Vue.mixin({
         })
 
         .catch((response) => {
-          console.error(response.error)
+
+          console.error(response.status, response.statusText)
+
         })
     
     }, 500), // searching
 
     clearSearch: _.debounce(function () {
 
-      this.search.focus = false
-      this.search.results.users = []
-      this.search.results.posts = []
-      this.search.results.polls = []
-      this.search.results.suggestions = []
+      this.search.focus                 = false
+      this.search.results.users         = []
+      this.search.results.posts         = []
+      this.search.results.polls         = []
+      this.search.results.suggestions   = []
 
     }, 500), // clearSearch
 
@@ -76,20 +83,23 @@ Vue.mixin({
 
       var match = text.match(new RegExp(this.search.key, 'i'))
 
-      if (!match) return text
-      else var index = match.index
+      if (!match)
+        return text
+      else
+        var index = match.index
 
-      if (index >= 0) text = text.substring(0, index) + "<span class='bg-primary'>" + text.substring(index, index + this.search.key.length) + "</span>" + text.substring(index + this.search.key.length)
+      if (index >= 0)
+        text = text.substring(0, index) + "<span class='bg-primary'>" + text.substring(index, index + this.search.key.length) + "</span>" + text.substring(index + this.search.key.length)
 
       return text
 
-    },
+    }, // highlight
 
     searchKey() {
 
       window.location = window.location.origin + '/search?key=' + this.search.key
 
-    }
+    } // searchKey
 
   } // methods
 

@@ -1,10 +1,3 @@
-Vue.http.interceptors.push((request, next) => {
-    request.headers.set('Authorization', 'Bearer ' + document.getElementById('Authorization').value)
-
-    next()
-
-})
-
 Vue.mixin({
 
   data() {
@@ -297,5 +290,6 @@ Vue.mixin({
 
 })
 
-require('./quick-search')
-require('./logout')
+require('./partials/_http-interceptor')
+require('./partials/_quick-search')
+require('./partials/_logout')

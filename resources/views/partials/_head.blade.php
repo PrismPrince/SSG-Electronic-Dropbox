@@ -13,9 +13,18 @@
   @stack('styles')
 
   <!-- Scripts -->
-  <script>
-    window.Laravel = <?php echo json_encode([
-      'csrfToken' => csrf_token(),
-    ]); ?>
-  </script>
+  @if (Auth::guest())
+    <script>
+      window.Laravel = {!! json_encode([
+        'csrfToken' => csrf_token(),
+      ]) !!}
+    </script>
+  @else
+    <script>
+      window.Laravel = {!! json_encode([
+        'csrfToken' => csrf_token(),
+        'authorization' => 'Bearer ' . Auth::user()->api_token,
+      ]) !!}
+    </script>
+  @endif
 </head>
