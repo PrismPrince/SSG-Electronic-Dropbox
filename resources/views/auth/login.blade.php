@@ -42,7 +42,7 @@
                   name="email"
                   required
                   v-model="email"
-                  @keyup.enter.prevent="focusPassword"
+                  @keyup.enter.prevent="focus('#password')"
                 >
 
                 <span class="help-block" v-if="errors.email.status != errors.email.dirty">

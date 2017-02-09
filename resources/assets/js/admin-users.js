@@ -1,3 +1,8 @@
+require('./partials/_http-interceptor')
+require('./partials/_get-auth-user')
+require('./partials/_logout')
+require('./partials/_quick-search')
+
 Vue.mixin({
 
   data() {
@@ -21,25 +26,6 @@ Vue.mixin({
     }
 
   }, // data
-
-  created() {
-
-    this.$http
-      .get(window.location.origin + '/api/user')
-
-      .then((response) => {
-
-        this.user = response.data
-
-      })
-
-      .catch((response) => {
-
-        console.error(response)
-
-      })
-
-  }, // created
 
   mounted() {
 
@@ -143,7 +129,3 @@ Vue.mixin({
   }
 
 })
-
-require('./partials/_http-interceptor')
-require('./partials/_quick-search')
-require('./partials/_logout')

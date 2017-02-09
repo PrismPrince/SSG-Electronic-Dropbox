@@ -1,3 +1,6 @@
+// helpers
+require('./partials/_helpers/_focus')
+
 Vue.mixin({
   data() {
     return {
@@ -67,9 +70,6 @@ Vue.mixin({
         this.errors.email.status = true
         this.email = document.getElementById('errEmail').value
       }
-    },
-    focusPassword() {
-      document.getElementById('password').focus()
     }
   },
   mounted() {

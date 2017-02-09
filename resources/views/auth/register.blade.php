@@ -69,7 +69,7 @@
                   name="id"
                   required
                   v-model.trim="student_id"
-                  @keyup.enter.prevent="focusNext('code')"
+                  @keyup.enter.prevent="focus('#code')"
                 >
 
                 <span class="help-block" v-if="errors.student_id.status != errors.student_id.dirty">
@@ -92,7 +92,7 @@
                   name="code"
                   required
                   v-model.trim="code"
-                  @keyup.enter.prevent="focusNext('first-name')"
+                  @keyup.enter.prevent="focus('#first-name')"
                 >
 
                 <span class="help-block" v-if="errors.code.status != errors.code.dirty">
@@ -115,7 +115,7 @@
                   name="first_name"
                   required
                   v-model.trim="first_name"
-                  @keyup.enter.prevent="focusNext('middle-name')"
+                  @keyup.enter.prevent="focus('#middle-name')"
                 >
 
                 <span class="help-block" v-if="errors.first_name.status != errors.first_name.dirty">
@@ -137,7 +137,7 @@
                   class="form-control"
                   name="middle_name"
                   v-model.trim="middle_name"
-                  @keyup.enter.prevent="focusNext('last-name')"
+                  @keyup.enter.prevent="focus('#last-name')"
                 >
 
                 <span class="help-block" v-if="errors.middle_name.status != errors.middle_name.dirty">
@@ -160,7 +160,7 @@
                   name="last_name"
                   required
                   v-model.trim="last_name"
-                  @keyup.enter.prevent="focusNext('email')"
+                  @keyup.enter.prevent="focus('#email')"
                 >
 
                 <span class="help-block" v-if="errors.last_name.status != errors.last_name.dirty">
@@ -183,7 +183,7 @@
                   name="email"
                   required
                   v-model="email"
-                  @keyup.enter.prevent="focusNext('password')"
+                  @keyup.enter.prevent="focus('#password')"
                 >
 
                 <span class="help-block" v-if="errors.email.status != errors.email.dirty">
@@ -206,7 +206,7 @@
                   name="password"
                   required
                   v-model="password"
-                  @keyup.enter.prevent="focusNext('password-confirm')"
+                  @keyup.enter.prevent="focus('#password-confirm')"
                 >
 
                 <span class="help-block" v-if="errors.password.status != errors.password.dirty">

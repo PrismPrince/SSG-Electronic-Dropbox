@@ -1,7 +1,13 @@
 require('./partials/_http-interceptor')
+require('./partials/_get-auth-user')
 require('./partials/_logout')
 require('./partials/_quick-search')
+
+// validators
 require('./partials/_validators/_post-validator')
+
+//helpers
+require('./partials/_helpers/_focus')
 
 Vue.mixin({
 
@@ -47,21 +53,6 @@ Vue.mixin({
   }, // data
 
   created() {
-
-    this.$http
-      .get(window.location.origin + '/api/user')
-
-      .then((response) => {
-
-        this.user = response.data
-
-      })
-
-      .catch((response) => {
-
-        console.error(response.error)
-
-      })
 
     this.$http
       .get(window.location.origin + '/api' + window.location.pathname)
