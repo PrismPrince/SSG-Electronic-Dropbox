@@ -44,7 +44,7 @@
                   name="fname"
                   required
                   v-model.trim="first_name"
-                  @keyup.enter.prevent="focusNext('middle-name')"
+                  @keyup.enter.prevent="focus('#middle-name')"
                 >
 
                 <span class="help-block" v-if="errors.first_name.status != errors.first_name.dirty">
@@ -66,7 +66,7 @@
                   class="form-control"
                   name="mname"
                   v-model.trim="middle_name"
-                  @keyup.enter.prevent="focusNext('last-name')"
+                  @keyup.enter.prevent="focus('#last-name')"
                 >
 
                 <span class="help-block" v-if="errors.middle_name.status != errors.middle_name.dirty">
@@ -99,7 +99,7 @@
 
             <div class="form-group">
               <div class="col-md-6 col-md-offset-4">
-                <p class="form-control-static text-muted"><b>Please note:</b> Use your real name so that people will know you. Make sure not to add any unusual capitalization, punctuation, characters or random words.</p>
+                <p class="form-control-static text-muted account-tip"><b>Please note:</b> Use your real name so that people will know you. Make sure not to add any unusual capitalization, punctuation, characters or random words.</p>
               </div>
             </div>
 

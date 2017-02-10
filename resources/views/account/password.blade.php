@@ -40,7 +40,7 @@
                   name="oldPassword"
                   required
                   v-model="oldPassword"
-                  @keyup.enter.prevent="focusNext('newPassword')"
+                  @keyup.enter.prevent="focus('#newPassword')"
                 >
 
                 <span class="help-block" v-if="errors.oldPassword.status != errors.oldPassword.dirty">
@@ -63,7 +63,7 @@
                   name="newPassword"
                   required
                   v-model="newPassword"
-                  @keyup.enter.prevent="focusNext('newPasswordConfirm')"
+                  @keyup.enter.prevent="focus('#newPasswordConfirm')"
                 >
 
                 <span class="help-block" v-if="errors.newPassword.status != errors.newPassword.dirty">
@@ -95,7 +95,7 @@
 
             <div class="form-group">
               <div class="col-md-6 col-md-offset-4">
-                <p class="form-control-static text-muted"><b>Please note:</b> Make sure to choose a secure password. Strong password contains alphanumeric characters.</p>
+                <p class="form-control-static text-muted account-tip"><b>Please note:</b> Make sure to choose a secure password. Strong password contains alphanumeric characters.</p>
               </div>
             </div>
 

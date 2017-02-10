@@ -467,3 +467,10 @@
   cursor: pointer;
   background: $brand-primary;
 }
+
+.account-tip {
+  padding-left: 10px;
+  padding-right: 5px;
+  border-left: 3px solid darken($state-info-border, 30%);
+  background-color: $state-info-bg;
+}

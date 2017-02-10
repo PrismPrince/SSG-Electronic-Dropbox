@@ -1,9 +1,10 @@
-Vue.http.interceptors.push((request, next) => {
-    request.headers.set('Authorization', 'Bearer ' + document.getElementById('Authorization').value)
+require('./../mixins/_http-interceptor')
+require('./../mixins/_get-auth-user')
+require('./../mixins/_logout')
+require('./../mixins/_quick-search')
 
-    next()
-
-})
+// helpers
+require('./../mixins/helpers/_focus')
 
 Vue.mixin({
   data() {
@@ -31,25 +32,6 @@ Vue.mixin({
       }
     }
   },
-
-  created() {
-
-    this.$http
-      .get(window.location.origin + '/api/user')
-
-      .then((response) => {
-
-        this.user = response.data
-
-      })
-
-      .catch((response) => {
-
-        console.error(response.error)
-
-      })
-
-  }, // created
 
   watch: {
     oldPassword() {
@@ -106,13 +88,5 @@ Vue.mixin({
         this.errors.newPasswordConfirm.status
       ) ? false : true
     }
-  },
-  methods: {
-    focusNext(selector) {
-      document.getElementById(selector).focus()
-    }
   }
 })
-
-require('./../quick-search')
-require('./../logout')

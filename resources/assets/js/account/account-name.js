@@ -1,9 +1,9 @@
-Vue.http.interceptors.push((request, next) => {
-    request.headers.set('Authorization', 'Bearer ' + document.getElementById('Authorization').value)
+require('./../mixins/_http-interceptor')
+require('./../mixins/_logout')
+require('./../mixins/_quick-search')
 
-    next()
-
-})
+// helpers
+require('./../mixins/helpers/_focus')
 
 Vue.mixin({
   data() {
@@ -35,7 +35,7 @@ Vue.mixin({
   created() {
 
     this.$http
-      .get(window.location.origin + '/api/user')
+      .get(window.location.origin + '/api/auth/user')
 
       .then((response) => {
 
@@ -44,15 +44,6 @@ Vue.mixin({
         this.first_name = this.user.fname
         this.middle_name = this.user.mname
         this.last_name = this.user.lname
-
-        // this.$nextTick(function () {
-        //   this.errors.first_name.status = false
-        //   // this.errors.first_name.dirty = false
-        //   this.errors.middle_name.status = true
-        //   // this.errors.middle_name.dirty = true
-        //   this.errors.last_name.status = false
-        //   // this.errors.last_name.dirty = false
-        // })
 
       })
 
@@ -119,13 +110,5 @@ Vue.mixin({
         this.errors.last_name.status
       ) ? false : true
     }
-  },
-  methods: {
-    focusNext(selector) {
-      document.getElementById(selector).focus()
-    }
   }
 })
-
-require('./../quick-search')
-require('./../logout')
