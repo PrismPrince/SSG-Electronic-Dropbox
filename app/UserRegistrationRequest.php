@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserRegistrationRequest extends Model
 {
-  protected $dates = ['deleted_at'];
-
   public $incrementing = false;
+  protected $dates     = ['deleted_at'];
 }

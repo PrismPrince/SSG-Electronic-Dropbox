@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\User;
-use App\UserRegistrationRequest;
 use DB;
+use App\User;
+use Illuminate\Http\Request;
+use App\UserRegistrationRequest;
 
 class AdminController extends Controller
 {
@@ -52,11 +52,11 @@ class AdminController extends Controller
 
     foreach ($users->get() as $user) {
       $u[] = [
-        'id' => $user->id,
-        'fname' => $user->fname,
-        'lname' => $user->lname,
-        'email' => $user->email,
-        'role' => $user->role,
+        'id'         => $user->id,
+        'fname'      => $user->fname,
+        'lname'      => $user->lname,
+        'email'      => $user->email,
+        'role'       => $user->role,
         'created_at' => $user->created_at,
         'deleted_at' => $user->deleted_at,
       ];
@@ -81,12 +81,13 @@ class AdminController extends Controller
       $user->suggestions()->delete();
       $user->delete();
     }
+
     return response()->json([
-      'id' => $user->id,
-      'fname' => $user->fname,
-      'lname' => $user->lname,
-      'email' => $user->email,
-      'role' => $user->role,
+      'id'         => $user->id,
+      'fname'      => $user->fname,
+      'lname'      => $user->lname,
+      'email'      => $user->email,
+      'role'       => $user->role,
       'created_at' => $user->created_at,
       'deleted_at' => $user->deleted_at,
     ]);

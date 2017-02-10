@@ -2,14 +2,16 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
   use SoftDeletes, Notifiable;
+
+  public $incrementing = false;
 
   /**
    * The attributes that are mass assignable.
@@ -34,8 +36,6 @@ class User extends Authenticatable
   protected $hidden = [
     'email', 'password', 'api_token', 'remember_token', 'created_at', 'updated_at', 'deleted_at',
   ];
-
-  public $incrementing = false;
 
   protected $dates = ['deleted_at'];
 

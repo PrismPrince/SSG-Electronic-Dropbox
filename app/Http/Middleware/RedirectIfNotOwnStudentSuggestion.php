@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use Auth;
+use Closure;
 use App\Suggestion;
 
 class RedirectIfNotOwnStudentSuggestion
@@ -11,8 +11,9 @@ class RedirectIfNotOwnStudentSuggestion
   /**
    * Handle an incoming request.
    *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \Closure  $next
+   * @param \Illuminate\Http\Request $request
+   * @param \Closure                 $next
+   *
    * @return mixed
    */
   public function handle($request, Closure $next)
@@ -20,7 +21,6 @@ class RedirectIfNotOwnStudentSuggestion
     if (Auth::user()->role == 'student')
       if (Suggestion::find($request->route('suggestion'))->user_id != Auth::id())
         return redirect('home');
-
     return $next($request);
   }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\User;
 
 class ProfileController extends Controller
 {
@@ -41,7 +41,7 @@ class ProfileController extends Controller
 
   public function changeRole(Request $request, $user)
   {
-    $user = User::findOrFail($user);
+    $user       = User::findOrFail($user);
     $user->role = $request->role;
     $user->save();
 

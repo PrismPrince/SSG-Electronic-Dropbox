@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Auth;
-use App\User;
-use App\Post;
 use App\Poll;
-use App\Suggestion;
+use App\Post;
+use App\User;
 use Carbon\Carbon;
+use App\Suggestion;
+use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
@@ -29,9 +29,9 @@ class SearchController extends Controller
       $suggestions = Suggestion::searchTitle($request->key)->orderBy('created_at', 'desc')->limit(3)->get();
 
     return response()->json([
-      'users' => $users,
-      'posts' => $posts,
-      'polls' => $polls,
+      'users'       => $users,
+      'posts'       => $posts,
+      'polls'       => $polls,
       'suggestions' => $suggestions,
     ]);
   }
@@ -54,7 +54,7 @@ class SearchController extends Controller
       $posts = Post::search($request->key)
         ->whereBetween('created_at', [
           Carbon::create($request->year, $request->month, 1, 12, 0, 0)->startOfMonth(),
-          Carbon::create($request->year, $request->month, 1, 12, 0, 0)->endOfMonth()
+          Carbon::create($request->year, $request->month, 1, 12, 0, 0)->endOfMonth(),
         ])
         ->orderBy('created_at', 'desc')
         ->offset($request->skip)
@@ -65,7 +65,7 @@ class SearchController extends Controller
       $posts = Post::search($request->key)
         ->whereBetween('created_at', [
           Carbon::create($request->year, 1, 1, 12, 0, 0)->startOfYear(),
-          Carbon::create($request->year, 1, 1, 12, 0, 0)->endOfYear()
+          Carbon::create($request->year, 1, 1, 12, 0, 0)->endOfYear(),
         ])
         ->orderBy('created_at', 'desc')
         ->offset($request->skip)
@@ -84,7 +84,7 @@ class SearchController extends Controller
       $polls = Poll::search($request->key)
         ->whereBetween('created_at', [
           Carbon::create($request->year, $request->month, 1, 12, 0, 0)->startOfMonth(),
-          Carbon::create($request->year, $request->month, 1, 12, 0, 0)->endOfMonth()
+          Carbon::create($request->year, $request->month, 1, 12, 0, 0)->endOfMonth(),
         ])
         ->orderBy('created_at', 'desc')
         ->offset($request->skip)
@@ -95,7 +95,7 @@ class SearchController extends Controller
       $polls = Poll::search($request->key)
         ->whereBetween('created_at', [
           Carbon::create($request->year, 1, 1, 12, 0, 0)->startOfYear(),
-          Carbon::create($request->year, 1, 1, 12, 0, 0)->endOfYear()
+          Carbon::create($request->year, 1, 1, 12, 0, 0)->endOfYear(),
         ])
         ->orderBy('created_at', 'desc')
         ->offset($request->skip)
@@ -115,7 +115,7 @@ class SearchController extends Controller
         $suggestions = Suggestion::search($request->key)
           ->whereBetween('created_at', [
             Carbon::create($request->year, $request->month, 1, 12, 0, 0)->startOfMonth(),
-            Carbon::create($request->year, $request->month, 1, 12, 0, 0)->endOfMonth()
+            Carbon::create($request->year, $request->month, 1, 12, 0, 0)->endOfMonth(),
           ])
           ->where('user_id', Auth::guard('api')->id())
           ->orderBy('created_at', 'desc')
@@ -126,7 +126,7 @@ class SearchController extends Controller
         $suggestions = Suggestion::search($request->key)
           ->whereBetween('created_at', [
             Carbon::create($request->year, $request->month, 1, 12, 0, 0)->startOfMonth(),
-            Carbon::create($request->year, $request->month, 1, 12, 0, 0)->endOfMonth()
+            Carbon::create($request->year, $request->month, 1, 12, 0, 0)->endOfMonth(),
           ])
           ->orderBy('created_at', 'desc')
           ->offset($request->skip)
@@ -138,7 +138,7 @@ class SearchController extends Controller
         $suggestions = Suggestion::search($request->key)
           ->whereBetween('created_at', [
             Carbon::create($request->year, 1, 1, 12, 0, 0)->startOfYear(),
-            Carbon::create($request->year, 1, 1, 12, 0, 0)->endOfYear()
+            Carbon::create($request->year, 1, 1, 12, 0, 0)->endOfYear(),
           ])
           ->where('user_id', Auth::guard('api')->id())
           ->orderBy('created_at', 'desc')
@@ -149,15 +149,14 @@ class SearchController extends Controller
         $suggestions = Suggestion::search($request->key)
           ->whereBetween('created_at', [
             Carbon::create($request->year, 1, 1, 12, 0, 0)->startOfYear(),
-            Carbon::create($request->year, 1, 1, 12, 0, 0)->endOfYear()
+            Carbon::create($request->year, 1, 1, 12, 0, 0)->endOfYear(),
           ])
           ->orderBy('created_at', 'desc')
           ->offset($request->skip)
           ->limit($request->take)
           ->get();
 
-    else
-      if (Auth::guard('api')->user()->role == 'student')
+    elseif (Auth::guard('api')->user()->role == 'student')
         $suggestions = Suggestion::search($request->key)->where('user_id', Auth::guard('api')->id())->orderBy('created_at', 'desc')->offset($request->skip)->limit($request->take)->get();
       else
         $suggestions = Suggestion::search($request->key)->orderBy('created_at', 'desc')->offset($request->skip)->limit($request->take)->get();
@@ -167,37 +166,33 @@ class SearchController extends Controller
 
   public function getSearchDates(Request $request, $search)
   {
-    if ($search == 'post') $searches = Post::select('created_at')->orderBy('created_at', 'desc')->get();
-    if ($search == 'poll') $searches = Poll::select('created_at')->orderBy('created_at', 'desc')->get();
+    if ($search == 'post') $searches       = Post::select('created_at')->orderBy('created_at', 'desc')->get();
+    if ($search == 'poll') $searches       = Poll::select('created_at')->orderBy('created_at', 'desc')->get();
     if ($search == 'suggestion') $searches = Suggestion::select('created_at')->orderBy('created_at', 'desc')->get();
 
-    $dates = [];
+    $dates   = [];
     $collect = [];
-    $final = [];
+    $final   = [];
 
     foreach ($searches as $search) {
-
       // date of the post
       $date = $search->created_at;
 
       // store year and month of the post
       $dates[] = ['year' => $date->year, 'month' => $date->month];
-
     }
 
     $newDates = collect($dates)->unique(function ($i) {
-
-      return $i['year'].$i['month'];
-
+      return $i['year'] . $i['month'];
     })->values();
 
-    for ( $i = 0; $i < count($newDates); $i++ ) {
+    for ($i = 0; $i < count($newDates); ++$i) {
       $collect[$newDates[$i]['year']][] = $newDates[$i]['month'];
     }
 
     list($year, $months) = array_divide($collect);
 
-    for ( $i = 0; $i < count($year); $i++ ) {
+    for ($i = 0; $i < count($year); ++$i) {
       $final[] = ['year' => $year[$i], 'months' => $months[$i]];
     }
 
