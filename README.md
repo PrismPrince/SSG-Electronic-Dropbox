@@ -1,6 +1,6 @@
-# SSG Poll System
+# SSG Electronic Dropbox System
 
-[Cebu Technological Univaersity - Main Campus](http://http://www.ctu.edu.ph): Supreme Student Government Poll System
+[Cebu Technological Univaersity - Main Campus](http://http://www.ctu.edu.ph): Supreme Student Government Electronic Dropbox System
 
 ## Introduction
 
@@ -16,15 +16,15 @@ There are three users:
 
 #### Students
 
-They can read on the posts, vote on polls and send a suggestions or feedback.
+They can read on the posts, vote on polls and send suggestions or feedbacks.
 
 #### Moderators
 
-They can post information or announcements, create a poll and read suggestions.
+They can post information or announcements, create polls and read suggestions.
 
 #### Administrators
 
-They can do the moderators' function but they are the only ones who can change the role of the user ("student", "moderator" or "administrator")
+They can generate codes for new users to register, avtivate or deactivate users, change the role of the user and they can also do  the moderators' functions.
 
 ## Deployment
 
@@ -36,7 +36,7 @@ They can do the moderators' function but they are the only ones who can change t
 
 ## Contributing
 
-Please contact us on [Faceboook](https://www.facebook.com/prismprince.xx) for details on our code of conduct, and the process for submitting pull requests to us.
+Please contact Dave on [Faceboook](https://www.facebook.com/prismprince.xx) for details on our code of conduct, and the process for submitting pull requests.
 
 ## Authors
 
@@ -47,4 +47,4 @@ Please contact us on [Faceboook](https://www.facebook.com/prismprince.xx) for de
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
