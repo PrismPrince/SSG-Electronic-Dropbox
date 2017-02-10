@@ -1,7 +1,7 @@
-require('./partials/_http-interceptor')
-require('./partials/_get-auth-user')
-require('./partials/_logout')
-require('./partials/_quick-search')
+require('./mixins/_http-interceptor')
+require('./mixins/_get-auth-user')
+require('./mixins/_logout')
+require('./mixins/_quick-search')
 
 Vue.mixin({
 

@@ -1,5 +1,5 @@
 // helpers
-require('./partials/_helpers/_focus')
+require('./mixins/_helpers/_focus')
 
 Vue.mixin({
   data() {

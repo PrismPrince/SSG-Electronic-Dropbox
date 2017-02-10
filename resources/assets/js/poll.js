@@ -1,13 +1,13 @@
-require('./partials/_http-interceptor')
-require('./partials/_get-auth-user')
-require('./partials/_logout')
-require('./partials/_quick-search')
+require('./mixins/_http-interceptor')
+require('./mixins/_get-auth-user')
+require('./mixins/_logout')
+require('./mixins/_quick-search')
 
 // validators
-require('./partials/_validators/_poll-validator')
+require('./mixins/_validators/_poll-validator')
 
 // helpers
-require('./partials/_helpers/_focus')
+require('./mixins/_helpers/_focus')
 
 Vue.mixin({
 
