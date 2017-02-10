@@ -1,6 +1,6 @@
 # SSG Electronic Dropbox System
 
-[Cebu Technological Univaersity - Main Campus](http://http://www.ctu.edu.ph): Supreme Student Government Electronic Dropbox System
+[Cebu Technological University - Main Campus](http://http://www.ctu.edu.ph): Supreme Student Government Electronic Dropbox System
 
 [![StyleCI](https://styleci.io/repos/76892434/shield?branch=master)](https://styleci.io/repos/76892434)
 
