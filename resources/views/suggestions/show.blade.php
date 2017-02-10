@@ -2,8 +2,8 @@
 
 @section('content')
 
-@include('partials._modals._suggestion-modal')
-@include('partials._modals._confirm-suggestion-modal')
+@include('partials.modals._suggestion-modal')
+@include('partials.modals._confirm-suggestion-modal')
 
 <div class="container root-content">
   <div class="row">

@@ -2,8 +2,8 @@
 
 @section('content')
 
-@include('partials._modals._poll-modal')
-@include('partials._modals._confirm-poll-modal')
+@include('partials.modals._poll-modal')
+@include('partials.modals._confirm-poll-modal')
 
 <div class="container root-content">
   <div class="row">

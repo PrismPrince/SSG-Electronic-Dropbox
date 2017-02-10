@@ -4,21 +4,21 @@
 
 @if ($profile->role != 'student')
 
-  @include('partials._modals._post-modal')
-  @include('partials._modals._confirm-post-modal')
-  @include('partials._modals._poll-modal')
-  @include('partials._modals._confirm-poll-modal')
+  @include('partials.modals._post-modal')
+  @include('partials.modals._confirm-post-modal')
+  @include('partials.modals._poll-modal')
+  @include('partials.modals._confirm-poll-modal')
 
 @else
 
-  @include('partials._modals._suggestion-modal')
-  @include('partials._modals._confirm-suggestion-modal')
+  @include('partials.modals._suggestion-modal')
+  @include('partials.modals._confirm-suggestion-modal')
 
 @endif
 
 @if (Auth::id() == $profile->id)
 
-  @include('partials._modals._upload-profile-modal')
+  @include('partials.modals._upload-profile-modal')
 
 @endif
 

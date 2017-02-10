@@ -2,8 +2,8 @@
 
 @section('content')
 
-@include('partials._modals._post-modal')
-@include('partials._modals._confirm-post-modal')
+@include('partials.modals._post-modal')
+@include('partials.modals._confirm-post-modal')
 
 <div class="container root-content">
   <div class="row">
