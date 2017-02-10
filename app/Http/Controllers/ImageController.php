@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Auth;
 use Image;
+use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {

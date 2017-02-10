@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Suggestion;
 use Auth;
+use App\Suggestion;
+use Illuminate\Http\Request;
 
 class SuggestionController extends Controller
 {
@@ -17,7 +17,7 @@ class SuggestionController extends Controller
 
   public function index(Request $request)
   {
-    if (Auth::guard('api')->user()->role == 'student') 
+    if (Auth::guard('api')->user()->role == 'student')
       $suggestions = Suggestion::with('user')
                                 ->where('user_id', Auth::guard('api')->id())
                                 ->offset($request->skip)
@@ -41,10 +41,10 @@ class SuggestionController extends Controller
 
   public function store(Request $request)
   {
-    $suggestion = new Suggestion();
+    $suggestion          = new Suggestion();
     $suggestion->user_id = Auth::guard('api')->id();
-    $suggestion->title = $request->title;
-    $suggestion->direct = $request->direct;
+    $suggestion->title   = $request->title;
+    $suggestion->direct  = $request->direct;
     $suggestion->message = $request->message;
     $suggestion->save();
 
@@ -54,6 +54,7 @@ class SuggestionController extends Controller
   public function show(Request $request, $suggestion)
   {
     Suggestion::with('user')->findOrFail($suggestion);
+
     return view('suggestions.show');
   }
 
@@ -69,9 +70,9 @@ class SuggestionController extends Controller
 
   public function update(Request $request, $suggestion)
   {
-    $suggestion = Suggestion::with('user')->find($suggestion);
-    $suggestion->title = $request->title;
-    $suggestion->direct = $request->direct;
+    $suggestion          = Suggestion::with('user')->find($suggestion);
+    $suggestion->title   = $request->title;
+    $suggestion->direct  = $request->direct;
     $suggestion->message = $request->message;
     $suggestion->save();
 

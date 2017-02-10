@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Carbon\Carbon;
+use Auth;
 use App\Poll;
 use App\Answer;
-use Auth;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class PollController extends Controller
 {
@@ -28,20 +28,20 @@ class PollController extends Controller
 
   public function store(Request $request)
   {
-    $poll = new Poll();
+    $poll          = new Poll();
     $poll->user_id = Auth::guard('api')->id();
-    $poll->title = $request->title;
-    $poll->desc = $request->desc;
-    $poll->start = Carbon::parse($request->start)->toDateTimeString();
-    $poll->end = Carbon::parse($request->end)->toDateTimeString();
-    $poll->type = $request->type;
+    $poll->title   = $request->title;
+    $poll->desc    = $request->desc;
+    $poll->start   = Carbon::parse($request->start)->toDateTimeString();
+    $poll->end     = Carbon::parse($request->end)->toDateTimeString();
+    $poll->type    = $request->type;
 
     $poll->save();
 
     $answers = [];
 
     foreach ($request->answers as $key => $answer) {
-      $answers[$key] = new Answer();
+      $answers[$key]         = new Answer();
       $answers[$key]->answer = $answer['answer'];
     }
 
@@ -53,6 +53,7 @@ class PollController extends Controller
   public function show(Request $request, $poll)
   {
     Poll::with('user')->findOrFail($poll);
+
     return view('polls.show');
   }
 
@@ -70,12 +71,12 @@ class PollController extends Controller
   {
     $id = $poll;
 
-    $poll = Poll::with('user')->with('answers')->find($id);
+    $poll        = Poll::with('user')->with('answers')->find($id);
     $poll->title = $request->title;
-    $poll->desc = $request->desc;
+    $poll->desc  = $request->desc;
     $poll->start = Carbon::parse($request->start)->toDateTimeString();
-    $poll->end = Carbon::parse($request->end)->toDateTimeString();
-    $poll->type = $request->type;
+    $poll->end   = Carbon::parse($request->end)->toDateTimeString();
+    $poll->type  = $request->type;
 
     // get answers from db
     $oldAnswers = array_pluck($poll->answers()->get()->toArray(), 'id'); // [1, 2, 3]
@@ -91,10 +92,10 @@ class PollController extends Controller
     // store instance of modified answers
     foreach ($request->answers as $key => $answer) {
       if ($answer['id'] == null) {                    // new added answers
-        $answers[$key] = new Answer();
+        $answers[$key]         = new Answer();
         $answers[$key]->answer = $answer['answer'];
       } else {                                        // untouched answers
-        $answers[$key] = Answer::find($answer['id']);
+        $answers[$key]         = Answer::find($answer['id']);
         $answers[$key]->answer = $answer['answer'];
       }
     }
@@ -150,7 +151,7 @@ class PollController extends Controller
         }
       }
       $answer->users()->toggle(Auth::guard('api')->id());
-    } else if ($answer->poll->type == 'multi') {
+    } elseif ($answer->poll->type == 'multi') {
       $answer->users()->toggle(Auth::guard('api')->id());
     }
 

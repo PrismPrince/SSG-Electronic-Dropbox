@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Suggestion extends Model
 {
   use SoftDeletes;
-  
+
   protected $hidden = [
     'user_id', 'updated_at', 'deleted_at',
   ];

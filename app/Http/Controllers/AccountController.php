@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Auth;
 use App\User;
+use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
@@ -45,7 +44,7 @@ class AccountController extends Controller
     $this->validate($request, ['email' => 'required|email|max:255|unique:users,email,' . Auth::id()]);
 
     $request->user()->fill([
-      'email' => $request->email
+      'email' => $request->email,
     ])->save();
 
     return redirect('account')->withStatus('Your e-mail was successfully changed.');

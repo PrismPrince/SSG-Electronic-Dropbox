@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+
 // use Faker\Factory;
 
 class PostsTableSeeder extends Seeder
@@ -8,10 +9,10 @@ class PostsTableSeeder extends Seeder
   public function run()
   {
     DB::table('posts')->insert([
-      'id' => 1000000000, // init
+      'id'      => 1000000000, // init
       'user_id' => 1000000,
-      'title' => 'Feb-Ibig Event',
-      'desc' => 'Love is in the air! There will be a program on February 14, 2017. All students are invited to show their talents on this event.
+      'title'   => 'Feb-Ibig Event',
+      'desc'    => 'Love is in the air! There will be a program on February 14, 2017. All students are invited to show their talents on this event.
       
       There will be no class this day and no uniform day!
       
@@ -23,8 +24,8 @@ class PostsTableSeeder extends Seeder
 
     DB::table('posts')->insert([
       'user_id' => 1000001,
-      'title' => 'Organization Day!',
-      'desc' => 'Get to know the different organizations in the university. Have fun and find your interest!
+      'title'   => 'Organization Day!',
+      'desc'    => 'Get to know the different organizations in the university. Have fun and find your interest!
       
       #OrganizationDay',
       'created_at' => date('Y-m-d H:i:s', time()),
@@ -45,6 +46,5 @@ class PostsTableSeeder extends Seeder
     //     'updated_at' => date('Y-m-d H:i:s', time()),
     //   ]);
     // }
-
   }
 }
