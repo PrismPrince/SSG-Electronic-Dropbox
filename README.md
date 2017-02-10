@@ -2,6 +2,8 @@
 
 [Cebu Technological Univaersity - Main Campus](http://http://www.ctu.edu.ph): Supreme Student Government Electronic Dropbox System
 
+[![StyleCI](https://styleci.io/repos/76892434/shield?branch=master)](https://styleci.io/repos/76892434)
+
 ## Introduction
 
 This system let the moderator or administrator post information and create a poll for the students and the students can suggest to the modertor or administrator
