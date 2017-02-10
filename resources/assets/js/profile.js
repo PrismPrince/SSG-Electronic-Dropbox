@@ -4,12 +4,18 @@ require('./mixins/_logout')
 require('./mixins/_quick-search')
 
 // validators
-require('./mixins/_validators/_post-validator')
-require('./mixins/_validators/_poll-validator')
-require('./mixins/_validators/_suggestion-validator')
+require('./mixins/validators/_post-validator')
+require('./mixins/validators/_poll-validator')
+require('./mixins/validators/_suggestion-validator')
 
 // helpers
-require('./mixins/_helpers/_focus')
+require('./mixins/helpers/_focus')
+require('./mixins/helpers/_clear-post')
+require('./mixins/helpers/_clear-posts')
+require('./mixins/helpers/_clear-poll')
+require('./mixins/helpers/_clear-polls')
+require('./mixins/helpers/_clear-suggestion')
+require('./mixins/helpers/_clear-suggestions')
 
 Vue.mixin({
 
@@ -346,108 +352,6 @@ Vue.mixin({
       }
 
     }, // switchActivity
-
-    clearPost() {
-
-      this.post.id                            = null
-      this.post.title                         = ''
-      this.post.desc                          = ''
-      
-      this.post.errors.title.dirty            = false
-      this.post.errors.title.status           = false
-      this.post.errors.title.text             = ''
-
-      this.post.errors.desc.dirty             = false
-      this.post.errors.desc.status            = false
-      this.post.errors.desc.text              = ''
-
-    }, // clearPost
-
-    clearPosts() {
-
-      this.skip                               = 0
-      this.take                               = 10
-      this.full                               = false
-      this.posts                              = []
-
-    }, // clearPosts
-
-    clearPoll() {
-
-      this.poll.id                            = null
-      this.poll.title                         = ''
-      this.poll.desc                          = ''
-      this.poll.start                         = ''
-      this.poll.end                           = ''
-      this.poll.type                          = ''
-      this.poll.status                        = ''
-      this.poll.answer                        = ''
-      this.poll.answers                       = []
-
-      this.poll.errors.title.dirty            = false
-      this.poll.errors.title.status           = false
-      this.poll.errors.title.text             = ''
-
-      this.poll.errors.desc.dirty             = false
-      this.poll.errors.desc.status            = false
-      this.poll.errors.desc.text              = ''
-
-      this.poll.errors.start.dirty            = false
-      this.poll.errors.start.status           = false
-      this.poll.errors.start.text             = ''
-
-      this.poll.errors.end.dirty              = false
-      this.poll.errors.end.status             = false
-      this.poll.errors.end.text               = ''
-
-      this.poll.errors.type.dirty             = false
-      this.poll.errors.type.status            = false
-      this.poll.errors.type.text              = ''
-
-      this.poll.errors.answer.dirty           = false
-      this.poll.errors.answer.status          = false
-      this.poll.errors.answer.text            = ''
-
-    }, // clearPoll
-
-    clearPolls() {
-
-      this.skip                               = 0
-      this.take                               = 10
-      this.full                               = false
-      this.polls                              = []
-
-    }, // clearPolls
-
-    clearSuggestion() {
-
-      this.suggestion.id                      = null
-      this.suggestion.title                   = ''
-      this.suggestion.direct                  = ''
-      this.suggestion.message                 = ''
-
-      this.suggestion.errors.title.dirty      = false
-      this.suggestion.errors.title.status     = false
-      this.suggestion.errors.title.text       = ''
-
-      this.suggestion.errors.direct.dirty     = false
-      this.suggestion.errors.direct.status    = false
-      this.suggestion.errors.direct.text      = ''
-
-      this.suggestion.errors.message.dirty    = false
-      this.suggestion.errors.message.status   = false
-      this.suggestion.errors.message.text     = ''
-
-    }, // clearSuggestion
-
-    clearSuggestions() {
-
-      this.skip                               = 0
-      this.take                               = 10
-      this.full                               = false
-      this.suggestions                        = []
-
-    }, // clearSuggestions
 
     clearImageUp() {
 

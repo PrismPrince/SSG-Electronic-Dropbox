@@ -4,10 +4,11 @@ require('./mixins/_logout')
 require('./mixins/_quick-search')
 
 // validators
-require('./mixins/_validators/_suggestion-validator')
+require('./mixins/validators/_suggestion-validator')
 
 // helpers
-require('./mixins/_helpers/_focus')
+require('./mixins/helpers/_focus')
+require('./mixins/helpers/_clear-suggestion')
 
 Vue.mixin({
 
@@ -130,27 +131,6 @@ Vue.mixin({
       })
 
     }, // hideModal
-
-    clearSuggestion() {
-
-      this.suggestion.id                      = null
-      this.suggestion.title                   = ''
-      this.suggestion.direct                  = ''
-      this.suggestion.message                 = ''
-
-      this.suggestion.errors.title.dirty      = false
-      this.suggestion.errors.title.status     = false
-      this.suggestion.errors.title.text       = ''
-
-      this.suggestion.errors.direct.dirty     = false
-      this.suggestion.errors.direct.status    = false
-      this.suggestion.errors.direct.text      = ''
-
-      this.suggestion.errors.message.dirty    = false
-      this.suggestion.errors.message.status   = false
-      this.suggestion.errors.message.text     = ''
-
-    }, // clearSuggestion
 
     edit(id) {
 
