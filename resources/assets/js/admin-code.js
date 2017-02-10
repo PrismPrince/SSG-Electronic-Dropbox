@@ -63,6 +63,18 @@ Vue.mixin({
 
   },
 
+  computed: {
+
+    btnDisabled() {
+
+      if (this.new_student_id == '') return true
+
+      return !this.errors.new_student_id.status
+
+    }
+
+  },
+
   methods: {
 
     getUsers() {
@@ -92,26 +104,26 @@ Vue.mixin({
 
     createCode() {
 
-      this.$http
-        .post(window.location.origin + '/api/admin/user/code', {
-          new_student_id: this.new_student_id
-        })
+      if (!this.btnDisabled)
+        this.$http
+          .post(window.location.origin + '/api/admin/user/code', {
+            new_student_id: this.new_student_id
+          })
 
-        .then(response => {
+          .then(response => {
 
-          this.skip++
-          this.new_student_id = ''
-          this.users.splice(0, 0, response.data)
+            this.skip++
+            this.new_student_id = ''
+            this.users.splice(0, 0, response.data)
 
-        })
+          })
 
-        .catch(response => {
+          .catch(response => {
 
-          console.error(response.status)
-          if (response.status == 422)
-            this.error = response.data.new_student_id[0]
+            if (response.status == 422)
+              this.error = response.data.new_student_id[0]
 
-        })
+          })
 
     },
 

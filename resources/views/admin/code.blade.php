@@ -73,14 +73,14 @@
                   :class="errors.new_student_id.status != errors.new_student_id.dirty ? 'has-error' : ''"
                 >
                   <label for="new-student-id">Student ID</label>
-                  <input type="text" id="new-student-id" name="new_student_id" class="form-control" placeholder="Enter ID number" v-model="new_student_id" @keypress.enter=createCode>
+                  <input type="text" id="new-student-id" name="new_student_id" class="form-control" placeholder="Enter ID number" v-model="new_student_id" @keypress.enter="createCode">
                   <span class="help-block" v-if="errors.new_student_id.status != errors.new_student_id.dirty">
                     <strong>@{{errors.new_student_id.text}}</strong>
                   </span>
                 </div>
               </div>
               <div class="col-sm-12">
-                <button class="btn btn-default pull-right" @click="createCode">Generate Code</button>
+                <button class="btn btn-default pull-right" @click="createCode" :disabled="btnDisabled">Generate Code</button>
               </div>
             </div>
           </div> {{-- .panel-body --}}
