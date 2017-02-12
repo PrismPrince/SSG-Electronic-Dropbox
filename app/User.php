@@ -59,6 +59,11 @@ class User extends Authenticatable
     return $this->belongsToMany(Answer::class, 'votes');
   }
 
+  public function comments()
+  {
+    return $this->hasMany(Comment::class);
+  }
+
   public function scopeSearchName($query, $key)
   {
     return $query
