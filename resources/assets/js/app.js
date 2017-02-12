@@ -30,6 +30,7 @@ Vue.component('bar-answer', require('./components/poll/bar-answer.vue'));
 // suggestion components
 Vue.component('accordion-suggestion', require('./components/suggestion/accordion-suggestion.vue'));
 Vue.component('panel-suggestion', require('./components/suggestion/panel-suggestion.vue'));
+Vue.component('suggestion-comment', require('./components/suggestion/suggestion-comment.vue'));
 
 Vue.component('panel-search', require('./components/panel-search.vue'));
 

@@ -13,6 +13,7 @@
       <panel-suggestion
         v-else
         :suggestion-act="suggestion.object"
+        :auth-user="user"
       >
         <div v-if="suggestion.object.user.id == user.id" slot="dropdown-menu" class="media-right">
           <div class="dropdown pull-right">
