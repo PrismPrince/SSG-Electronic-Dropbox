@@ -24,6 +24,8 @@ Route::get('/answer/{answer}/voters', 'AnswerController@getVoters');
 Route::post('/vote', 'PollController@vote');
 
 Route::resource('/suggestion', 'SuggestionController', ['except' => ['create', 'show']]);
+Route::get('/suggestion/{suggestion}/comment', 'SuggestionController@getComments');
+Route::post('/suggestion/{suggestion}/comment', 'SuggestionController@storeComment');
 
 Route::get('/search/{search}/dates', 'SearchController@getSearchDates');
 

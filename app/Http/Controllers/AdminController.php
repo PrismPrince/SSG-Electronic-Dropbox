@@ -30,22 +30,21 @@ class AdminController extends Controller
   {
     $users = User::where(DB::raw(1), 1);
 
-    if ($request->student_id) {
+    if ($request->student_id) 
       $users->where('id', 'LIKE', '%' . $request->student_id . '%');
-    }
-    if ($request->name) {
+
+    if ($request->name) 
       $users->searchName($request->name);
-    }
-    if ($request->email) {
+    
+    if ($request->email) 
       $users->where('email', 'LIKE', '%' . $request->email . '%');
-    }
-    if ($request->role) {
+      
+    if ($request->role)
       $users->where('role', $request->role);
-    }
+    
     if ($request->status) {
-      if ($request->status == 'deactive') {
+      if ($request->status == 'deactive')
         $users->onlyTrashed();
-      }
     } else $users->withTrashed();
 
     $u = [];
@@ -72,13 +71,16 @@ class AdminController extends Controller
       $user->posts()->restore();
       $user->polls()->restore();
       $user->suggestions()->restore();
+      $user->comments()->restore();
       $user->restore();
     }
+
     if ($request->status == 'deactivate') {
       $user = User::withTrashed()->find($request->id);
       $user->posts()->delete();
       $user->polls()->delete();
       $user->suggestions()->delete();
+      $user->comments()->delete();
       $user->delete();
     }
 

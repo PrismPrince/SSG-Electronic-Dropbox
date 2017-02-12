@@ -78,6 +78,7 @@
         <transition-group name="list">
           <accordion-suggestion
             v-for="suggestion in suggestions"
+            :auth-user="user"
             :key="suggestion.id"
             :suggestion-act="suggestion"
           >

@@ -434,7 +434,7 @@
 
   .upload {
     position: absolute;
-    width: 150px;
+    width: 152px;
     height: 40px;
     font-size: 150%;
     text-align: center;
@@ -473,4 +473,28 @@
   padding-right: 5px;
   border-left: 3px solid darken($state-info-border, 30%);
   background-color: $state-info-bg;
+}
+
+.comments {
+  .list-group-item:first-child {
+    padding: 0 15px;
+  }
+
+  .media-left .media-object {
+    height: 36px;
+    width: 36px;
+  }
+
+  .media-body .form-control {
+    height: 36px;
+    resize: none;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+  }
+
+  .full-option {
+    margin: 10px 0;
+  }
 }

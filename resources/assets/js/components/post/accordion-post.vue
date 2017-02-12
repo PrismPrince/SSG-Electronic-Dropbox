@@ -2,7 +2,7 @@
   <div class="panel list-item panel-default">
     <div class="panel-heading" role="tab" :id="'post-heading-' + postAct.id">
       <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-post" :data-target="'#post-collapse-' + postAct.id" @click.prevent="" :href="postUrl" aria-expanded="true" :aria-controls="'post-collapse-' + postAct.id">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-post" :data-target="'#post-collapse-' + postAct.id" @click.prevent :href="postUrl" aria-expanded="true" :aria-controls="'post-collapse-' + postAct.id">
           {{postAct.title}}
         </a>
       </h4>

@@ -10,7 +10,7 @@
             'label-danger': status == 'Expired' ? true : false
           }"
         >{{status}}</span>
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-poll" :data-target="'#poll-collapse-' + pollAct.id" @click.prevent="" :href="pollUrl" aria-expanded="true" :aria-controls="'poll-collapse-' + pollAct.id">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-poll" :data-target="'#poll-collapse-' + pollAct.id" @click.prevent :href="pollUrl" aria-expanded="true" :aria-controls="'poll-collapse-' + pollAct.id">
           {{pollAct.title}}
         </a>
       </h4>
