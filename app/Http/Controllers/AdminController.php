@@ -30,18 +30,18 @@ class AdminController extends Controller
   {
     $users = User::where(DB::raw(1), 1);
 
-    if ($request->student_id) 
+    if ($request->student_id)
       $users->where('id', 'LIKE', '%' . $request->student_id . '%');
 
-    if ($request->name) 
+    if ($request->name)
       $users->searchName($request->name);
-    
-    if ($request->email) 
+
+    if ($request->email)
       $users->where('email', 'LIKE', '%' . $request->email . '%');
-      
+
     if ($request->role)
       $users->where('role', $request->role);
-    
+
     if ($request->status) {
       if ($request->status == 'deactive')
         $users->onlyTrashed();

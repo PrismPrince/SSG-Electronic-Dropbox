@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Suggestion;
 use App\Comment;
+use App\Suggestion;
 use Illuminate\Http\Request;
 
 class SuggestionController extends Controller
@@ -106,8 +106,8 @@ class SuggestionController extends Controller
     $comment = new Comment();
 
     $comment->suggestion_id = $suggestion;
-    $comment->user_id = Auth::guard('api')->id();
-    $comment->comment = $request->comment;
+    $comment->user_id       = Auth::guard('api')->id();
+    $comment->comment       = $request->comment;
     $comment->save();
 
     return response()->json(Comment::with('user')->find($comment->id));
