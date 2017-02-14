@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Post;
+use App\Photo;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -16,7 +17,7 @@ class PostController extends Controller
 
   public function index(Request $request)
   {
-    return response()->json(Post::with('user')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get());
+    return response()->json(Post::with('user')->with('photos')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get());
   }
 
   public function create()
@@ -26,25 +27,36 @@ class PostController extends Controller
 
   public function store(Request $request)
   {
-    $post          = new Post();
+    $post = new Post();
+
     $post->user_id = Auth::guard('api')->id();
     $post->title   = $request->title;
     $post->desc    = $request->desc;
     $post->save();
 
-    return response()->json(Post::with('user')->find($post->id));
+    $photos = [];
+
+    foreach ($request->photos as $key => $photo) {
+      $photos[$key] = new Photo();
+
+      $photos[$key]->name = $photo;
+    }
+
+    $post->photos()->saveMany($photos);
+
+    return response()->json(Post::with('user')->with('photos')->find($post->id));
   }
 
   public function show(Request $request, $post)
   {
-    Post::with('user')->findOrFail($post);
+    Post::findOrFail($post);
 
     return view('posts.show');
   }
 
   public function getPost($post)
   {
-    return response()->json(Post::with('user')->find($post));
+    return response()->json(Post::with('user')->with('photos')->find($post));
   }
 
   public function edit($post)
@@ -54,7 +66,8 @@ class PostController extends Controller
 
   public function update(Request $request, $post)
   {
-    $post        = Post::with('user')->find($post);
+    $post = Post::with('user')->with('photos')->find($post);
+
     $post->title = $request->title;
     $post->desc  = $request->desc;
     $post->save();
@@ -64,7 +77,7 @@ class PostController extends Controller
 
   public function destroy($post)
   {
-    $post = Post::with('user')->find($post);
+    $post = Post::with('user')->with('photos')->find($post);
     $post->delete();
 
     return response()->json($post);
