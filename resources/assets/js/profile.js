@@ -54,6 +54,15 @@ Vue.mixin({
         id:           null,
         title:        '',
         desc:         '',
+
+        photos: {
+
+          data:       [],
+          uploading:  false,
+          loaded:     null
+
+        },
+
         errors: {
 
           title: {
@@ -67,6 +76,13 @@ Vue.mixin({
           desc: {
 
             dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          photos: {
+
             status:   false,
             text:     ''
 

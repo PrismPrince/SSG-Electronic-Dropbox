@@ -27,6 +27,15 @@ Vue.mixin({
         id:           null,
         title:        '',
         desc:         '',
+
+        photos: {
+
+          data:       [],
+          uploading:  false,
+          loaded:     null
+
+        },
+
         errors: {
 
           title: {
@@ -40,6 +49,13 @@ Vue.mixin({
           desc: {
 
             dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          photos: {
+
             status:   false,
             text:     ''
 
@@ -220,7 +236,57 @@ Vue.mixin({
 
       this.updateAct(id, data)
 
-    }
+    }, // submitAct
+
+    onFileChange(e) {
+
+      // this.post.errors.photos.dirty = true
+      var files = e.target.files || e.dataTransfer.files
+
+      if (files.length == 0) {
+        this.post.errors.photos.status = true
+        this.post.errors.photos.text = 'No image selected'
+
+      } else {
+        var vm = this
+
+        for (var i = 0; i < files.length; i++) {
+          if (['image/gif', 'image/jpeg', 'image/png'].indexOf(files[i]['type']) == -1) {
+            vm.post.errors.photos.status = true
+            vm.post.errors.photos.text = 'File is not an image'
+            console.log(files[i])
+
+          } else {
+            vm.post.errors.photos.status = false
+
+            var reader = new FileReader()
+
+            reader.onload = e => {
+
+              if (vm.post.photos.length < 15)
+                vm.post.photos.push(e.target.result)
+              else {
+                vm.post.errors.photos.status = true
+                vm.post.errors.photos.text = 'Maximum of 15 photos only'
+              }
+
+            }
+
+            reader.readAsDataURL(files[i])
+
+          }
+
+        }
+
+      }
+
+    }, // onFileChange
+
+    removePhoto(key) {
+
+      this.post.photos.splice(key, 1)
+
+    } // removePhoto
 
   } //methods
 

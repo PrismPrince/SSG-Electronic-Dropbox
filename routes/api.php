@@ -50,6 +50,7 @@ Route::get('/user/{user}/suggestion', 'ProfileController@getUserSuggestions');
 Route::post('/user/{user}/role', 'ProfileController@changeRole');
 
 Route::post('/image/user/upload', 'ImageController@uploadUserProfile');
+Route::post('/image/post/upload', 'ImageController@uploadPostPhotos');
 
 Route::get('/account/email', 'AccountController@getEmail');
 

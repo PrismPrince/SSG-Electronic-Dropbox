@@ -175,5 +175,8 @@
 @endsection
 
 @push('scripts')
+  @if (Auth::user()->role != 'student')
+    <script src="/js/cropper.min.js"></script>
+  @endif
   <script src="/js/home.js"></script>
 @endpush

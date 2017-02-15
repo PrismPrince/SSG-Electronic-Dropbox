@@ -42,6 +42,15 @@ Vue.mixin({
         id:           null,
         title:        '',
         desc:         '',
+
+        photos: {
+
+          data:       [],
+          uploading:  false,
+          loaded:     null
+
+        },
+
         errors: {
 
           title: {
@@ -55,6 +64,13 @@ Vue.mixin({
           desc: {
 
             dirty:    false,
+            status:   false,
+            text:     ''
+
+          },
+
+          photos: {
+
             status:   false,
             text:     ''
 
@@ -274,6 +290,7 @@ Vue.mixin({
 
       $(selector).on('hidden.bs.modal', function () {
         vm.clearPost()
+        vm.clearPostPhotos()
         vm.clearPoll()
         vm.clearSuggestion()
         vm.disableFieldset()
@@ -283,11 +300,20 @@ Vue.mixin({
 
     }, // hideModal
 
+    clearPostPhotos() {
+
+      this.post.photos.data = []
+      this.post.errors.photos.status = false
+      this.post.errors.photos.text = ''
+
+    }, // clearPostPhotos
+
     switchActivity(activity) {
 
       this.active = activity
 
       this.clearPost()
+      this.clearPostPhotos()
       this.clearPosts()
       this.clearPoll()
       this.clearPolls()
@@ -538,41 +564,114 @@ Vue.mixin({
 
     submitAct() {
 
-      this.disableFieldset()
+      var vm = this
 
-      if (this.active == 'post') {
-        var id = this.post.id
+      vm.disableFieldset()
 
-        var data    = {
-          title:    this.post.title,
-          desc:     this.post.desc
+      if (vm.active == 'post') {
+
+        if (vm.post.photos.data.length > 0) {
+
+          vm.post.photos.uploading = true
+
+          vm.$http
+            .post(window.location.origin + '/api/image/post/upload',
+            {
+              photos: vm.post.photos.data
+            },
+            {
+
+              progress(e) {
+
+                if (e.lengthComputable)
+                  vm.post.photos.loaded = (e.loaded / e.total) * 100
+
+              }
+
+            })
+
+            .then(response => {
+
+              vm.post.photos.uploading = false
+
+              var id = vm.post.id
+
+              var data    = {
+                title:    vm.post.title,
+                desc:     vm.post.desc,
+                photos:   response.data
+              }
+
+              vm.$nextTick(function () {
+                if (vm.action == 'Update')
+                  vm.updateAct(id, data)
+                else
+                  vm.storeAct(data)
+              })
+
+            })
+
+            .catch(response => {
+
+              vm.post.photos.uploading = false
+              vm.post.photos.loaded = null
+              vm.post.errors.photos.status = true
+              vm.post.errors.photos.text = response.statusText
+              vm.enableFieldset()
+
+              return false;
+
+            })
+
+        } else {
+
+          var id = vm.post.id
+
+          var data    = {
+            title:    vm.post.title,
+            desc:     vm.post.desc,
+            photos:   []
+          }
+
+          if (vm.action == 'Update')
+            vm.updateAct(id, data)
+          else
+            vm.storeAct(data)
+
         }
 
-      } else if (this.active == 'poll') {
-        var id = this.poll.id
+      } else if (vm.active == 'poll') {
+        var id = vm.poll.id
 
         var data    = {
-          title:    this.poll.title,
-          desc:     this.poll.desc,
-          start:    this.poll.start,
-          end:      this.poll.end,
-          type:     this.poll.type,
-          answers:  this.poll.answers
+          title:    vm.poll.title,
+          desc:     vm.poll.desc,
+          start:    vm.poll.start,
+          end:      vm.poll.end,
+          type:     vm.poll.type,
+          answers:  vm.poll.answers
         }
 
-      } else if (this.active == 'suggestion') {
-        var id = this.suggestion.id
+        if (vm.action == 'Update')
+          vm.updateAct(id, data)
+        else
+          vm.storeAct(data)
+
+      } else if (vm.active == 'suggestion') {
+        var id = vm.suggestion.id
 
         var data    = {
-          title:    this.suggestion.title,
-          direct:   this.suggestion.direct,
-          message:  this.suggestion.message
+          title:    vm.suggestion.title,
+          direct:   vm.suggestion.direct,
+          message:  vm.suggestion.message
         }
+
+        if (vm.action == 'Update')
+          vm.updateAct(id, data)
+        else
+          vm.storeAct(data)
 
       }
-
-      if (this.action == 'Update')  this.updateAct(id, data)
-      else                          this.storeAct(data)
 
     }, // submitAct
 
@@ -596,7 +695,55 @@ Vue.mixin({
 
       this.poll.answers.splice(key, 1)
 
-    } // removeAnswer
+    }, // removeAnswer
+
+    onFileChange(e) {
+
+      var files = e.target.files || e.dataTransfer.files
+
+      if (files.length == 0) {
+        this.post.errors.photos.status = true
+        this.post.errors.photos.text = 'No image selected'
+
+      } else {
+        var vm = this
+
+        for (var i = 0; i < files.length; i++) {
+          if (['image/gif', 'image/jpeg', 'image/png'].indexOf(files[i]['type']) == -1) {
+            vm.post.errors.photos.status = true
+            vm.post.errors.photos.text = 'File is not an image'
+
+          } else {
+            vm.post.errors.photos.status = false
+
+            var reader = new FileReader()
+
+            reader.onload = e => {
+
+              if (vm.post.photos.data.length < 15)
+                vm.post.photos.data.push(e.target.result)
+              else {
+                vm.post.errors.photos.status = true
+                vm.post.errors.photos.text = 'Maximum of 15 photos only'
+              }
+
+            } // e
+
+            reader.readAsDataURL(files[i])
+
+          } // else
+
+        } // for
+
+      } // else
+
+    }, // onFileChange
+
+    removePhoto(key) {
+
+      this.post.photos.data.splice(key, 1)
+
+    } // removePhoto
 
   } //methods
 
