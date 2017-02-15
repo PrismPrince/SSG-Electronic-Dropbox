@@ -2,7 +2,7 @@
   <div class="panel list-item panel-default">
     <div class="panel-heading" role="tab" :id="'post-heading-' + postAct.id">
       <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-post" :data-target="'#post-collapse-' + postAct.id" @click.prevent :href="postUrl" aria-expanded="true" :aria-controls="'post-collapse-' + postAct.id">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion-post" :data-target="'#post-collapse-' + postAct.id" @click.prevent :href="baseUrl + '/post/' + postAct.id" aria-expanded="true" :aria-controls="'post-collapse-' + postAct.id">
           {{postAct.title}}
         </a>
       </h4>
@@ -13,13 +13,13 @@
         <div class="media">
 
           <div class="media-left">
-            <a :href="userUrl">
-              <img class="media-object" :src="image" :alt="fullname">
+            <a :href="baseUrl + '/profile/' + postAct.user.id">
+              <img class="media-object" :src="baseUrl + '/image/user/' + postAct.user.id + '?wh=64'" :alt="fullname">
             </a>
           </div>
 
           <div class="media-body">
-            <h4 class="media-heading"><a :href="userUrl">{{fullname}}</a></h4>
+            <h4 class="media-heading"><a :href="baseUrl + '/profile/' + postAct.user.id">{{fullname}}</a></h4>
             {{date}}
           </div>
 
@@ -29,6 +29,12 @@
 
         </div> <!-- .media -->
       </div> <!-- .panel-body -->
+
+      <div v-if="postAct.photos.length > 0" class="post-photos">
+        <a v-for="photo in postAct.photos" href="#" :style="'background-image: url(\'' + baseUrl + '/image/post/' + photo.name +'\')'">
+        </a>
+      </div> <!-- .post-photos -->
+
     </div> <!-- .panel-collapse -->
 
   </div> <!-- .panel -->
@@ -55,21 +61,9 @@
 
       },
 
-      image() {
+      baseUrl() {
 
-        return window.location.origin + '/image/user/' + this.postAct.user.id + '?wh=64'
-
-      },
-
-      userUrl() {
-
-        return window.location.origin + '/profile/' + this.postAct.user.id
-
-      },
-
-      postUrl() {
-
-        return window.location.origin + '/post/' + this.postAct.id
+        return window.location.origin
 
       },
 

@@ -78,6 +78,7 @@ class PostController extends Controller
   public function destroy($post)
   {
     $post = Post::with('user')->with('photos')->find($post);
+    $post->photos()->delete();
     $post->delete();
 
     return response()->json($post);

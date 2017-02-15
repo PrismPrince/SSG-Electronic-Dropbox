@@ -52,3 +52,4 @@ Route::get('/poll/{poll}', 'PollController@show');
 Route::get('/suggestion/{suggestion}', 'SuggestionController@show');
 
 Route::get('/image/user/{user}', 'ImageController@userProfile');
+Route::get('/image/post/{image}', 'ImageController@postImage');

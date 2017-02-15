@@ -524,3 +524,24 @@
     }
   }
 }
+
+.post-photos {
+  display: flex;
+  height: 100px;
+
+  a {
+    border: 1px solid $laravel-border-color;
+    display: inline-flex;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
+    width: 110%;
+
+    &:hover {
+      height: 130px;
+      margin: -15px -5% 0 -5%;
+      z-index: 0;
+    }
+  }
+}
