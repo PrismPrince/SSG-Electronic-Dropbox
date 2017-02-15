@@ -15,7 +15,7 @@ class Photo extends Model
 
   protected $dates = ['deleted_at'];
 
-	public function post()
+    public function post()
   {
     return $this->belongsTo(Post::class);
   }

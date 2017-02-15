@@ -31,7 +31,6 @@ class ImageController extends Controller
   {
     if (file_exists(storage_path('app/public/images/posts/' . $image)))
       return Image::make(storage_path('app/public/images/posts/' . $image))->response();
-
     return false;
   }
 
@@ -48,8 +47,8 @@ class ImageController extends Controller
 
     foreach ($request->photos as $photo) {
       $imageName = time() . '-' . mt_rand(1000000000, mt_getrandmax()) . '-' . mt_rand(1000000000, mt_getrandmax());
-      $images[] = $imageName;
-      $image = Image::make($photo)->save(storage_path('app/public/images/posts/' . $imageName));
+      $images[]  = $imageName;
+      $image     = Image::make($photo)->save(storage_path('app/public/images/posts/' . $imageName));
     }
 
     return response()->json($images);
