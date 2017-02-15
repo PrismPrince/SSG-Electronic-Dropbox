@@ -532,6 +532,7 @@
   a {
     border: 1px solid $laravel-border-color;
     display: inline-flex;
+    background-color: $body-bg;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
