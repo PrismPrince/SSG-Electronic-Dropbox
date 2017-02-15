@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
   public function getUserPosts(Request $request, $user)
   {
-    return User::findOrFail($user)->posts()->with('user')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get();
+    return User::findOrFail($user)->posts()->with('user')->with('photos')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get();
   }
 
   public function getUserPolls(Request $request, $user)

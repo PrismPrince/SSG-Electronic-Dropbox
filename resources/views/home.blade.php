@@ -2,6 +2,8 @@
 
 @section('content')
 
+@include('partials.modals._post-photos-modal')
+
 @if (Auth::user()->role != 'student')
 
   @include('partials.modals._post-modal')
@@ -27,6 +29,7 @@
             v-for="post in posts"
             :key="post.id"
             :post-act="post"
+            v-on:show-carousel-modal="showPostPhotosModal"
           >
             <div v-if="post.user.id == user.id" slot="dropdown-menu" class="media-right">
               <div class="dropdown pull-right">

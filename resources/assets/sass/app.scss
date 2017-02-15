@@ -546,3 +546,46 @@
     }
   }
 }
+
+#post-photos-modal {
+
+  .modal-content {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .modal-header {
+    border: none;
+  }
+
+  .close {
+    color: #fff;
+    opacity: 1;
+  }
+
+  .carousel {
+    min-height: 300px;
+  }
+
+  .carousel-inner > .item {
+    min-height: 300px;
+    text-align: center;
+
+    > span {
+      display: inline-block;
+      vertical-align: middle;
+      min-height: 300px;
+    }
+
+    > img {
+      display: inline-block;
+    }
+  }
+
+  .carousel-indicators li {
+    background-color: $body-bg;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}

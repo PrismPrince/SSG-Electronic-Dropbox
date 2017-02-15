@@ -23,7 +23,7 @@
     </div> <!-- .panel-body -->
 
     <div v-if="postAct.photos.length > 0" class="post-photos">
-      <a v-for="photo in postAct.photos" href="#" :style="'background-image: url(\'' + baseUrl + '/image/post/' + photo.name +'\')'">
+      <a v-for="photo in postAct.photos" href="baseUrl + '/post/' + postAct.id + '/image/' + photo.name" :style="'background-image: url(\'' + baseUrl + '/image/post/' + photo.name +'\')'" @click.prevent="$emit('show-carousel-modal', postAct.photos, photo)">
       </a>
     </div> <!-- .post-photos -->
 
@@ -111,7 +111,7 @@
 
       }
 
-    }
+    } // computed
 
   }
 </script>

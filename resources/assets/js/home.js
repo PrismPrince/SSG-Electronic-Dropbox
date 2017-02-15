@@ -17,6 +17,8 @@ require('./mixins/helpers/_clear-polls')
 require('./mixins/helpers/_clear-suggestion')
 require('./mixins/helpers/_clear-suggestions')
 
+require('./mixins/helpers/_post-photos')
+
 Vue.mixin({
 
   data() {

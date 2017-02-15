@@ -10,6 +10,8 @@ require('./mixins/validators/_post-validator')
 require('./mixins/helpers/_focus')
 require('./mixins/helpers/_clear-post')
 
+require('./mixins/helpers/_post-photos')
+
 Vue.mixin({
 
   data() {

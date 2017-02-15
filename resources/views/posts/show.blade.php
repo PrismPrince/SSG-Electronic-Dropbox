@@ -2,6 +2,7 @@
 
 @section('content')
 
+@include('partials.modals._post-photos-modal')
 @include('partials.modals._post-modal')
 @include('partials.modals._confirm-post-modal')
 
@@ -13,6 +14,7 @@
       <panel-post
         v-else
         :post-act="post.object"
+        v-on:show-carousel-modal="showPostPhotosModal"
       >
         <div v-if="post.object.user.id == user.id" slot="dropdown-menu" class="media-right">
           <div class="dropdown pull-right">

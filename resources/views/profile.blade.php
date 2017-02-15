@@ -4,15 +4,26 @@
 
 @if ($profile->role != 'student')
 
-  @include('partials.modals._post-modal')
-  @include('partials.modals._confirm-post-modal')
-  @include('partials.modals._poll-modal')
-  @include('partials.modals._confirm-poll-modal')
+  @include('partials.modals._post-photos-modal')
+
+  @if ($profile->id == Auth::id())
+
+    @include('partials.modals._post-modal')
+    @include('partials.modals._confirm-post-modal')
+    @include('partials.modals._poll-modal')
+    @include('partials.modals._post-photos-modal')
+    @include('partials.modals._confirm-poll-modal')
+
+  @endif
 
 @else
 
-  @include('partials.modals._suggestion-modal')
-  @include('partials.modals._confirm-suggestion-modal')
+  @if ($profile->id == Auth::id())
+
+    @include('partials.modals._suggestion-modal')
+    @include('partials.modals._confirm-suggestion-modal')
+
+  @endif
 
 @endif
 
@@ -87,6 +98,7 @@
               v-for="post in posts"
               :key="post.id"
               :post-act="post"
+              v-on:show-carousel-modal="showPostPhotosModal"
             >
               <div v-if="post.user.id == user.id" slot="dropdown-menu" class="media-right">
                 <div class="dropdown pull-right">
