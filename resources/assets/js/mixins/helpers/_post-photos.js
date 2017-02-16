@@ -5,6 +5,7 @@ Vue.mixin({
     return {
 
       carousel: {
+        title: '',
         photos: [],
         photo: null
       }
@@ -15,9 +16,10 @@ Vue.mixin({
 
   methods: {
 
-    showPostPhotosModal(photos, photo) {
+    showPostPhotosModal(title, photos, photo) {
 
 
+      this.carousel.title = title
       this.carousel.photos = photos
       this.carousel.photo = photo
 

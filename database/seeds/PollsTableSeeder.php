@@ -35,9 +35,8 @@ class PollsTableSeeder extends Seeder
       'user_id' => 1000000,
       'title'   => 'This Poll is Pending',
       'desc'    => 'Sorry, you have to wait for a long time.
-
-      #forever
-      hehehe',
+#forever
+hehehe',
       'start'      => '2020-01-01 00:00:00',
       'end'        => '2020-12-31 23:59:59',
       'type'       => 'multi',

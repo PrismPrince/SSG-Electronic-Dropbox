@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" @click="hidePostPhotosModal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">@{{carousel.title}}</h4>
       </div>
       <div id="carousel-post-photos" class="carousel" data-ride="carousel">
         <!-- Indicators -->

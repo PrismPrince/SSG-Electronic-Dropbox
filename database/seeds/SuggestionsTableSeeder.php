@@ -26,7 +26,7 @@ class SuggestionsTableSeeder extends Seeder
       'title'   => 'Trashbins Everywhere',
       'direct'  => 'SSG Officers',
       'message' => 'Please add more trashbins in the campus to minimize littering.
-      #TrashbinsEverywhere',
+#TrashbinsEverywhere',
       'created_at' => date('Y-m-d H:i:s', time()),
       'updated_at' => date('Y-m-d H:i:s', time()),
     ]);
