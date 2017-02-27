@@ -119,5 +119,5 @@
 @endsection
 
 @push('scripts')
-  <script src="/js/account-name.js"></script>
+  <script src="{{ asset('/js/account-name.js') }}"></script>
 @endpush

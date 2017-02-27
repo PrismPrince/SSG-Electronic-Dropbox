@@ -31,7 +31,7 @@
       </div> <!-- .panel-body -->
 
       <div v-if="postAct.photos.length > 0" class="post-photos">
-        <a v-for="photo in postAct.photos" href="baseUrl + '/post/' + postAct.id + '/image/' + photo.name" :style="'background-image: url(\'' + baseUrl + '/image/post/' + photo.name +'\')'" @click.prevent="$emit('show-carousel-modal', postAct.title, postAct.photos, photo)">
+        <a v-for="photo in postAct.photos" :href="baseUrl + '/post/' + postAct.id + '/image/' + photo.name" :style="'background-image: url(\'' + baseUrl + '/image/post/' + photo.name +'\')'" @click.prevent="$emit('show-carousel-modal', postAct.title, postAct.photos, photo)">
         </a>
       </div> <!-- .post-photos -->
 

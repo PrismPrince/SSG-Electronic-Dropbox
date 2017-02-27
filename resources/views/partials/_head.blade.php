@@ -12,7 +12,8 @@
   <title>{{ config('app.name', 'Laravel') }}</title>
 
   <!-- Styles -->
-  <link href="/css/app.css" rel="stylesheet">
+  <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
   @stack('styles')
 
   <!-- Scripts -->

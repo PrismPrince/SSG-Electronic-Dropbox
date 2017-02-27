@@ -12,7 +12,7 @@
 
       <!-- Branding Image -->
       <a class="navbar-brand" href="{{ url('/') }}">
-        <img src="{{ url('/images/tomorrows_council_v1.png') }}" alt="Republic of the Philippines">
+        <img src="{{ asset('/images/tomorrows_council_v1.png') }}" alt="Republic of the Philippines">
       </a>
     </div>
 

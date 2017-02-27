@@ -35,5 +35,5 @@
 @endsection
 
 @push('scripts')
-  <script src="/js/suggestion.js"></script>
+  <script src="{{ asset('/js/suggestion.js') }}"></script>
 @endpush

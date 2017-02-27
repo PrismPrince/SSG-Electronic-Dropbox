@@ -93,5 +93,5 @@
 @endsection
 
 @push('scripts')
-  <script src="/js/admin-code.js"></script>
+  <script src="{{ asset('/js/admin-code.js') }}"></script>
 @endpush

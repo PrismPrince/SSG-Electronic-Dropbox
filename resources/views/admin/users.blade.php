@@ -135,5 +135,5 @@
 @endsection
 
 @push('scripts')
-  <script src="/js/admin-users.js"></script>
+  <script src="{{ asset('/js/admin-users.js') }}"></script>
 @endpush

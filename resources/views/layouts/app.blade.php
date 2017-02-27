@@ -8,8 +8,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="/js/bootstrap.js"></script>
+  <script src="{{ asset('/js/bootstrap.js') }}"></script>
   @stack('scripts')
-  <script src="/js/app.js"></script>
+  <script src="{{ asset('/js/app.js') }}"></script>
 </body>
 </html>

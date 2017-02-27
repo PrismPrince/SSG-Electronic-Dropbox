@@ -35,5 +35,5 @@
 @endsection
 
 @push('scripts')
-  <script src="/js/poll.js"></script>
+  <script src="{{ asset('/js/poll.js') }}"></script>
 @endpush
