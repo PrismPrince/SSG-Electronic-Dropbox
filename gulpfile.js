@@ -15,6 +15,7 @@ require('laravel-elixir-vue-2');
 
 elixir((mix) => {
   mix.sass('app.scss')
+    .sass('welcome.scss')
     .webpack('bootstrap.js')
     .webpack('login.js')
     .webpack('register.js')
@@ -31,6 +32,7 @@ elixir((mix) => {
     .webpack('poll.js')
     .webpack('suggestion.js')
     .webpack('app.js')
+    .webpack('welcome.js')
     .copy('node_modules/bootstrap-sass/assets/fonts/', 'public/fonts/')
     .copy('node_modules/cropper/dist/cropper.min.js', 'public/js/cropper.min.js')
     .copy('node_modules/cropper/dist/cropper.min.css', 'public/css/cropper.min.css')
