@@ -188,42 +188,24 @@
 
       <div class="affix profile" data-offset-top="202" data-spy="affix">
 
-        <div class="nav-aside list-group">
+        <ul class="nav nav-pills nav-stacked">
 
           @if ($profile->role != 'student')
 
-            <button
-              class="list-group-item"
-              v-if="active != 'post'"
-              :class="{disabled: full == 'loading'}"
-              :disabled="full == 'loading'"
-              @click="switchActivity('post')"
-            >Posts</button>
-            <button class="list-group-item active disabled" v-else disabled>Posts</button>
+            <li role="presentation" v-if="active != 'post'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('post')">Posts</a></li>
+            <li role="presentation" v-else class="active"><a href="#" @click.prevent>Posts</a></li>
 
-            <button
-              class="list-group-item"
-              v-if="active != 'poll'"
-              :class="{disabled: full == 'loading'}"
-              :disabled="full == 'loading'"
-              @click="switchActivity('poll')"
-            >Polls</button>
-            <button class="list-group-item active disabled" v-else disabled>Polls</button>
+            <li role="presentation" v-if="active != 'poll'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('poll')">Polls</a></li>
+            <li role="presentation" v-else class="active"><a href="#" @click.prevent>Polls</a></li>
 
           @else
 
-            <button
-              class="list-group-item"
-              v-if="active != 'suggestion'"
-              :class="{disabled: full == 'loading'}"
-              :disabled="full == 'loading'"
-              @click="switchActivity('suggestion')"
-            >Suggestions</button>
-            <button class="list-group-item active disabled" v-else disabled>Suggestions</button>
+            <li role="presentation" v-if="active != 'suggestion'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('suggestion')">Suggestions</a></li>
+            <li role="presentation" v-else class="active"><a href="#" @click.prevent>Suggestions</a></li>
 
           @endif
 
-        </div> {{-- .nav-aside --}}
+        </ul>
 
       </div> {{-- .affix --}}
 
