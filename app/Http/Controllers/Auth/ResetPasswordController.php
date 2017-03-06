@@ -41,7 +41,10 @@ class ResetPasswordController extends Controller
     public function changePassword(Request $request)
     {
         if (Hash::check($request->oldPassword, $request->user()->password)) {
-            $this->validate($request, $this->rules(), $this->validationErrorMessages());
+            $this->validate($request, [
+                'oldPassword' => 'required',
+                'newPassword' => 'required|confirmed|min:6',
+            ], $this->validationErrorMessages());
 
             $request->user()->fill([
                 'password' => Hash::make($request->newPassword),
@@ -51,13 +54,5 @@ class ResetPasswordController extends Controller
         }
 
             return redirect()->back()->withErrors(['oldPassword' => ['Your password is incorrect']]);
-    }
-
-    protected function rules()
-    {
-        return [
-            'oldPassword' => 'required',
-            'newPassword' => 'required|confirmed|min:6',
-        ];
     }
 }
