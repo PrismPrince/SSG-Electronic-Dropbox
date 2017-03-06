@@ -1,6 +1,6 @@
-# SSG Electronic Dropbox System
+# SSG Electronic Dropbox
 
-[Cebu Technological University - Main Campus](http://http://www.ctu.edu.ph): Supreme Student Government Electronic Dropbox System
+[Cebu Technological University - Main Campus](http://http://www.ctu.edu.ph): Supreme Student Government Electronic Dropbox
 
 [![StyleCI](https://styleci.io/repos/76892434/shield?branch=master)](https://styleci.io/repos/76892434)
 
@@ -26,7 +26,7 @@ They can post information or announcements, create polls and read suggestions.
 
 #### Administrators
 
-They can generate codes for new users to register, avtivate or deactivate users, change the role of the user and they can also do  the moderators' functions.
+They can generate codes for new users to register, activate or deactivate users, change the role of the user and they can also do  the moderators' functions.
 
 ## Deployment
 
@@ -43,9 +43,9 @@ Please contact Dave on [Faceboook](https://www.facebook.com/prismprince.xx) for 
 ## Authors
 
 * **[Dave Dane Pacilan](https:://www.facebook.com/prismprince.xx)** - *Initial work* - [PrismPrince](https://github.com/PrismPrince)
-* **[Chiarra Sebial](https:://www.facebook.com/chiarra.sebial)**
-* **[Rachel Anne Quiamco](https:://www.facebook.com/quiamco123)**
-* **[Maria Divina Alegre](https:://www.facebook.com/Iya.Alegre08)**
+* **[Chiarra Sebial](https://www.facebook.com/chiarra.sebial)**
+* **[Rachel Anne Quiamco](https://www.facebook.com/quiamco123)**
+* **[Maria Divina Alegre](https://www.facebook.com/Iya.Alegre08)**
 
 ## License
 
