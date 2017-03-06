@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App\User;
 use Illuminate\Http\Request;
 use App\UserRegistrationRequest;
