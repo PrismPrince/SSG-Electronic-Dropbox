@@ -54,7 +54,7 @@
           </tbody>
         </table>
 
-        <div v-if="!full" class="full-option text-center"><a href="#" @click.prevent="getAct">Load more...</a></div>
+        <div v-if="!full" class="full-option text-center"><a href="#" @click.prevent="getUsers">Load more...</a></div>
         <div v-else-if="full == 'loading'" class="full-option"><div class="loading-circle"></div><span class="sr-only">loading...</span></div>
         <div v-else-if="full" class="full-option text-center"><span class="full"></span><span class="sr-only">No more user registration request codes</span></div>
 

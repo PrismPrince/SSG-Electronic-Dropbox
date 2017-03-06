@@ -26,11 +26,7 @@ Vue.mixin({
       },
 
       // search
-      student_id: null,
-      name: null,
-      email: null,
-      role: null,
-      status: null
+      student_id: '',
 
     }
 
@@ -141,11 +137,7 @@ Vue.mixin({
 
     clearUserSearch() {
 
-      this.student_id = null
-      this.name = null
-      this.email = null
-      this.role = null
-      this.status = null
+      this.student_id = ''
 
     },
 
@@ -157,24 +149,6 @@ Vue.mixin({
       this.full = false
 
       this.getUsers()
-
-    },
-
-    toggleStatus(id, status) {
-
-      this.$http
-        .post(window.location.origin + '/api/admin/user/status', {id: id, status: status})
-
-        .then(response => {
-
-          var i = _.indexOf(this.users, _.find(this.users, {id: response.data.id}))
-
-          this.users.splice(i, 1, response.data)
-
-        })
-        .catch(response => {
-          console.error(response)
-        })
 
     }
 

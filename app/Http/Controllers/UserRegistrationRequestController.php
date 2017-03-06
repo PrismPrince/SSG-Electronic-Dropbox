@@ -13,26 +13,14 @@ class UserRegistrationRequestController extends Controller
     $this->middleware('admin');
   }
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
   public function index(Request $request)
   {
-    // return $request->key;
-    if ($request->key != 'null')
-      return response()->json(UserRegistrationRequest::where('id', 'LIKE', '%' . $request->key . '%')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get());
-      return response()->json(UserRegistrationRequest::offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get());
+    if (isset($request->key))
+      return response()->json(UserRegistrationRequest::where('id', 'LIKE', '%' . $request->key . '%')->offset($request->skip)->limit($request->take)->orderBy('id')->get());
+    else
+      return response()->json(UserRegistrationRequest::offset($request->skip)->limit($request->take)->orderBy('id')->get());
   }
 
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @param \Illuminate\Http\Request $request
-   *
-   * @return \Illuminate\Http\Response
-   */
   public function store(Request $request)
   {
     $this->validate($request, [

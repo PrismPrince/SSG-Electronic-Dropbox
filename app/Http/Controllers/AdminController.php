@@ -28,7 +28,7 @@ class AdminController extends Controller
 
   public function getUsers(Request $request)
   {
-    $users = User::where(DB::raw(1), 1);
+    $users = User::offset($request->skip)->limit($request->take);
 
     if ($request->student_id)
       $users->where('id', 'LIKE', '%' . $request->student_id . '%');
