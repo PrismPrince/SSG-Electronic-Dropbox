@@ -16,9 +16,9 @@ class UserRegistrationRequestController extends Controller
   public function index(Request $request)
   {
     if (isset($request->key))
-      return response()->json(UserRegistrationRequest::where('id', 'LIKE', '%' . $request->key . '%')->offset($request->skip)->limit($request->take)->orderBy('id')->get());
+      return response()->json(UserRegistrationRequest::where('id', 'LIKE', '%' . $request->key . '%')->offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get());
     else
-      return response()->json(UserRegistrationRequest::offset($request->skip)->limit($request->take)->orderBy('id')->get());
+      return response()->json(UserRegistrationRequest::offset($request->skip)->limit($request->take)->orderBy('created_at', 'desc')->get());
   }
 
   public function store(Request $request)
