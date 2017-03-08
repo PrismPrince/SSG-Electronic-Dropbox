@@ -35,7 +35,7 @@ elixir((mix) => {
     .webpack('suggestion.js')
     .webpack('app.js')
     .webpack('welcome.js')
-    .copy('init-map', 'public/js/init-map.js')
+    .copy('resources/assets/js/init.js', 'public/js/init.js')
     .copy('node_modules/bootstrap-sass/assets/fonts/', 'public/fonts/')
     .copy('node_modules/cropper/dist/cropper.min.js', 'public/js/cropper.min.js')
     .copy('node_modules/cropper/dist/cropper.min.css', 'public/css/cropper.min.css')

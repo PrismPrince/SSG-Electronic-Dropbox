@@ -11,6 +11,8 @@
 
   </head>
   <body>
+    <div id="fb-root"></div>
+
     <nav id="nav" class="navbar navbar-fixed-top affix-top" data-spy="affix" data-offset-top="70">
       <noscript>
         <p class="noscript text-center">Javascript is disabled in your browser</p>
@@ -130,45 +132,56 @@
         <div class="row">
           <div class="col-sm-3 hidden-xs">
             <img class="img-responsive" src="{{ asset('/images/ssg_logo.png') }}">
-          </div> {{-- .col-sm-3 --}}
-          <div class="col-sm-9">
-            <h1 class="text-center">About</h1>
-            <p><a target="_blank" href="https://www.facebook.com/CTUMCSSG">Tomorrow's Council</a> is the official Facebook page of the Supreme Student Government of Cebu Technological University - Main Campus.</p>
-            <p>The highest governing student body in <a target="_blank" href="http://www.ctu.edu.ph">Cebu Technological University - Main Campus</a>.</p>
-          </div> {{-- .col-sm-9 --}}
-        </div> {{-- .row --}}
-
-        <div class="row">
-          <div class="col-sm-3 hidden-xs">
             <a target="_blank" href="http://www.ctu.edu.ph/transparency-seal/" style="display: block;padding: 0 20px;">
               <img class="img-responsive" src="{{ asset('/images/school/pts.png') }}" alt="Philippine Transparency Seal">
             </a>
           </div> {{-- .col-sm-3 --}}
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12">
+                <h1 class="text-center">About</h1>
+                <p><a target="_blank" href="https://www.facebook.com/CTUMCSSG">Tomorrow's Council</a> is the official Facebook page of the Supreme Student Government of Cebu Technological University - Main Campus.</p>
+                <p>The highest governing student body in <a target="_blank" href="http://www.ctu.edu.ph">Cebu Technological University - Main Campus</a>.</p>
+              </div> {{-- .col-sm-12 --}}
+            </div> {{-- .row --}}
 
-          <div class="col-sm-3">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Employee Portal</h3>
-              </div> {{-- .panel-heading --}}
-              <div class="panel-body">
-                <a target="_blank" href="http://www.ctu.edu.ph/employee-portal/">
-                  <img class="img-responsive" src="{{ asset('/images/school/employee-portal.png') }}" alt="Employee Portal">
-                </a>
-              </div> {{-- .panel-body --}}
-            </div> {{-- .panel --}}
-          </div> {{-- .col-sm-3 --}}
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Employee Portal</h3>
+                  </div> {{-- .panel-heading --}}
+                  <div class="panel-body">
+                    <a target="_blank" href="http://www.ctu.edu.ph/employee-portal/">
+                      <img class="img-responsive" src="{{ asset('/images/school/employee-portal.png') }}" alt="Employee Portal">
+                    </a>
+                  </div> {{-- .panel-body --}}
+                </div> {{-- .panel --}}
+              </div> {{-- .col-sm-6 --}}
 
-          <div class="col-sm-3">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Student Portal</h3>
-              </div> {{-- .panel-heading --}}
-              <div class="panel-body">
-                <a target="_blank" href="http://www.ctu.edu.ph/studentwebapp/">
-                  <img class="img-responsive" src="{{ asset('/images/school/student-portal.png') }}" alt="Student Portal">
-                </a>
-              </div> {{-- .panel-body --}}
-            </div> {{-- .panel --}}
+              <div class="col-sm-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Student Portal</h3>
+                  </div> {{-- .panel-heading --}}
+                  <div class="panel-body">
+                    <a target="_blank" href="http://www.ctu.edu.ph/studentwebapp/">
+                      <img class="img-responsive" src="{{ asset('/images/school/student-portal.png') }}" alt="Student Portal">
+                    </a>
+                  </div> {{-- .panel-body --}}
+                </div> {{-- .panel --}}
+              </div> {{-- .col-sm-6 --}}
+            </div> {{-- .row --}}
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="fb-like" data-href="https://web.facebook.com/CTUMCSSG/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+              </div>
+            </div> {{-- .row --}}
+          </div> {{-- .col-sm-6 --}}
+
+          <div class="col-sm-3" style="padding-top: 15px;">
+            <div class="fb-page" data-href="https://www.facebook.com/CTUMCSSG" data-tabs="timeline,events,messages" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/CTUMCSSG" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/CTUMCSSG">Tomorrow&#039;s Council</a></blockquote></div>
           </div> {{-- .col-sm-3 --}}
         </div> {{-- .row --}}
       </div> {{-- .container --}}
@@ -183,11 +196,12 @@
             </div> {{-- .col-sm-12 --}}
           </div> {{-- .row --}}
           <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-3 hidden-xs">
               <div class="panel panel-default">
                 <div class="panel-body">
                   <address>
-                    <strong>Cebu Technological University - Main Campus</strong><br>
+                    <strong>G/F Admin Bldg.<br>
+                    Cebu Technological University - Main Campus</strong><br>
                     Corner M.J. Cuenco Ave. &amp; R. Palma St.,<br>
                     Cebu City, Philippines, 6000
                   </address>
@@ -283,6 +297,7 @@
             </address>
             <address>
               <strong>E-mail Address</strong><br>
+              <a href="mailto:tomorrowscouncil2016@gmail.com">tomorrowscouncil2016@gmail.com</a>
               <a href="mailto:information@ctu.edu.ph">information@ctu.edu.ph</a>
             </address>
             <address>
@@ -387,7 +402,7 @@
     </footer>
 
     <script src="{{ asset('/js/welcome.js') }}"></script>
-    <script src="{{ asset('/js/init-map.js') }}"></script>
+    <script src="{{ asset('/js/init.js') }}"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initMap"></script>
   </body>
 </html>

@@ -11,9 +11,6 @@ $("#app-navbar-collapse a").on('click', function(e) {
     $('html, body').animate({
       scrollTop: $(hash).offset().top
     },
-    800,
-    function() {
-      window.location.hash = hash;
-    })
+    800)
   }
 })
