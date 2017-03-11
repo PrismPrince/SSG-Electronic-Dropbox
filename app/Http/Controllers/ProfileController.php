@@ -12,6 +12,7 @@ class ProfileController extends Controller
   {
     $this->middleware('auth:api', ['except' => ['showProfile']]);
     $this->middleware('auth', ['only' => ['showProfile']]);
+    $this->middleware('profile', ['only' => ['showProfile']]);
   }
 
   public function showProfile($user)
