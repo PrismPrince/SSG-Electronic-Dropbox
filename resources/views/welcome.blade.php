@@ -149,19 +149,6 @@
               <div class="col-sm-6">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3 class="panel-title">Employee Portal</h3>
-                  </div> {{-- .panel-heading --}}
-                  <div class="panel-body">
-                    <a target="_blank" href="http://www.ctu.edu.ph/employee-portal/">
-                      <img class="img-responsive" src="{{ asset('/images/school/employee-portal.png') }}" alt="Employee Portal">
-                    </a>
-                  </div> {{-- .panel-body --}}
-                </div> {{-- .panel --}}
-              </div> {{-- .col-sm-6 --}}
-
-              <div class="col-sm-6">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
                     <h3 class="panel-title">Student Portal</h3>
                   </div> {{-- .panel-heading --}}
                   <div class="panel-body">
