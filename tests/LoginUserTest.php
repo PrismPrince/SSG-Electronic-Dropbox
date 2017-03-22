@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class LoginUserTest extends TestCase
 {
@@ -13,7 +11,7 @@ class LoginUserTest extends TestCase
    */
   public function testLoginUser()
   {
-    $this->artisan("db:Seed");
+    $this->artisan('db:Seed');
 
     $this->visit('/register')
          ->type('administrator@gmail.com', 'email')
