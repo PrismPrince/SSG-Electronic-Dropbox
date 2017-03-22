@@ -1,4 +1,3 @@
-
 // Fonts
 // @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
@@ -8,6 +7,15 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/bootstrap-datetimepicker-sass/src/sass/bootstrap-datetimepicker";
+@import "node_modules/cropper/dist/cropper.css";
+
+/*!!
+ * ===================================================================================================
+ * SSG Electronic Dropbox (https://www.github.com/PrismPrince/SSG-Electronic-Dropbox)
+ * Copyright 2017 Dave Dane Pacilan
+ * Licensed under MIT (https://github.com/PrismPrince/SSG-Electronic-Dropbox/blob/master/LICENSE)
+ * ===================================================================================================
+ */
 
 [v-cloak] {
   display: none;

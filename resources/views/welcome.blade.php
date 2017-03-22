@@ -1,13 +1,24 @@
+<!--
+ | ===================================================================================================
+ | SSG Electronic Dropbox (https://www.github.com/PrismPrince/SSG-Electronic-Dropbox)
+ | Copyright 2017 Dave Dane Pacilan
+ | Licensed under MIT (https://github.com/PrismPrince/SSG-Electronic-Dropbox/blob/master/LICENSE)
+ | ===================================================================================================
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="SSG Electronic Dropbox">
+    <meta name="author" content="Dave Dane Pacilan">
+    <meta name="description" content="Cebu Technological University - Main Campus: Supreme Student Government Electronic Dropbox">
+    <meta name="keywords" content="Cebu Technological University, CTU, Supreme Student Government, SSG, post, poll, suggestion">
 
     <title>SSG Electronic Dropbox System</title>
 
-    <link href="{{ asset('/css/welcome.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.min.css') }}" rel="stylesheet">
 
   </head>
   <body>
@@ -388,7 +399,8 @@
       </div> {{-- .container --}}
     </footer>
 
-    <script src="{{ asset('/js/welcome.js') }}"></script>
+    <script src="{{ asset('/js/onload.js') }}"></script>
+    <script src="{{ asset('/js/welcome.min.js') }}"></script>
     <script src="{{ asset('/js/init.js') }}"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initMap"></script>
   </body>

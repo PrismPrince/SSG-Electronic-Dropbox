@@ -75,5 +75,5 @@
 @endsection
 
 @push('scripts')
-  <script src="{{ asset('/js/account-email.js') }}"></script>
+  <script src="{{ asset('/js/account-email.min.js') }}"></script>
 @endpush

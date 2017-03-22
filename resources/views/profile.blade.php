@@ -217,14 +217,5 @@
 @stop
 
 @push('scripts')
-  @if (Auth::id() == $profile->id)
-    <script src="{{ asset('/js/cropper.min.js') }}"></script>
-  @endif
-  <script src="{{ asset('/js/profile.js') }}"></script>
-@endpush
-
-@push('styles')
-  @if (Auth::id() == $profile->id)
-    <link href="{{ asset('/css/cropper.min.css') }}" rel="stylesheet">
-  @endif
+  <script src="{{ asset('/js/profile.min.js') }}"></script>
 @endpush

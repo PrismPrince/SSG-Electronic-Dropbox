@@ -118,5 +118,5 @@
 @endsection
 
 @push('scripts')
-  <script src="{{ asset('/js/reset.js') }}"></script>
+  <script src="{{ asset('/js/reset.min.js') }}"></script>
 @endpush

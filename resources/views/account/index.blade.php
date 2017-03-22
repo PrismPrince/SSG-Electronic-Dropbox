@@ -40,5 +40,5 @@
 @endsection
 
 @push('scripts')
-  <script src="{{ asset('/js/account.js') }}"></script>
+  <script src="{{ asset('/js/account.min.js') }}"></script>
 @endpush

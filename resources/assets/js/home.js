@@ -1,3 +1,13 @@
+/*!!
+ * ===================================================================================================
+ * SSG Electronic Dropbox (https://www.github.com/PrismPrince/SSG-Electronic-Dropbox)
+ * Copyright 2017 Dave Dane Pacilan
+ * Licensed under MIT (https://github.com/PrismPrince/SSG-Electronic-Dropbox/blob/master/LICENSE)
+ * ===================================================================================================
+ */
+
+require('./bootstrap.js')
+
 require('./mixins/_http-interceptor')
 require('./mixins/_get-auth-user')
 require('./mixins/_logout')
@@ -750,3 +760,5 @@ Vue.mixin({
   } //methods
 
 })
+
+require('./app.js')

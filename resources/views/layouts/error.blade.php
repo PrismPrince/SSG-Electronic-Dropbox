@@ -1,9 +1,20 @@
+<!--
+ | ===================================================================================================
+ | SSG Electronic Dropbox (https://www.github.com/PrismPrince/SSG-Electronic-Dropbox)
+ | Copyright 2017 Dave Dane Pacilan
+ | Licensed under MIT (https://github.com/PrismPrince/SSG-Electronic-Dropbox/blob/master/LICENSE)
+ | ===================================================================================================
+-->
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="SSG Electronic Dropbox">
+    <meta name="author" content="Dave Dane Pacilan">
+    <meta name="description" content="Cebu Technological University - Main Campus: Supreme Student Government Electronic Dropbox">
+    <meta name="keywords" content="Cebu Technological University, CTU, Supreme Student Government, SSG, post, poll, suggestion">
 
     <title>@yield('error-title')</title>
 
@@ -78,5 +89,6 @@
       <p>Cebu Technological University - Main campus &copy; 2017</p>
     </footer>
 
+    <script src="{{ asset('/js/onload.js') }}"></script>
   </body>
 </html>

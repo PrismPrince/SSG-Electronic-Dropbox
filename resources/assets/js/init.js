@@ -1,3 +1,9 @@
+/*!!
+ * SSG Electronic Dropbox (https://www.github.com/PrismPrince/SSG-Electronic-Dropbox)
+ * Copyright 2017 Dave Dane Pacilan
+ * Licensed under MIT (https://github.com/PrismPrince/SSG-Electronic-Dropbox/blob/master/LICENSE)
+ */
+
 function initMap() {
   var uluru = {lat: 10.295861, lng: 123.906303};
 

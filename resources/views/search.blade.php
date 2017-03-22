@@ -116,5 +116,5 @@
 @endsection
 
 @push('scripts')
-  <script src="{{ asset('/js/search.js') }}"></script>
+  <script src="{{ asset('/js/search.min.js') }}"></script>
 @endpush

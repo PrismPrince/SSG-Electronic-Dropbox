@@ -36,5 +36,5 @@
 @endsection
 
 @push('scripts')
-  <script src="{{ asset('/js/post.js') }}"></script>
+  <script src="{{ asset('/js/post.min.js') }}"></script>
 @endpush

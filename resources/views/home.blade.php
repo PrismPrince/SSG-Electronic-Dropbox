@@ -158,8 +158,5 @@
 @endsection
 
 @push('scripts')
-  @if (Auth::user()->role != 'student')
-    <script src="{{ asset('/js/cropper.min.js') }}"></script>
-  @endif
-  <script src="{{ asset('/js/home.js') }}"></script>
+  <script src="{{ asset('/js/home.min.js') }}"></script>
 @endpush
