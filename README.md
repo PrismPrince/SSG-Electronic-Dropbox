@@ -3,6 +3,7 @@
 [Cebu Technological University - Main Campus](http://http://www.ctu.edu.ph): Supreme Student Government Electronic Dropbox
 
 [![StyleCI](https://styleci.io/repos/76892434/shield?branch=master)](https://styleci.io/repos/76892434)
+[![Build Status](https://travis-ci.org/PrismPrince/SSG-Electronic-Dropbox.svg?branch=master)](https://travis-ci.org/PrismPrince/SSG-Electronic-Dropbox)
 
 ## Introduction
 
