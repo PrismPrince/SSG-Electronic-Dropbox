@@ -8,6 +8,7 @@
 
       @if (session('status'))
         <alert-success>
+          <span class="glyphicon glyphicon-ok-sign"></span>
           <strong>Success!</strong>
           {{ session('status') }}
         </alert-success>

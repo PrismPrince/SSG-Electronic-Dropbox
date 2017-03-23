@@ -21,14 +21,14 @@
 <nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs-block" v-cloak>
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li v-if="active != 'post'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('post')">Posts</a></li>
-      <li v-else class="active"><a href="#" @click.prevent>Posts</a></li>
+      <li v-if="active != 'post'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('post')"><span class="glyphicon glyphicon-blackboard"></span><span class="sr-only">Posts</span></a></li>
+      <li v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-blackboard"></span><span class="sr-only">Posts</span></a></li>
 
-      <li v-if="active != 'poll'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('poll')">Polls</a></li>
-      <li v-else class="active"><a href="#" @click.prevent>Polls</a></li>
+      <li v-if="active != 'poll'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('poll')"><span class="glyphicon glyphicon-stats"></span><span class="sr-only">Polls</span></a></li>
+      <li v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-stats"></span><span class="sr-only">Polls</span></a></li>
 
-      <li v-if="active != 'suggestion'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('suggestion')">Suggestions</a></li>
-      <li v-else class="active"><a href="#" @click.prevent>Suggestions</a></li>
+      <li v-if="active != 'suggestion'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('suggestion')"><span class="glyphicon glyphicon-comment"></span><span class="sr-only">Suggestions</span></a></li>
+      <li v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-comment"></span><span class="sr-only">Suggestions</span></a></li>
     </ul>
 
     @if (Auth::user()->role != 'student')
@@ -38,14 +38,14 @@
           type="button"
           class="btn btn-primary btn-sm navbar-btn"
           @click="showModal('#post-modal', 'Post')"
-        >Write a Post</button>
+        ><span class="glyphicon glyphicon-pencil"></span><span class="sr-only">Write a Post</</span></button>
 
         <button
           v-if="active == 'poll'"
           type="button"
           class="btn btn-primary btn-sm navbar-btn"
           @click="showModal('#poll-modal', 'Create')"
-        >Create a Poll</button>
+        ><span class="glyphicon glyphicon-list-alt"></span><span class="sr-only">Create a Poll</</span></button>
 
     @else
 
@@ -54,7 +54,7 @@
           type="button"
           class="btn btn-primary btn-sm navbar-btn"
           @click="showModal('#suggestion-modal', 'Send')"
-        >Send a Suggest</button>
+        ><span class="glyphicon glyphicon-send"></span><span class="sr-only">Send a Suggest</span></button>
 
     @endif
   </div>
@@ -153,14 +153,14 @@
       <div class="affix" data-offset-top="0" data-spy="affix">
 
         <ul class="nav nav-pills nav-stacked">
-          <li role="presentation" v-if="active != 'post'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('post')">Posts</a></li>
-          <li role="presentation" v-else class="active"><a href="#" @click.prevent>Posts</a></li>
+          <li role="presentation" v-if="active != 'post'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('post')"><span class="glyphicon glyphicon-blackboard"></span>Posts</a></li>
+          <li role="presentation" v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-blackboard"></span>Posts</a></li>
 
-          <li role="presentation" v-if="active != 'poll'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('poll')">Polls</a></li>
-          <li role="presentation" v-else class="active"><a href="#" @click.prevent>Polls</a></li>
+          <li role="presentation" v-if="active != 'poll'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('poll')"><span class="glyphicon glyphicon-stats"></span>Polls</a></li>
+          <li role="presentation" v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-stats"></span>Polls</a></li>
 
-          <li role="presentation" v-if="active != 'suggestion'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('suggestion')">Suggestions</a></li>
-          <li role="presentation" v-else class="active"><a href="#" @click.prevent>Suggestions</a></li>
+          <li role="presentation" v-if="active != 'suggestion'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('suggestion')"><span class="glyphicon glyphicon-comment"></span>Suggestions</a></li>
+          <li role="presentation" v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-comment"></span>Suggestions</a></li>
         </ul>
 
         @if (Auth::user()->role != 'student')
@@ -170,14 +170,14 @@
               type="button"
               class="btn btn-primary"
               @click="showModal('#post-modal', 'Post')"
-            >Write a Post</button>
+            ><span class="glyphicon glyphicon-pencil"></span>Write a Post</button>
 
             <button
               v-if="active == 'poll'"
               type="button"
               class="btn btn-primary"
               @click="showModal('#poll-modal', 'Create')"
-            >Create a Poll</button>
+            ><span class="glyphicon glyphicon-list-alt"></span>Create a Poll</button>
 
         @else
 
@@ -186,7 +186,7 @@
               type="button"
               class="btn btn-primary"
               @click="showModal('#suggestion-modal', 'Send')"
-            >Send a Suggest</button>
+            ><span class="glyphicon glyphicon-send"></span>Send a Suggest</button>
 
         @endif
 

@@ -295,8 +295,8 @@
             </address>
             <address>
               <strong>E-mail Address</strong><br>
-              <a href="mailto:tomorrowscouncil2016@gmail.com">tomorrowscouncil2016@gmail.com</a>
-              <a href="mailto:information@ctu.edu.ph">information@ctu.edu.ph</a>
+              <a target="_blank" href="mailto:tomorrowscouncil2016@gmail.com">tomorrowscouncil2016@gmail.com</a>
+              <a target="_blank" href="mailto:information@ctu.edu.ph">information@ctu.edu.ph</a>
             </address>
             <address>
               <a target="_blank" href="http://www.ctu.edu.ph/departments/">Campus Directory</a>

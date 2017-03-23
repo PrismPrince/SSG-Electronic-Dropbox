@@ -7,6 +7,7 @@
 
       @if ($errors->has('oldPassword') || $errors->has('newPassword'))
         <alert-danger>
+          <span class="glyphicon glyphicon-exclamation-sign"></span>
           <strong>Error!</strong>
           <ul>
             @if ($errors->has('oldPassword'))

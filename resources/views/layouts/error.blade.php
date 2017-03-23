@@ -26,7 +26,6 @@
       }
       body {
         margin: 0;
-        color: #fff;
         text-align: center;
         text-shadow: 0 2px 4px rgba(0,0,0,.5);
         padding: 0;
@@ -36,17 +35,25 @@
         display: table;
         font-family: "Open Sans",Arial,sans-serif;
       }
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
       .cover {
         display: table-cell;
         vertical-align: middle;
         padding: 0 20px;
+        color: silver;
       }
       h1 {
         margin: .67em 0;
         font-family: inherit;
         font-weight: 500;
         line-height: 1.1;
-        color: inherit;
+        color: #fff;
         font-size: 36px;
       }
       h1 small {
@@ -56,16 +63,11 @@
         color: #777;
       }
       .lead {
-        color: silver;
         font-size: 21px;
         line-height: 1.4;
       }
-      .lead a {
-        color: #fff;
-        text-decoration: none;
-      }
-      .lead a:hover {
-        text-decoration: underline;
+      .help {
+        font-size: 15px;
       }
       footer {
         display: block;
@@ -83,6 +85,11 @@
     <div class="cover">
       <h1>@yield('error-title') <small>Error @yield('error-code')</small></h1>
       <p class="lead">@yield('error-message')</p>
+      <p class="help">
+        Caught an error? Fork me on <a href="https://www.github.com/PrismPrince/SSG-Electronic-Dropbox">Github</a>.<br>
+        <a href="https://www.github.com/PrismPrince">Dave Dane Pacilan</a>
+      </p>
+
     </div>
 
     <footer>

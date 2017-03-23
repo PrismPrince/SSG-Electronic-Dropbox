@@ -76,35 +76,36 @@
       <ul class="nav navbar-nav navbar-right" v-cloak>
         <!-- Authentication Links -->
         @if (Auth::guest())
-          <li><a href="{{ url('/login') }}">Login</a></li>
-          <li><a href="{{ url('/register') }}">Register</a></li>
+          <li><a href="{{ url('/login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a href="{{ url('/register') }}"><span class="glyphicon glyphicon-edit"></span> Register</a></li>
         @else
-          <li><a href="{{ url('/home') }}">Home</a></li>
+          <li><a href="{{ url('/home') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                 <input type="hidden" id="Authorization" value="{{ Auth::user()->api_token }}">
+                <span class="glyphicon glyphicon-user"></span>
                 {{ Auth::user()->fname }} <span class="caret"></span>
             </a>
 
             <ul class="dropdown-menu" role="menu">
 
-              <li><a href="{{ url('/profile/' . Auth::id()) }}">Profile</a></li>
+              <li><a href="{{ url('/profile/' . Auth::id()) }}"><span class="glyphicon glyphicon-star"></span> Profile</a></li>
 
               @if (Auth::user()->role == 'administrator')
                 <li class="divider"></li>
                 <li class="dropdown-header">Administrator</li>
-                <li><a href="{{ url('/admin/user/code') }}">Registration Codes</a></li>
-                <li><a href="{{ url('/admin/user') }}">Users</a></li>
+                <li><a href="{{ url('/admin/user/code') }}"><span class="glyphicon glyphicon-barcode"></span> Registration Codes</a></li>
+                <li><a href="{{ url('/admin/user') }}"><span class="glyphicon glyphicon-book"></span> Users</a></li>
               @endif
 
               <li class="divider"></li>
               <li class="dropdown-header">Settings</li>
-              <li><a href="{{ url('/account') }}">Account</a></li>
+              <li><a href="{{ url('/account') }}"><span class="glyphicon glyphicon-cog"></span> Account</a></li>
               <li>
                 <a
                   href="{{ url('/logout') }}"
                   @click.prevent="logout()"
-                >Logout</a>
+                ><span class="glyphicon glyphicon-log-out"></span> Logout</a>
 
                 <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                   {{ csrf_field() }}

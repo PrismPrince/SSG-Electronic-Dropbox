@@ -7,9 +7,13 @@
   <div class="row">
     <div class="col-sm-12 col-md-7 col-md-offset-1" v-cloak>
 
-      <alert-info><strong>Note!</strong> Please secure the code as a password.</alert-info>
+      <alert-info>
+        <span class="glyphicon glyphicon-info-sign"></span>
+        <strong>Note!</strong> Please secure the code as a password.
+      </alert-info>
       <div v-if="error" class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" @click="error = null" aria-label="Close">&times;</button>
+        <span class="glyphicon glyphicon-exclamation-sign"></span>
         <strong>Error!</strong> @{{error}}
       </div>
 

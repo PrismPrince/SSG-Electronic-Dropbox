@@ -87,6 +87,18 @@
 
 .affix, .affix-top {
   width: 220px;
+
+  .nav-pills > li > a > .glyphicon {
+    margin-right: 10px;
+  }
+
+  > button {
+    margin-top: 10px;
+
+    > .glyphicon {
+      margin-right: 10px;
+    }
+  }
 }
 
 .profile.affix {

@@ -38,16 +38,16 @@
     <ul class="nav navbar-nav">
       @if ($profile->role != 'student')
 
-        <li role="presentation" v-if="active != 'post'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('post')">Posts</a></li>
-        <li role="presentation" v-else class="active"><a href="#" @click.prevent>Posts</a></li>
+        <li role="presentation" v-if="active != 'post'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('post')"><span class="glyphicon glyphicon-blackboard"><span class="sr-only">Posts</span></a></li>
+        <li role="presentation" v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-blackboard"><span class="sr-only">Posts</span></a></li>
 
-        <li role="presentation" v-if="active != 'poll'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('poll')">Polls</a></li>
-        <li role="presentation" v-else class="active"><a href="#" @click.prevent>Polls</a></li>
+        <li role="presentation" v-if="active != 'poll'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('poll')"><span class="glyphicon glyphicon-stats"></span><span class="sr-only">Polls</span></a></li>
+        <li role="presentation" v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-stats"></span><span class="sr-only">Polls</span></a></li>
 
       @else
 
-        <li role="presentation" v-if="active != 'suggestion'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('suggestion')">Suggestions</a></li>
-        <li role="presentation" v-else class="active"><a href="#" @click.prevent>Suggestions</a></li>
+        <li role="presentation" v-if="active != 'suggestion'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('suggestion')"><span class="glyphicon glyphicon-comment"></span><span class="sr-only">Suggestions</span></a></li>
+        <li role="presentation" v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-comment"></span><span class="sr-only">Suggestions</span></a></li>
 
       @endif
     </ul>
@@ -79,7 +79,11 @@
 
             <div class="media-body">
               <h1 class="media-heading">@{{profile.fname + ' ' + profile.lname}}</h1>
-              <span class="text-capitalize text-muted">@{{profile.role}}</span>
+              <span class="text-capitalize text-muted">
+              <span v-if="profile.role == 'administrator'"><span class="glyphicon glyphicon-king"></span> @{{profile.role}}</span>
+              <span v-else-if="profile.role == 'moderator'"><span class="glyphicon glyphicon-bishop"></span> @{{profile.role}}</span>
+              <span v-else-if="profile.role == 'student'"><span class="glyphicon glyphicon-pawn"></span> @{{profile.role}}</span>
+              </span>
             </div>
 
             @if (Auth::user()->role == 'administrator')
@@ -87,12 +91,12 @@
               <div class="media-right">
                 <div class="dropdown pull-right">
                   <button class="btn btn-block btn-default dropdown-toggle" type="button" id="change-role" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Change Role <span class="caret"></span>
+                    <span class="glyphicon glyphicon-grain"></span> Change Role <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="change-role">
-                    <li v-if="profile.role != 'administrator'"><a href="#" @click.prevent="changeUserRole(profile.id, 'administrator')">Administrator</a></li>
-                    <li v-if="profile.role != 'moderator'"><a href="#" @click.prevent="changeUserRole(profile.id, 'moderator')">Moderator</a></li>
-                    <li v-if="profile.role != 'student'"><a href="#" @click.prevent="changeUserRole(profile.id, 'student')">Student</a></li>
+                    <li v-if="profile.role != 'administrator'"><a href="#" @click.prevent="changeUserRole(profile.id, 'administrator')"><span class="glyphicon glyphicon-king"></span> Administrator</a></li>
+                    <li v-if="profile.role != 'moderator'"><a href="#" @click.prevent="changeUserRole(profile.id, 'moderator')"><span class="glyphicon glyphicon-bishop"></span> Moderator</a></li>
+                    <li v-if="profile.role != 'student'"><a href="#" @click.prevent="changeUserRole(profile.id, 'student')"><span class="glyphicon glyphicon-pawn"></span> Student</a></li>
                   </ul>
                 </div>
               </div>
@@ -213,16 +217,16 @@
 
           @if ($profile->role != 'student')
 
-            <li role="presentation" v-if="active != 'post'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('post')">Posts</a></li>
-            <li role="presentation" v-else class="active"><a href="#" @click.prevent>Posts</a></li>
+            <li role="presentation" v-if="active != 'post'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('post')"><span class="glyphicon glyphicon-blackboard"></span>Posts</a></li>
+            <li role="presentation" v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-blackboard"></span>Posts</a></li>
 
-            <li role="presentation" v-if="active != 'poll'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('poll')">Polls</a></li>
-            <li role="presentation" v-else class="active"><a href="#" @click.prevent>Polls</a></li>
+            <li role="presentation" v-if="active != 'poll'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('poll')"><span class="glyphicon glyphicon-stats"></span>Polls</a></li>
+            <li role="presentation" v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-stats"></span>Polls</a></li>
 
           @else
 
-            <li role="presentation" v-if="active != 'suggestion'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('suggestion')">Suggestions</a></li>
-            <li role="presentation" v-else class="active"><a href="#" @click.prevent>Suggestions</a></li>
+            <li role="presentation" v-if="active != 'suggestion'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('suggestion')"><span class="glyphicon glyphicon-comment"></span>Suggestions</a></li>
+            <li role="presentation" v-else class="active"><a href="#" @click.prevent><span class="glyphicon glyphicon-comment"></span>Suggestions</a></li>
 
           @endif
 

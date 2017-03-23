@@ -8,12 +8,14 @@
 
       @if (session('status'))
         <div class="alert alert-success">
+          <span class="glyphicon glyphicon-ok-sign"></span>
           {{ session('status') }}
         </div>
       @endif
 
       @if ($errors->has('email'))
         <alert-danger>
+          <span class="glyphicon glyphicon-exclamation-sign"></span>
           <strong>Error!</strong>
           <ul>
             @if ($errors->has('email'))

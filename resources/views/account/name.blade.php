@@ -7,6 +7,7 @@
 
       @if ($errors->has('fname') || $errors->has('mname') || $errors->has('lname'))
         <alert-danger>
+          <span class="glyphicon glyphicon-exclamation-sign"></span>
           <strong>Error!</strong>
           <ul>
             @if ($errors->has('fname'))

@@ -8,6 +8,7 @@
 
       @if ($errors->has('email') || $errors->has('password'))
         <alert-danger>
+          <span class="glyphicon glyphicon-exclamation-sign"></span>
           <strong>Error!</strong>
           <ul>
             @if ($errors->has('email'))

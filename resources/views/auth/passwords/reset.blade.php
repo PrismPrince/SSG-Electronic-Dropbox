@@ -7,12 +7,14 @@
 
       @if (session('status'))
         <alert-success>
+          <span class="glyphicon glyphicon-ok-sign"></span>
           {{ session('status') }}
         </alert-success>
       @endif
 
       @if ($errors->has('email') || $errors->has('password'))
         <alert-danger>
+          <span class="glyphicon glyphicon-exclamation-sign"></span>
           <strong>Error!</strong>
           <ul>
             @if ($errors->has('email'))
