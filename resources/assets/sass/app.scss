@@ -18,14 +18,13 @@
  */
 
 [v-cloak] {
-  display: none;
+  display: none !important;
 }
 
 @media (min-width: 768px) {
   .navbar-form {
     width: 385px;
     padding: 0;
-
   }
 }
 
@@ -58,6 +57,12 @@
 
 .root-content {
   margin-top: 73px;
+}
+
+@media (max-width: 767px) {
+  .nav-xs {
+    margin-bottom: 44px;
+  }
 }
 
 .modal {
@@ -115,6 +120,24 @@
 .nav-aside-inner {
   margin-bottom: 0;
   margin-left: 10px;
+}
+
+.navbar-inverse {
+  min-height: 44px;
+
+  .navbar-btn {
+    float: right;
+    margin: 6px 0;
+  }
+
+  .navbar-nav {
+    float: left;
+    margin: 0;
+
+    >li {
+      float: left;
+    }
+  }
 }
 
 .search-collapse {
@@ -256,7 +279,6 @@
 }
 
 .bar {
-  // background-color: lighten($brand-info, 10%);
   height: 100%;
   position: absolute;
 }

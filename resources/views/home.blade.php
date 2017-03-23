@@ -18,7 +18,49 @@
 
 @endif
 
-<div class="container root-content">
+<nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs-block" v-cloak>
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li v-if="active != 'post'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('post')">Posts</a></li>
+      <li v-else class="active"><a href="#" @click.prevent>Posts</a></li>
+
+      <li v-if="active != 'poll'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('poll')">Polls</a></li>
+      <li v-else class="active"><a href="#" @click.prevent>Polls</a></li>
+
+      <li v-if="active != 'suggestion'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('suggestion')">Suggestions</a></li>
+      <li v-else class="active"><a href="#" @click.prevent>Suggestions</a></li>
+    </ul>
+
+    @if (Auth::user()->role != 'student')
+
+        <button
+          v-if="active == 'post'"
+          type="button"
+          class="btn btn-primary btn-sm navbar-btn"
+          @click="showModal('#post-modal', 'Post')"
+        >Write a Post</button>
+
+        <button
+          v-if="active == 'poll'"
+          type="button"
+          class="btn btn-primary btn-sm navbar-btn"
+          @click="showModal('#poll-modal', 'Create')"
+        >Create a Poll</button>
+
+    @else
+
+        <button
+          v-if="active == 'suggestion'"
+          type="button"
+          class="btn btn-primary btn-sm navbar-btn"
+          @click="showModal('#suggestion-modal', 'Send')"
+        >Send a Suggest</button>
+
+    @endif
+  </div>
+</nav>
+
+<div class="container root-content nav-xs">
   <div class="row">
 
     <div id="activity" class="col-sm-8 col-md-7 col-md-offset-1" v-cloak>
@@ -104,7 +146,7 @@
         <div v-else-if="full" class="full-option text-center"><span class="full"></span><span class="sr-only">No more suggestion</span></div>
       </div>
 
-    </div> {{-- .col-sm-8 --}} 
+    </div> {{-- .col-sm-8 --}}
 
     <div class="col-sm-4 col-md-3 hidden-xs" v-cloak>
 

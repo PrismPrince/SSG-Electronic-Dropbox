@@ -33,7 +33,28 @@
 
 @endif
 
-<div class="container root-content">
+<nav class="navbar navbar-inverse navbar-fixed-bottom visible-xs-block" v-cloak>
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      @if ($profile->role != 'student')
+
+        <li role="presentation" v-if="active != 'post'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('post')">Posts</a></li>
+        <li role="presentation" v-else class="active"><a href="#" @click.prevent>Posts</a></li>
+
+        <li role="presentation" v-if="active != 'poll'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('poll')">Polls</a></li>
+        <li role="presentation" v-else class="active"><a href="#" @click.prevent>Polls</a></li>
+
+      @else
+
+        <li role="presentation" v-if="active != 'suggestion'" :class="{disabled: full == 'loading'}"><a href="#" @click.prevent="switchActivity('suggestion')">Suggestions</a></li>
+        <li role="presentation" v-else class="active"><a href="#" @click.prevent>Suggestions</a></li>
+
+      @endif
+    </ul>
+  </div>
+</nav>
+
+<div class="container root-content nav-xs">
 
   <div class="row">
     <div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -182,7 +203,7 @@
 
       @endif
 
-    </div> {{-- .col-sm-8 --}} 
+    </div> {{-- .col-sm-8 --}}
 
     <div class="col-sm-4 col-md-3 hidden-xs" v-cloak>
 
