@@ -21,7 +21,7 @@
             <li>Change your information here.
               <ul>
                 <li>Change your name.</li>
-                <li>Update your e-mail.</li>
+                <li>Update your e-mail address.</li>
                 <li>Secure your password.</li>
               </ul>
             </li>
@@ -29,7 +29,7 @@
         </div>
         <ul class="list-group">
           <li class="list-group-item"><a href="{{ url('/account/name') }}">Change Name</a></li>
-          <li class="list-group-item"><a href="{{ url('/account/email') }}">Change Email</a></li>
+          <li class="list-group-item"><a href="{{ url('/account/email') }}">Change E-mail Address</a></li>
           <li class="list-group-item"><a href="{{ url('/account/password') }}">Change Password</a></li>
         </ul>
       </div>
