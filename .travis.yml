@@ -10,6 +10,10 @@ env:
     - setup=basic
     - DB_CONNECTION=sqlite
 
+branches:
+  only:
+    - master
+
 sudo: false
 
 cache:
@@ -30,7 +34,7 @@ install:
   - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
 
-script: 
+script:
   - php -r "file_exists('.env') || copy('.env.example', '.env');"
   - php artisan key:generate
   - vendor/bin/phpunit
