@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\UserRegistrationRequest;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class RegisterTest extends TestCase
 {
@@ -11,13 +9,11 @@ class RegisterTest extends TestCase
 
   /**
    * A basic test example.
-   *
-   * @return void
    */
   public function testExample()
   {
-    $code = new UserRegistrationRequest();
-    $code->id = 1234567;
+    $code       = new UserRegistrationRequest();
+    $code->id   = 1234567;
     $code->code = 'XXXXX-XXXXX-XXXXX';
     $code->save();
 
