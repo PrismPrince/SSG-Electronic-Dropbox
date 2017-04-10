@@ -10,7 +10,7 @@ class RegisterTest extends TestCase
   /**
    * A basic test example.
    */
-  public function testExample()
+  public function testRegister()
   {
     $code       = new UserRegistrationRequest();
     $code->id   = 1234567;
