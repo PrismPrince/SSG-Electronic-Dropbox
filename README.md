@@ -7,27 +7,32 @@
 
 ## Introduction
 
-This system let the moderator or administrator post information and create a poll for the students and the students can suggest to the modertor or administrator
+Dropbox is manually put and can be seen through the different locations in the university. The application is entitled “Supreme Student Government Electronic Dropbox”, this helps convert the manual process of dropbox into an automated and web-based application.
+
+### The main functions of the application
+* Post information
+* Create a poll
+* Send suggestion
 
 ### Users
 
 There are three users:
 
-* [Students](#students)
-* [Moderators](#moderators)
 * [Administrators](#administrators)
-
-#### Students
-
-They can read on the posts, vote on polls and send suggestions or feedbacks.
-
-#### Moderators
-
-They can post information or announcements, create polls and read suggestions.
+* [Moderators](#moderators)
+* [Students](#students)
 
 #### Administrators
 
-They can generate codes for new users to register, activate or deactivate users, change the role of the user and they can also do  the moderators' functions.
+The administrators can generate codes for new users to register. They can activate or deactivate users and change their role. They can also do the moderator’s function.
+
+#### Moderators
+
+The moderators can write a post, conduct a poll, read all students’ suggestion, and may also reach students for further information about the suggestion.
+
+#### Students
+
+The students can submit a suggestion, read a post, participate in the conducted poll and comment on their own suggestions that they sent. Student users can only see and communicate with the administrator and moderator users, they cannot see other student users’ activities.
 
 ## Deployment
 
@@ -43,7 +48,7 @@ Please contact Dave on [Faceboook](https://www.facebook.com/prismprince.xx) for 
 
 ## Authors
 
-* **[Dave Dane Pacilan](https:://www.facebook.com/prismprince.xx)** - *Initial work* - [PrismPrince](https://github.com/PrismPrince)
+* **[Dave Dane Pacilan](https://www.facebook.com/prismprince.xx)** - *Initial work* - [PrismPrince](https://github.com/PrismPrince)
 * **[Chiarra Sebial](https://www.facebook.com/chiarra.sebial)**
 * **[Rachel Anne Quiamco](https://www.facebook.com/quiamco123)**
 * **[Maria Divina Alegre](https://www.facebook.com/Iya.Alegre08)**
