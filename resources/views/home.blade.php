@@ -54,7 +54,7 @@
           type="button"
           class="btn btn-primary btn-sm navbar-btn"
           @click="showModal('#suggestion-modal', 'Send')"
-        ><span class="glyphicon glyphicon-send"></span><span class="sr-only">Send a Suggest</span></button>
+        ><span class="glyphicon glyphicon-send"></span><span class="sr-only">Send a Suggestion</span></button>
 
     @endif
   </div>
@@ -186,7 +186,7 @@
               type="button"
               class="btn btn-primary"
               @click="showModal('#suggestion-modal', 'Send')"
-            ><span class="glyphicon glyphicon-send"></span>Send a Suggest</button>
+            ><span class="glyphicon glyphicon-send"></span>Send a Suggestion</button>
 
         @endif
 
