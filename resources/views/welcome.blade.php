@@ -402,6 +402,6 @@
     <script src="{{ asset('/js/onload.js') }}"></script>
     <script src="{{ asset('/js/welcome.min.js') }}"></script>
     <script src="{{ asset('/js/init.js') }}"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API') }}&callback=initMap"></script>
   </body>
 </html>
